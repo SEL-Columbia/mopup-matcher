@@ -1,0 +1,49 @@
+body {
+  background-color: #fdf7e3;
+	overflow-x: hidden;
+	padding-left: 5px; padding-right: 5px;
+}
+
+.data h4 {
+  text-align: center;
+  font-weight: 400; }
+
+.data-list {
+  padding-left: 20px; }
+
+.matched {
+  text-align: center; }
+
+	dl{
+		padding: 10px;
+	}
+		dt {
+		  display: inline-block; }
+		dd {
+		  display: inline-block; }
+
+#nmis_list{
+  overflow: auto;
+}
+	#nmis_list .facilities{
+	  background-color: white;
+	}
+
+.accordions {
+	background-color: white;
+}
+.accordions .pairs, .accordions .rejects {
+	background-color: aqua;
+}
+
+#match_list .pairs{
+  background-color: white;
+}
+
+#lga_list .facilities {
+  background-color:orange;
+}
+	.facility_section {
+	  padding-left:20px;
+	}
+

@@ -1,0 +1,23 @@
+!!!
+html(ng-app="myApp")
+  head
+    meta(charset='utf8')
+    base(href='/')
+    title Angular Express Seed App
+    link(rel='stylesheet', href='/css/app.css')
+    link(rel='stylesheet', href='/css/bootstrap-combined.min.css')
+  body
+    div(ng-controller='AppCtrl')
+      div.navbar
+        div.navbar-inner
+          div.container
+            a.brand(href='#') Matchmaker
+            ul.nav
+              li 
+                a(href='view1') Health Facilities
+              li 
+                a(href='view2') Education Facilities
+    
+    div(ng-view)
+      
+    block body
