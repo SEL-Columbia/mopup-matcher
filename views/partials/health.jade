@@ -66,9 +66,8 @@ html
             h4 Matched List
             .accordions
               accordion(close-others='true')
-                accordion-group(heading='Matched Facility')
+                accordion-group(heading='hello')
                   div(ng-controller='PairedListCtrl')
-                    #matched_list_{{$index}}
                     .pairs(ng-repeat='pair in pairs')
                       dl
                         dt  Facility Name:
@@ -83,15 +82,36 @@ html
                         dt  NMIS Location
                         dd  {{pair[1].community}}, {{pair[1].ward}}
                         br
-                    // facilities
-                accordion-group(heading='Rejected Facility')
-                  div(ng-controller='RejectedListCtrl')
-                    #rejected_list_{{$index}}
-                    .rejects(ng-repeat='reject in rejects')
-                      dl
-                        dt  NMIS Name:
-                        dd {{reject.facility_name}}
-                        br
-                        dt  NMIS Location
-                        dd  {{reject.community}}, {{reject.ward}}
+                accordion-group(heading='hello2')
+                  h4 hello2
+            //
+              .accordions
+                accordion(close-others='true')
+                  accordion-group(heading='Matched Facility')
+                    div(ng-controller='PairedListCtrl')
+                      #matched_list_{{$index}}
+                      .pairs(ng-repeat='pair in pairs')
+                        dl dt  Facility Name:
+                          dd {{pair[0].facility_name}}
+                          br
+                          dt  Facility Location
+                          dd  {{pair[0].community}}, {{pair[0].ward}}
+                          br
+                          dt  NMIS Name:
+                          dd {{pair[1].facility_name}}
+                          br
+                          dt  NMIS Location
+                          dd  {{pair[1].community}}, {{pair[1].ward}}
+                          br
+                      // facilities
+                  accordion-group(heading='Rejected Facility')
+                    div(ng-controller='RejectedListCtrl')
+                      #rejected_list_{{$index}}
+                      .rejects(ng-repeat='reject in rejects')
+                        dl
+                          dt  NMIS Name:
+                          dd {{reject.facility_name}}
+                          br
+                          dt  NMIS Location
+                          dd  {{reject.community}}, {{reject.ward}}
                         br

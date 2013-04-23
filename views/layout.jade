@@ -4,20 +4,24 @@ html(ng-app="myApp")
     meta(charset='utf8')
     base(href='/')
     title Matching Assistant
-    link(rel='stylesheet', href='/css/bootstrap-combined.min.css')
+    script(src='js/lib/angular/angular.js')
+    script(src='js/lib/jquery/jquery-2.0.0.min.js')
+    script(src='js/ui-bootstrap-tpls-0.2.0.js')
     link(rel='stylesheet', href='/css/app.css')
+    link(rel='stylesheet', href='/css/bootstrap-combined.min.css')
 
   body
     div(ng-controller='AppCtrl')
-      div.navbar
-        div.navbar-inner
-          div.container
-            a.brand(href='#') Matchmaker
-            ul.nav
-              li
-                a(href='health') Health Facilities
-              li
-                a(href='education') Education Facilities
+      div(ng-controller='RootCtrl')
+        div.navbar
+          div.navbar-inner
+            div.container
+              a.brand(href='#') Matchmaker
+              ul.nav
+                li
+                  a(href='health') Health Facilities
+                li
+                  a(href='education') Education Facilities
 
     div(ng-view)
     block body
