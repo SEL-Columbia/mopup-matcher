@@ -3,9 +3,10 @@ html(ng-app="myApp")
   head
     meta(charset='utf8')
     base(href='/')
-    title Angular Express Seed App
-    link(rel='stylesheet', href='/css/app.css')
+    title Matching Assistant
     link(rel='stylesheet', href='/css/bootstrap-combined.min.css')
+    link(rel='stylesheet', href='/css/app.css')
+
   body
     div(ng-controller='AppCtrl')
       div.navbar
@@ -13,11 +14,10 @@ html(ng-app="myApp")
           div.container
             a.brand(href='#') Matchmaker
             ul.nav
-              li 
-                a(href='view1') Health Facilities
-              li 
-                a(href='view2') Education Facilities
-    
+              li
+                a(href='health') Health Facilities
+              li
+                a(href='education') Education Facilities
+
     div(ng-view)
-      
     block body

@@ -30,7 +30,7 @@ var RootCtrl = function($rootScope) {
 };
 
 var FacilitiesListCtrl = function($scope, $http) {
-  var file = "docs/Aba_North_Health_Facility_List.csv";
+  var file = "../docs/Aba_North_Health_Facility_List.csv";
   $http.get(file)
     .success(function(data, status, headers, config){
       $scope.facilities = csv(data).toObjects();
@@ -66,7 +66,7 @@ var FacilitiesListCtrl = function($scope, $http) {
   
 
 var NMISListCtrl = function($scope, $http) {
-  var file = "docs/Aba_North_NMIS_List.csv";
+  var file = "../docs/Aba_North_NMIS_List.csv";
   $http.get(file)
     .success(function(data, status, headers, config){
       $scope.facilities = csv(data).toObjects();
@@ -90,7 +90,7 @@ var NMISListCtrl = function($scope, $http) {
 };
 
 var PairedListCtrl = function($scope, $rootScope, $http) {
-  var file = "docs/paired_list.json";
+	var file = '../docs/paired_list.json';
   $http.get(file)
     .success(function(data, status, headers, config){
       if (data.length === 0){
@@ -98,18 +98,18 @@ var PairedListCtrl = function($scope, $rootScope, $http) {
       }else{
         $scope.pairs = JSON.parse(data);
       }
-      $scope.$on("pair_confirmed", function(evt, fac){
+      $scope.$on('pair_confirmed', function(evt, fac){
         //pushing to the front using unshift
         $scope.pairs.unshift(fac);
       });
     })
     .error(function(data, status, headers, config){
-      alert(file + " is not valid file format, please check!");
+      alert(file + ' is not valid file format, please check!');
     });
 };
 
 var RejectedListCtrl = function($scope, $rootScope, $http) {
-  var file = "docs/rejected_list.json";
+  var file = "../docs/rejected_list.json";
   $scope.oneAtATime = true;
   $http.get(file)
     .success(function(data, status, headers, config){

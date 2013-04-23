@@ -38,10 +38,10 @@ html
           .span4(ng-controller='NMISListCtrl')
             | Sort by:
             .btn-group(data-toggle='buttons-checkbox')
-              button.btn(btn-radio='"Name"', ng-model='radioModel', ng-click='predicate = "facility_name"; reverse=false')  Name
-              button.btn(btn-radio='"Type"', ng-model='radioModel', ng-click='predicate = "facility_type"; reverse=false')  Type
-              button.btn(btn-radio='"Ward"', ng-model='radioModel', ng-click='predicate = "ward"; reverse=false')  Ward
-              button.btn(btn-radio='"Community"', ng-model='radioModel', ng-click='predicate = "community"; reverse=false')  Community
+              button.btn(btn-radio='\"Name\"', ng-model='radioModel', ng-click='predicate = \"facility_name\"; reverse=false')  Name
+              button.btn(btn-radio='\"Type\"', ng-model='radioModel', ng-click='predicate = \"facility_type\"; reverse=false')  Type
+              button.btn(btn-radio='\"Ward\"', ng-model='radioModel', ng-click='predicate = \"ward\"; reverse=false')  Ward
+              button.btn(btn-radio='\"Community\"', ng-model='radioModel', ng-click='predicate = \"community\"; reverse=false')  Community
             h4  List of facilities in NMIS ({{facilities.length}})
             #nmis_list
               .facilities(ng-repeat='facility in facilities | orderBy:predicate:reverse')
@@ -68,7 +68,8 @@ html
               accordion(close-others='true')
                 accordion-group(heading='Matched Facility')
                   div(ng-controller='PairedListCtrl')
-                    #matched_list_{{$index}}.pairs(ng-repeat='pair in pairs | orderBy:predicate:reverse')
+                    #matched_list_{{$index}}
+                    .pairs(ng-repeat='pair in pairs')
                       dl
                         dt  Facility Name:
                         dd {{pair[0].facility_name}}
@@ -85,7 +86,8 @@ html
                     // facilities
                 accordion-group(heading='Rejected Facility')
                   div(ng-controller='RejectedListCtrl')
-                    #rejected_list_{{$index}}.rejects(ng-repeat='reject in rejects | orderBy:predicate:reverse')
+                    #rejected_list_{{$index}}
+                    .rejects(ng-repeat='reject in rejects')
                       dl
                         dt  NMIS Name:
                         dd {{reject.facility_name}}
