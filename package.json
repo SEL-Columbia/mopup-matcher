@@ -8,6 +8,7 @@
       "natural": "*",
       "coffee-script": "*",
       "underscore": "*",
-      "jquery": "*"
+      "jquery": "*",
+      "monk": "*"
   }
 }
