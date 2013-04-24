@@ -33,7 +33,7 @@ app.get('/partials/:name', routes.partials);
 
 // JSON API
 
-app.get('/api/facilities/:type/:name/:sector', api.facilities);
+app.get('/api/facilities/:type/:id/:sector', api.facilities);
 
 // redirect all others to the index (HTML5 history)
 app.get('*', routes.index);

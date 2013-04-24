@@ -9,7 +9,7 @@ html
               .facilities
                 dl
                   dt  Name:
-                  dd {{facility['Schools.school_name']}}
+                  dd {{facility['HealthFacilities.health_facility_name']}}
                   br
                   dt  LGA:
                   dd  {{facility.mylga}}
@@ -18,13 +18,13 @@ html
                   dd  {{facility.mylga_state}}
                   br
                   dt  Ward
-                  dd  {{facility['Schools.ward_name']}}
+                  dd  {{facility['HealthFacilities.ward_name']}}
                   br
                   dt  Community:
-                  dd  {{facility['Schools.com_name']}}
+                  dd  {{facility['HealthFacilities.com_name_h']}}
                   br
                   dt  Facility Type:
-                  dd  {{facility['Schools.level_of_education']}}
+                  dd  {{facility['HealthFacilities.health_facility_type']}}
                   br
               // facilities
               .row-fluid

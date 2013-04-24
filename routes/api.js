@@ -11,16 +11,16 @@ exports.name = function(req, res) {
   });
 };
 exports.facilities = function (req, res) {
-  var type, name, sector, db_str, collection, promise;
+  var type, id, sector, db_str, collection, promise;
   type = req.params.type;
-  name = req.params.name;
+  id = +req.params.id;
   sector = req.params.sector;
   db_str = type + "_list_" + sector;
   collection = db.get(db_str);
   if (type=="nmis"){
-    promise = collection.find({"lga":name.toUpperCase()});
+    promise = collection.find({"X_lga_id": id});
   }else{
-    promise = collection.find({"mylga":name});
+    promise = collection.find({"lga_id": id});
   }
   promise.on('success', function(b){
     res.json(b);
