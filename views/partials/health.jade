@@ -64,27 +64,6 @@ html
                       button.btn.btn-danger(ng-click='fail(facility)') Report a problem
           .span4
             h4 Matched List
-            .accordions
-              accordion(close-others='true')
-                accordion-group(heading='hello')
-                  div(ng-controller='PairedListCtrl')
-                    .pairs(ng-repeat='pair in pairs')
-                      dl
-                        dt  Facility Name:
-                        dd {{pair[0].facility_name}}
-                        br
-                        dt  Facility Location
-                        dd  {{pair[0].community}}, {{pair[0].ward}}
-                        br
-                        dt  NMIS Name:
-                        dd {{pair[1].facility_name}}
-                        br
-                        dt  NMIS Location
-                        dd  {{pair[1].community}}, {{pair[1].ward}}
-                        br
-                accordion-group(heading='hello2')
-                  h4 hello2
-            //
               .accordions
                 accordion(close-others='true')
                   accordion-group(heading='Matched Facility')
