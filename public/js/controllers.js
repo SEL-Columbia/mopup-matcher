@@ -40,10 +40,12 @@ var RootCtrl = function($rootScope) {
 };
 
 var FacilitiesListCtrl = function($scope, $http) {
-  var file = "../docs/Aba_North_Health_Facility_List.csv";
-  $http.get(file)
+  //var file = "../docs/Aba_North_Health_Facility_List.csv";
+  
+  $http.get('/api/facilities/lga/bassa/edu')
     .success(function(data, status, headers, config){
-      $scope.facilities = csv(data).toObjects();
+      //$scope.facilities = csv(data).toObjects();
+      $scope.facilities = data;
 //_.each($scope.facilities, function(item, i){item.index=i});
       $scope.index = 0;
       $scope.facility = $scope.facilities[$scope.index];
