@@ -42,7 +42,7 @@ var RootCtrl = function($rootScope) {
 var FacilitiesListCtrl = function($scope, $http) {
   //var file = "../docs/Aba_North_Health_Facility_List.csv";
   
-  $http.get('/api/facilities/lga/bassa/edu')
+  $http.get('/api/facilities/lga/5/health')
     .success(function(data, status, headers, config){
       //$scope.facilities = csv(data).toObjects();
       $scope.facilities = data;
@@ -71,17 +71,19 @@ var FacilitiesListCtrl = function($scope, $http) {
       };
     })
     .error(function(data, status, headers, config){
-      alert(csv_addr + " is not valid file format, please check!");
+      alert("data  is not valid please check!");
     });
 
 };
   
 
 var NMISListCtrl = function($scope, $http) {
-  var file = "../docs/Aba_North_NMIS_List.csv";
-  $http.get(file)
+  //var file = "../docs/Aba_North_NMIS_List.csv";
+  //$http.get(file)
+  $http.get('/api/facilities/nmis/5/health')
     .success(function(data, status, headers, config){
-      $scope.facilities = csv(data).toObjects();
+      //$scope.facilities = csv(data).toObjects();
+      $scope.facilities = data;
       var facilities_len = $scope.facilities.length;
       $scope.predicate = 'facility_name';
       $scope.radioModel = 'Name';
@@ -97,7 +99,7 @@ var NMISListCtrl = function($scope, $http) {
       };
     })
     .error(function(data, status, headers, config){
-      alert(file + " is not valid file format, please check!");
+      alert("data  is not valid please check!");
     });
 };
 
