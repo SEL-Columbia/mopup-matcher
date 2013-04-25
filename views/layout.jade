@@ -19,9 +19,9 @@ html(ng-app="myApp")
               a.brand(href='#') Matchmaker
               ul.nav
                 li
-                  a(href='health') Health Facilities
+                  a(ng-href='{{current_lga}}/health') Health Facilities
                 li
-                  a(href='education') Education Facilities
+                  a(ng-href='{{current_lga}}/education') Education Facilities
 
     div(ng-view)
     block body

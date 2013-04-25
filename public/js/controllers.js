@@ -21,7 +21,8 @@ function MyCtrl2() {
 MyCtrl2.$inject = [];
 
 
-var RootCtrl = function($rootScope) {
+var RootCtrl = function($rootScope, $routeParams) {
+  $rootScope.current_lga = $routeParams.lgaid;
   $rootScope.$on('currentFacility', function(evt, fac){
     $rootScope.currentFacility = fac;
   });
@@ -39,10 +40,11 @@ var RootCtrl = function($rootScope) {
   });
 };
 
-var FacilitiesListCtrl = function($scope, $http) {
+var LGAHealthCtrl = function($scope, $http, $rootScope) {
   //var file = "../docs/Aba_North_Health_Facility_List.csv";
+  var lga_id = $rootScope.current_lga;
   
-  $http.get('/api/facilities/lga/5/health')
+  $http.get('/api/facilities/lga/'+lga_id+'/health')
     .success(function(data, status, headers, config){
       //$scope.facilities = csv(data).toObjects();
       $scope.facilities = data;
@@ -77,10 +79,49 @@ var FacilitiesListCtrl = function($scope, $http) {
 };
   
 
-var NMISListCtrl = function($scope, $http) {
+var LGAEduCtrl = function($scope, $http, $rootScope) {
+  //var file = "../docs/Aba_North_Health_Facility_List.csv";
+  var lga_id = $rootScope.current_lga;
+  
+  $http.get('/api/facilities/lga/'+lga_id+'/edu')
+    .success(function(data, status, headers, config){
+      //$scope.facilities = csv(data).toObjects();
+      $scope.facilities = data;
+//_.each($scope.facilities, function(item, i){item.index=i});
+      $scope.index = 0;
+      $scope.facility = $scope.facilities[$scope.index];
+      
+      //looping selector
+      $scope._changeI = function(delta){
+        var newI = $scope.index + delta;
+        if(newI >= $scope.facilities.length) {
+          newI = 0;
+        } else if(newI <= 0) {
+          newI = $scope.facilities.length - 1;
+        }
+        $scope.index = newI;
+        $scope.facility = $scope.facilities[newI];
+        $scope.$emit("currentFacility", $scope.facility);
+      };
+      $scope.$emit("currentFacility", $scope.facility);
+      $scope.next = function(){
+        $scope._changeI(1);
+      };
+      $scope.previous = function(){
+        $scope._changeI(-1);
+      };
+    })
+    .error(function(data, status, headers, config){
+      alert("data  is not valid please check!");
+    });
+
+};
+var NMISHealthCtrl = function($scope, $http, $rootScope) {
   //var file = "../docs/Aba_North_NMIS_List.csv";
   //$http.get(file)
-  $http.get('/api/facilities/nmis/5/health')
+  var lga_id = $rootScope.current_lga;
+  
+  $http.get('/api/facilities/nmis/'+lga_id+'/health')
     .success(function(data, status, headers, config){
       //$scope.facilities = csv(data).toObjects();
       $scope.facilities = data;
@@ -103,6 +144,32 @@ var NMISListCtrl = function($scope, $http) {
     });
 };
 
+var NMISEduCtrl = function($scope, $http, $rootScope) {
+  //var file = "../docs/Aba_North_NMIS_List.csv";
+  //$http.get(file)
+  var lga_id = $rootScope.current_lga;
+  $http.get('/api/facilities/nmis/'+ lga_id +'/edu')
+    .success(function(data, status, headers, config){
+      //$scope.facilities = csv(data).toObjects();
+      $scope.facilities = data;
+      var facilities_len = $scope.facilities.length;
+      $scope.predicate = 'facility_name';
+      $scope.radioModel = 'Name';
+      $scope.sortby = function(key) {
+        $scope.facilities = _.sortBy($scope.facilities, 
+                function(fac){ return fac[key].toLowerCase();});
+      };
+      $scope.match = function(fac){
+        $scope.$emit('matching_request', fac);
+      };
+      $scope.fail = function(fac){
+        $scope.$emit('rejecting_request', fac);
+      };
+    })
+    .error(function(data, status, headers, config){
+      alert("data  is not valid please check!");
+    });
+};
 var PairedListCtrl = function($scope, $rootScope, $http) {
 	var file = '../docs/paired_list.json';
   $http.get(file)

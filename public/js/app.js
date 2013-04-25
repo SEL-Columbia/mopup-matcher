@@ -4,8 +4,8 @@
 // Declare app level module which depends on filters, and services
 angular.module('myApp', ['ui.bootstrap','myApp.filters', 'myApp.services', 'myApp.directives']).
   config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
-    $routeProvider.when('/health', {templateUrl: 'partials/health', controller: MyCtrl1});
-    $routeProvider.when('/education', {templateUrl: 'partials/education', controller: MyCtrl2});
+    $routeProvider.when('/:lgaid/health', {templateUrl: 'partials/health', controller: RootCtrl});
+    $routeProvider.when('/:lgaid/education', {templateUrl: 'partials/education', controller: RootCtrl});
     $routeProvider.otherwise({redirectTo: '/health'});
     $locationProvider.html5Mode(true);
   }]);
