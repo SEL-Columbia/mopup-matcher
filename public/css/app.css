@@ -126,6 +126,10 @@ tbody tr.active{
   background-color: rgb(132, 201, 235);
   font-weight: bold;
 }
+tbody tr.active td:first-child{
+  background: url("../images/icon-star.png") no-repeat;
+  background-position: 25px 10px;
+}
 tbody tr.matched{
   opacity: 0.5;
 }
