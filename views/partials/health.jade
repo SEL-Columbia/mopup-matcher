@@ -7,7 +7,7 @@ html
           section#lga_list(name='facility_section', ng-controller='LGAHealthCtrl')
             .inner
               h3 Baseline List
-                span.unmatched &nbsp;({{}} unmatched)
+                span.unmatched ({{}} unmatched)
               label.search Search
                 input(type="search")
               table.table.table-bordered.table-hover
@@ -39,7 +39,7 @@ html
           section#nmis_list(ng-controller='NMISHealthCtrl')
             .inner
               h3 Facility List
-                span.unmatched &nbsp;({{}} unmatched)
+                span.unmatched ({{}} unmatched)
               label.search Search
                 input(type="search")
               .guidance Click&nbsp;
@@ -62,7 +62,6 @@ html
                     td {{facility.facility_name}}
                     td {{facility.community}}
                     td {{facility.facility_type}}
-                    // button.btn.btn-danger(ng-click='fail(facility)') Report a problem
         section.span2#matches_list(ng-controller='PairedListCtrl')
           h4 Matched Facilities&nbsp;
             span.matched-length ({{pairs.length}})
