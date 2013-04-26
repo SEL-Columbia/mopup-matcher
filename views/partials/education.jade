@@ -5,31 +5,29 @@ html
         .span10
           section#lga_list(name='facility_section', ng-controller='LGAEduCtrl')
             .inner
-            h3 Baseline List
-              span.unmatched ({{}} unmatched)
-            label.search Search
-              input(type="search")
-            table.table.table-bordered.table-hover
-              thead
-                tr
-                  th
-                  th  ID
-                  th  Ward
-                  th  Facility Name
-                  th  Community
-                  th  Facility Type
-              tbody
-                tr(ng-repeat='facilty in facilities')(ng-click="select()")
-                  td
-                  td {{$index+1}}
-                  td {{facility['Schools.ward_name']}}
-                  td {{facility['Schools.school_name']}}
-                  td {{facility['Schools.com_name']}}
-                  td {{facility['Schools.level_of_education']}}
-                  dt  LGA:
-                  //{{facility.mylga}}
-                  //{{facility.mylga_state}}
-          // lga_list
+              h3 Baseline List&nbsp;
+                span.unmatched ({{}} unmatched)
+              label.search Search
+                input(type="search")
+              table.table.table-bordered.table-hover
+                thead
+                  tr
+                    th
+                    th  ID
+                    th  Ward
+                    th  Facility Name
+                    th  Community
+                    th  Facility Type
+                tbody
+                  tr(ng-repeat='facilty in facilities')(ng-click="select()")
+                    td
+                    td {{$index+1}}
+                    td {{facility['Schools.ward_name']}}
+                    td {{facility['Schools.school_name']}}
+                    td {{facility['Schools.com_name']}}
+                    td {{facility['Schools.level_of_education']}}
+                    //{{facility.mylga}}
+                    //{{facility.mylga_state}}
           //  | Sort by:
           //  .btn-group(data-toggle='buttons-checkbox')
               button.btn(btn-radio='\"Name\"', ng-model='radioModel', ng-click='predicate = \"facility_name\"; reverse=false')  Name
@@ -38,7 +36,7 @@ html
               button.btn(btn-radio='\"Community\"', ng-model='radioModel', ng-click='predicate = \"community\"; reverse=false')  Community
           section#nmis_list(ng-controller='NMISEduCtrl')
             .inner
-              h3 Facility List
+              h3 Facility List&nbsp;
                 span.unmatched ({{}} unmatched)
               label.search Search
                 input(type="search")
