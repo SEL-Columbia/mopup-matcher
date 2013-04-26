@@ -5,10 +5,10 @@ html
         .span10.main
           section#lga_list(name='facility_section', ng-controller='LGAEduCtrl')
             .inner
-              h3 Baseline List&nbsp;
+              h3 Baseline List
                 span.unmatched ({{}} unmatched)
               label.search Search
-                input(type="search")
+                input(ng-model="lgaEduSearch")
               .table-wrapper
                 table.table.table-bordered.table-hover
                   thead
@@ -20,13 +20,14 @@ html
                       th  Community
                       th  Facility Type
                   tbody
-                    tr(ng-repeat='facilty in facilities')(ng-click="select()")
+                    tr(ng-repeat='facilty in facilities | orderBy:predicate:reverse | filter:lgaEduSearch')(ng-click="select()")
                       td
                       td {{$index+1}}
                       td {{facility['Schools.ward_name']}}
                       td {{facility['Schools.school_name']}}
                       td {{facility['Schools.com_name']}}
                       td {{facility['Schools.level_of_education']}}
+                      dt  LGA:
                       //{{facility.mylga}}
                       //{{facility.mylga_state}}
           //  | Sort by:
@@ -40,7 +41,7 @@ html
               h3 Facility List&nbsp;
                 span.unmatched ({{}} unmatched)
               label.search Search
-                input(type="search")
+                input(ng-model='nmisEduSearch')
               .guidance Click&nbsp;
                 button.btn.btn-small.btn-match.no-hover Match
                 | &nbsp;on the matching facility
@@ -54,7 +55,7 @@ html
                       th  Community
                       th  Facility Type
                   tbody
-                    tr(ng-repeat='facility in facilities | orderBy:predicate:reverse')
+                    tr(ng-repeat='facility in facilities | orderBy:predicate:reverse | filter:nmisEduSearch')
                       td 
                         button.btn.btn-small.btn-match(ng-click='match(facility)') Match
                       td {{$index+1}}
@@ -62,6 +63,7 @@ html
                       td {{facility.facility_name}}
                       td {{facility.community}}
                       td {{facility.facility_type}}
+
         section.span2#matches_list(ng-controller='PairedListCtrl')
           h4 Matched Facilities&nbsp;
             span.matched-length ({{pairs.length}})
