@@ -11,21 +11,19 @@ html(ng-app="myApp")
     link(rel='stylesheet', href='/css/app.css')
 
   body
-    div(ng-controller='AppCtrl')
-      div(ng-controller='RootCtrl')
-        .navbar
-          .navbar-inner
-            .container
-              a.brand(href='#')
-                img(src='/images/logo.png')
-                | NMIS/LGA Facility Matching Tool
-              span.lga LGA: {{current_lga}}
-              ul.nav
-                li
-                  a(ng-href='{{current_lga}}/health') Health Facilities
-                li
-                  a(ng-href='{{current_lga}}/education') Education Facilities
-              button.btn.printouts Download Printouts
+    .navbar
+      .navbar-inner
+        .container
+          a.brand(href='#')
+            img(src='/images/logo.png')
+            | NMIS/LGA Facility Matching Tool
+          span.lga LGA: {{current_lga}}
+          ul.nav
+            li
+              a(ng-href='{{current_lga}}/health') Health Facilities
+            li
+              a(ng-href='{{current_lga}}/education') Education Facilities
+          button.btn.printouts Download Printouts
 
     div(ng-view)
     block body
