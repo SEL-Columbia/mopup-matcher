@@ -193,6 +193,10 @@ var PairedListCtrl = function($scope, $rootScope, $http) {
     .error(function(data, status, headers, config){
       alert(file + ' is not valid file format, please check!');
     });
+
+   $scope.removePair = function(){
+      
+   }
 };
 
 var RejectedListCtrl = function($scope, $rootScope, $http) {

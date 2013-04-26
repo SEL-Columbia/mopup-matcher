@@ -16,14 +16,16 @@ html(ng-app="myApp")
         .navbar
           .navbar-inner
             .container
-              a.brand(href='#') NMIS/LGA Facility Matching Tool
+              a.brand(href='#')
+                img(src='/images/logo.png')
+                | NMIS/LGA Facility Matching Tool
               span.lga LGA: {{current_lga}}
               ul.nav
                 li
                   a(ng-href='{{current_lga}}/health') Health Facilities
                 li
                   a(ng-href='{{current_lga}}/education') Education Facilities
-              button.printouts Download Printouts
+              button.btn.printouts Download Printouts
 
     div(ng-view)
     block body

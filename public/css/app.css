@@ -1,27 +1,59 @@
 body {
-  background-color: #fafafa;
+  background: rgb(240,240,240);
 	/*overflow-x: hidden;*/
 	padding-left: 5px; padding-right: 5px;
 }
 
+/* navbar quick fixes but needs to be done better */
+.navbar .brand{
+  padding-top: 15px;
+  color: black;
+}
+.nav{
+  padding-top: 5px;
+}
+.brand img{
+  width: 35px;
+  margin: -8px 8px 0 0;
+}
 .navbar-inner{
+  background: rgb(240,240,240);
   border: none;
+  -webkit-box-shadow: none;
+  -mox-box-shadow: none;
+  box-shadow: none;
 }
-.navbar-inner.lga{
+.navbar-inner .lga{
   float: left;
+  padding-top: 15px;
 }
-
-.printouts{
+.navbar .btn.printouts{
   float: right;
+  margin-top: 15px;
 }
 
-h4{
+.icon-putback{
+  background-image: url("../images/putback.png");
+  background-position: 0 0;
+}
+
+
+h3{
   font-weight: normal;
 }
 
 .unmatched{
   font-weight: normal;
   color: rgb(178,196,204);
+}
+
+.matched-length{
+  color: rgb(100,100,100);
+}
+
+.guidance{
+  font-size: 17px;
+  color: rgb(144, 213, 248);
 }
 
 table{
@@ -34,35 +66,31 @@ th:first-child{
 
 tbody tr.active{
   background-color: rgb(132, 201, 235);
+  font-weight: bold;
+}
+tbody tr.matched{
+  opacity: 0.5;
 }
 
 .search{
   font-weight: normal;
   float: right;
 }
+
+#lga_list .search{
+  margin-top: -42px;
+}
+
 input[type="search"]{
   margin-left: 10px;
 }
 
-
-/*.data h4 {
-  color #ffffff
-  text-align: center;
-  font-weight: 400; }
-
-.data-list {
-  padding-left: 20px; }
-
-.matched {
-  text-align: center; }
-
-	dl{
-		padding: 10px;
-	}
-		dt {
-		  display: inline-block; }
-		dd {
-		  display: inline-block; }*/
+.btn-match, .guidance .btn-match:hover{
+  background: rgb(132, 201, 235);
+  font-weight: bold;
+  font-size: 13px;
+  padding: 0 7px 2px 7px;
+}
 
 #nmis_list, #lga_list{
   background-color: rgb(63,98,116);
@@ -70,12 +98,43 @@ input[type="search"]{
   max-height: 50%;
   padding: 25px;
 }
+
+#lga_list{
+  padding-bottom: 0;
+}
+
+#nmis_list{
+  padding-top: 0;
+}
+
+#lga_list .inner{
+  border-bottom: 4px solid rgb(43, 68, 80);
+}
   
 #nmis_list h3, #lga_list h3, .search{
   color: #ffffff;
 }
 
 .pairs{
-  border-bottom: 1px solid #ddd;
+  border-bottom: 2px solid #aaa;
 }
 
+.pairs dt, dd{
+  font-weight: bold;
+}
+.pairs dt{
+  display: inline;
+}
+.pairs dd{
+  display: inline;
+}
+
+.putback{
+  float: right;
+}
+.putback-guidance{
+  margin-top: 15px;
+}
+.putback-guidance .putback{
+  float: none;
+}
