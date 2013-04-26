@@ -3,7 +3,7 @@ html(ng-app="myApp")
   head
     meta(charset='utf8')
     base(href='/')
-    title Matching Assistant
+    title NMIS/LGA Facility Matching Tool
     script(src='js/lib/angular/angular.min.js')
     script(src='js/lib/jquery/jquery-2.0.0.min.js')
     script(src='js/lib/ui-bootstrap-tpls-0.2.0.js')
@@ -13,15 +13,17 @@ html(ng-app="myApp")
   body
     div(ng-controller='AppCtrl')
       div(ng-controller='RootCtrl')
-        div.navbar
-          div.navbar-inner
-            div.container
-              a.brand(href='#') Matchmaker
+        .navbar
+          .navbar-inner
+            .container
+              a.brand(href='#') NMIS/LGA Facility Matching Tool
+              span.lga LGA: {{current_lga}}
               ul.nav
                 li
                   a(ng-href='{{current_lga}}/health') Health Facilities
                 li
                   a(ng-href='{{current_lga}}/education') Education Facilities
+              button.printouts Download Printouts
 
     div(ng-view)
     block body
