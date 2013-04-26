@@ -1,96 +1,80 @@
 html
   body
-    .row-fluid
-      .span12
-        .row-fluid
-          .span4(name='facility_section', ng-controller='LGAEduCtrl')
-            h4  Official LGA facility list ({{facilities.length}})
-            #lga_list
-              .facilities
-                dl
-                  dt  Name:
-                  dd {{facility['Schools.school_name']}}
-                  br
+    .container-fluid
+      .row-fluid
+        .span10
+          section#lga_list(name='facility_section', ng-controller='LGAEduCtrl')
+            .inner
+            h3 Baseline List
+              span.unmatched ({{}} unmatched)
+            label.search Search
+              input(type="search")
+            table.table.table-bordered.table-hover
+              thead
+                tr
+                  th
+                  th  ID
+                  th  Ward
+                  th  Facility Name
+                  th  Community
+                  th  Facility Type
+              tbody
+                tr(ng-repeat='facilty in facilities')(ng-click="select()")
+                  td
+                  td {{$index+1}}
+                  td {{facility['Schools.ward_name']}}
+                  td {{facility['Schools.school_name']}}
+                  td {{facility['Schools.com_name']}}
+                  td {{facility['Schools.level_of_education']}}
                   dt  LGA:
-                  dd  {{facility.mylga}}
-                  br
-                  dt  State:
-                  dd  {{facility.mylga_state}}
-                  br
-                  dt  Ward
-                  dd  {{facility['Schools.ward_name']}}
-                  br
-                  dt  Community:
-                  dd  {{facility['Schools.com_name']}}
-                  br
-                  dt  Facility Type:
-                  dd  {{facility['Schools.level_of_education']}}
-                  br
-              // facilities
-              .row-fluid
-                .buttons
-                  .pull-left
-                    button.btn.btn-success(ng-click='previous()') previous
-                  .pull-right
-                    button.btn.btn-danger(ng-click='next()') next
-            // lga_list
-          // span4
-          .span4(ng-controller='NMISEduCtrl')
-            | Sort by:
-            .btn-group(data-toggle='buttons-checkbox')
+                  //{{facility.mylga}}
+                  //{{facility.mylga_state}}
+          // lga_list
+          //  | Sort by:
+          //  .btn-group(data-toggle='buttons-checkbox')
               button.btn(btn-radio='\"Name\"', ng-model='radioModel', ng-click='predicate = \"facility_name\"; reverse=false')  Name
               button.btn(btn-radio='\"Type\"', ng-model='radioModel', ng-click='predicate = \"facility_type\"; reverse=false')  Type
               button.btn(btn-radio='\"Ward\"', ng-model='radioModel', ng-click='predicate = \"ward\"; reverse=false')  Ward
               button.btn(btn-radio='\"Community\"', ng-model='radioModel', ng-click='predicate = \"community\"; reverse=false')  Community
-            h4  List of facilities in NMIS ({{facilities.length}})
-            #nmis_list
-              .facilities(ng-repeat='facility in facilities | orderBy:predicate:reverse')
-                dl
-                  dt  Name:
-                  dd {{facility.facility_name}}
-                  br
-                  dt  Ward
-                  dd  {{facility.ward}}
-                  br
-                  dt  Community:
-                  dd  {{facility.community}}
-                  br
-                  dt  Facility Type:
-                  dd  {{facility.facility_type}}
-                  br
-                  .row-fluid
-                    button.btn.btn-success(ng-click='match(facility)') Matches!
-                    .pull-right
-                      button.btn.btn-danger(ng-click='fail(facility)') Report a problem
-          .span4
-            h4 Matched List
-              .accordions
-                accordion(close-others='true')
-                  accordion-group(heading='Matched Facility')
-                    div(ng-controller='PairedListCtrl')
-                      #matched_list_{{$index}}
-                      .pairs(ng-repeat='pair in pairs')
-                        dl dt  Facility Name:
-                          dd {{pair[0].facility_name}}
-                          br
-                          dt  Facility Location
-                          dd  {{pair[0].community}}, {{pair[0].ward}}
-                          br
-                          dt  NMIS Name:
-                          dd {{pair[1].facility_name}}
-                          br
-                          dt  NMIS Location
-                          dd  {{pair[1].community}}, {{pair[1].ward}}
-                          br
-                      // facilities
-                  accordion-group(heading='Rejected Facility')
-                    div(ng-controller='RejectedListCtrl')
-                      #rejected_list_{{$index}}
-                      .rejects(ng-repeat='reject in rejects')
-                        dl
-                          dt  NMIS Name:
-                          dd {{reject.facility_name}}
-                          br
-                          dt  NMIS Location
-                          dd  {{reject.community}}, {{reject.ward}}
-                        br
+          section#nmis_list(ng-controller='NMISEduCtrl')
+            .inner
+              h3 Facility List
+                span.unmatched ({{}} unmatched)
+              label.search Search
+                input(type="search")
+              .guidance Click&nbsp;
+                button.btn.btn-small.btn-match.no-hover Match
+                | &nbsp;on the matching facility
+              table.table.table-bordered.table-hover
+                thead
+                    th
+                    th  ID
+                    th  Ward
+                    th  Facility Name
+                    th  Community
+                    th  Facility Type
+                tbody
+                  tr(ng-repeat='facility in facilities | orderBy:predicate:reverse')
+                    td 
+                      button.btn.btn-small.btn-match(ng-click='match(facility)') Match
+                    td {{$index+1}}
+                    td {{facility.ward}}
+                    td {{facility.facility_name}}
+                    td {{facility.community}}
+                    td {{facility.facility_type}}
+        section.span2#matches_list(ng-controller='PairedListCtrl')
+          h4 Matched Facilities&nbsp;
+            span.matched-length ({{pairs.length}})
+          #matched_list_{{$index}}
+            .pairs(ng-repeat='pair in pairs')
+              button.btn.btn-small.putback(ng-click="removePair()")
+               i.icon-putback
+              dl 
+                dt {{pair[0].id}}
+                dd {{pair[0].facility_name}}
+                &nbsp;matches&nbsp;
+                dt {{pair[1].id}}
+                dd {{pair[1].facility_name}}
+            div.putback-guidance If you made an error, put facilities back by clicking 
+              button.btn.btn-small.putback
+                i.icon-putback
