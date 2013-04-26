@@ -71,6 +71,10 @@ var LGAHealthCtrl = function($scope, $http, $rootScope) {
       $scope.previous = function(){
         $scope._changeI(-1);
       };
+      $scope.select = function(){
+        console.log('selected: ', $scope.facility);
+      };
+
     })
     .error(function(data, status, headers, config){
       alert("data  is not valid please check!");
@@ -110,11 +114,13 @@ var LGAEduCtrl = function($scope, $http, $rootScope) {
       $scope.previous = function(){
         $scope._changeI(-1);
       };
+      $scope.select = function(){
+   	  console.log('selected: ', $scope.facility);
+      };
     })
     .error(function(data, status, headers, config){
       alert("data  is not valid please check!");
     });
-
 };
 var NMISHealthCtrl = function($scope, $http, $rootScope) {
   //var file = "../docs/Aba_North_NMIS_List.csv";
@@ -187,6 +193,8 @@ var PairedListCtrl = function($scope, $rootScope, $http) {
     .error(function(data, status, headers, config){
       alert(file + ' is not valid file format, please check!');
     });
+
+   $scope.removePair = function(){};
 };
 
 var RejectedListCtrl = function($scope, $rootScope, $http) {
