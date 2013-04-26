@@ -1,5 +1,5 @@
 /** overall layout **/
-html, body, .container-fluid, .row-fluid, .span10, #matches_list{
+html, body, .container-fluid, .row-fluid, .span10, #matches_list, .inner{
 	height: 100%;
 }
 .navbar{
@@ -11,9 +11,17 @@ html, body, .container-fluid, .row-fluid, .span10, #matches_list{
 	overflow: hidden;
 }
 
+#nmis_list, #lga_list{
+  height: 45%;
+  padding: 25px;
+  overflow: hidden;
+}
+
 .table-wrapper{
+  margin: 0;
+  padding: 0;
   width: 100%;
-  height: 400px;
+  height: 80%;
   overflow-y: auto;
 }
 
@@ -86,6 +94,9 @@ h3{
 table{
   background-color: #fafafa;
 }
+.table{
+  margin-bottom: 0;
+}
 
 .table-bordered{
   border-radius: 0;
@@ -121,12 +132,6 @@ input[type="search"]{
   font-weight: bold;
   font-size: 13px;
   padding: 0 7px 2px 7px;
-}
-
-#nmis_list, #lga_list{
-  max-height: 45%;
-  padding: 25px;
-  overflow: hidden;
 }
 
 #lga_list{
