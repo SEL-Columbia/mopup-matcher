@@ -57,10 +57,11 @@ html, body, .container-fluid, .row-fluid, .span10, #matches_list, .inner{
   margin-left: 40px;
 }
 .nav .active{
+  font-weight: bold;
   text-decoration: underline;
 }
 .brand img{
-  width: 32px;
+  width: 24px;
   margin: -8px 8px 0 0;
 }
 .navbar-inner{
@@ -76,8 +77,9 @@ html, body, .container-fluid, .row-fluid, .span10, #matches_list, .inner{
   margin-left: 50px;
 }
 .navbar .btn.printouts{
+  color: rgb(8, 88, 129);
   float: right;
-  margin-top: 15px;
+  margin-top: 10px;
 }
 
 
