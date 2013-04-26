@@ -24,10 +24,10 @@ html
                     tr(ng-repeat='facility in facilities | orderBy:predicate:reverse | filter:lgaHealthSearch')(ng-click="select()")
                       td  
                       td  {{$index+1}}
-                      td  {{facility['HealthFacilities.ward_name']}}
-                      td  {{facility['HealthFacilities.health_facility_name']}}
-                      td  {{facility['HealthFacilities.com_name_h']}}
-                      td  {{facility['HealthFacilities.health_facility_type']}}
+                      td  {{facility.ward_name}}
+                      td  {{facility.health_facility_name}}
+                      td  {{facility.com_name_h}}
+                      td  {{facility.health_facility_type}}
                       // {{facility.mylga}}
                       // {{facility.mylga_state}}
               // | Sort by:
