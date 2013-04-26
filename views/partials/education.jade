@@ -5,10 +5,11 @@ html
         .span10.main
           section#lga_list(name='facility_section', ng-controller='LGAEduCtrl')
             .inner
-              h3 Baseline List&nbsp;
-                span.unmatched ({{}} unmatched)
-              label.search Search
-                input(ng-model="lgaEduSearch", type="search")
+              header.clearfix
+                h3 Baseline List&nbsp;
+                  span.unmatched ({{}} unmatched)
+                label.search Search
+                  input(ng-model="lgaEduSearch", type="search")
               .table-wrapper
                 table.table.table-bordered.table-hover
                   thead
@@ -37,13 +38,14 @@ html
               button.btn(btn-radio='\"Community\"', ng-model='radioModel', ng-click='predicate = \"community\"; reverse=false')  Community
           section#nmis_list(ng-controller='NMISEduCtrl')
             .inner
-              h3 Facility List&nbsp;
-                span.unmatched ({{}} unmatched)
-              label.search Search
-                input(ng-model='nmisEduSearch', type="search")
-              .guidance Click&nbsp;
-                button.btn.btn-small.btn-match.no-hover Match
-                | &nbsp;on the matching facility
+              header.clearfix
+                h3 Facility List&nbsp;
+                  span.unmatched ({{}} unmatched)
+                label.search Search
+                  input(ng-model='nmisEduSearch', type="search")
+                .guidance Click&nbsp;
+                  button.btn.btn-small.btn-match.no-hover Match
+                  | &nbsp;on the matching facility
               .table-wrapper
                 table.table.table-bordered.table-hover
                   thead
