@@ -2,32 +2,33 @@ html
   body
     .container-fluid
       .row-fluid
-        .span10
+        .span10.main
           section#lga_list(name='facility_section', ng-controller='LGAEduCtrl')
             .inner
               h3 Baseline List&nbsp;
                 span.unmatched ({{}} unmatched)
               label.search Search
                 input(type="search")
-              table.table.table-bordered.table-hover
-                thead
-                  tr
-                    th
-                    th  ID
-                    th  Ward
-                    th  Facility Name
-                    th  Community
-                    th  Facility Type
-                tbody
-                  tr(ng-repeat='facilty in facilities')(ng-click="select()")
-                    td
-                    td {{$index+1}}
-                    td {{facility['Schools.ward_name']}}
-                    td {{facility['Schools.school_name']}}
-                    td {{facility['Schools.com_name']}}
-                    td {{facility['Schools.level_of_education']}}
-                    //{{facility.mylga}}
-                    //{{facility.mylga_state}}
+              .table-wrapper
+                table.table.table-bordered.table-hover
+                  thead
+                    tr
+                      th
+                      th  ID
+                      th  Ward
+                      th  Facility Name
+                      th  Community
+                      th  Facility Type
+                  tbody
+                    tr(ng-repeat='facilty in facilities')(ng-click="select()")
+                      td
+                      td {{$index+1}}
+                      td {{facility['Schools.ward_name']}}
+                      td {{facility['Schools.school_name']}}
+                      td {{facility['Schools.com_name']}}
+                      td {{facility['Schools.level_of_education']}}
+                      //{{facility.mylga}}
+                      //{{facility.mylga_state}}
           //  | Sort by:
           //  .btn-group(data-toggle='buttons-checkbox')
               button.btn(btn-radio='\"Name\"', ng-model='radioModel', ng-click='predicate = \"facility_name\"; reverse=false')  Name
@@ -43,23 +44,24 @@ html
               .guidance Click&nbsp;
                 button.btn.btn-small.btn-match.no-hover Match
                 | &nbsp;on the matching facility
-              table.table.table-bordered.table-hover
-                thead
-                    th
-                    th  ID
-                    th  Ward
-                    th  Facility Name
-                    th  Community
-                    th  Facility Type
-                tbody
-                  tr(ng-repeat='facility in facilities | orderBy:predicate:reverse')
-                    td 
-                      button.btn.btn-small.btn-match(ng-click='match(facility)') Match
-                    td {{$index+1}}
-                    td {{facility.ward}}
-                    td {{facility.facility_name}}
-                    td {{facility.community}}
-                    td {{facility.facility_type}}
+              .table-wrapper
+                table.table.table-bordered.table-hover
+                  thead
+                      th
+                      th  ID
+                      th  Ward
+                      th  Facility Name
+                      th  Community
+                      th  Facility Type
+                  tbody
+                    tr(ng-repeat='facility in facilities | orderBy:predicate:reverse')
+                      td 
+                        button.btn.btn-small.btn-match(ng-click='match(facility)') Match
+                      td {{$index+1}}
+                      td {{facility.ward}}
+                      td {{facility.facility_name}}
+                      td {{facility.community}}
+                      td {{facility.facility_type}}
         section.span2#matches_list(ng-controller='PairedListCtrl')
           h4 Matched Facilities&nbsp;
             span.matched-length ({{pairs.length}})

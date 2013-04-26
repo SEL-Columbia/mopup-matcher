@@ -2,33 +2,34 @@ html
   body
     .container-fluid
       .row-fluid
-        .span10
+        .span10.main
           // facilities_list
           section#lga_list(name='facility_section', ng-controller='LGAHealthCtrl')
             .inner
-              h3 Baseline List
+              h3 Baseline List&nbsp;
                 span.unmatched ({{}} unmatched)
               label.search Search
                 input(type="search")
-              table.table.table-bordered.table-hover
-                thead
-                  tr
-                    th
-                    th  ID
-                    th  Ward
-                    th  Facility Name
-                    th  Community
-                    th  Facility Type
-                tbody
-                  tr(ng-repeat='facility in facilities | orderBy:predicate:reverse')(ng-click="select()")
-                    td  
-                    td  {{$index+1}}
-                    td  {{facility['HealthFacilities.ward_name']}}
-                    td  {{facility['HealthFacilities.health_facility_name']}}
-                    td  {{facility['HealthFacilities.com_name_h']}}
-                    td  {{facility['HealthFacilities.health_facility_type']}}
-                    // {{facility.mylga}}
-                    // {{facility.mylga_state}}
+              .table-wrapper
+                table.table.table-bordered.table-hover
+                  thead
+                    tr
+                      th
+                      th  ID
+                      th  Ward
+                      th  Facility Name
+                      th  Community
+                      th  Facility Type
+                  tbody
+                    tr(ng-repeat='facility in facilities | orderBy:predicate:reverse')(ng-click="select()")
+                      td  
+                      td  {{$index+1}}
+                      td  {{facility['HealthFacilities.ward_name']}}
+                      td  {{facility['HealthFacilities.health_facility_name']}}
+                      td  {{facility['HealthFacilities.com_name_h']}}
+                      td  {{facility['HealthFacilities.health_facility_type']}}
+                      // {{facility.mylga}}
+                      // {{facility.mylga_state}}
               // lga_list
               // | Sort by:
               // .btn-group(data-toggle='buttons-checkbox')
@@ -38,30 +39,31 @@ html
                    button.btn(btn-radio='\"Community\"', ng-model='radioModel', ng-click='predicate = \"community\"; reverse=false')  Community
           section#nmis_list(ng-controller='NMISHealthCtrl')
             .inner
-              h3 Facility List
+              h3 Facility List&nbsp;
                 span.unmatched ({{}} unmatched)
               label.search Search
                 input(type="search")
               .guidance Click&nbsp;
                 button.btn.btn-small.btn-match.no-hover Match
                 | &nbsp;on the matching facility
-              table.table.table-bordered.table-hover
-                thead
-                    th
-                    th  ID
-                    th  Ward
-                    th  Facility Name
-                    th  Community
-                    th  Facility Type
-                tbody
-                  tr(ng-repeat='facility in facilities | orderBy:predicate:reverse')
-                    td 
-                      button.btn.btn-small.btn-match(ng-click='match(facility)') Match
-                    td {{$index+1}}
-                    td {{facility.ward}}
-                    td {{facility.facility_name}}
-                    td {{facility.community}}
-                    td {{facility.facility_type}}
+              .table-wrapper
+                table.table.table-bordered.table-hover
+                  thead
+                      th
+                      th  ID
+                      th  Ward
+                      th  Facility Name
+                      th  Community
+                      th  Facility Type
+                  tbody
+                    tr(ng-repeat='facility in facilities | orderBy:predicate:reverse')
+                      td 
+                        button.btn.btn-small.btn-match(ng-click='match(facility)') Match
+                      td {{$index+1}}
+                      td {{facility.ward}}
+                      td {{facility.facility_name}}
+                      td {{facility.community}}
+                      td {{facility.facility_type}}
         section.span2#matches_list(ng-controller='PairedListCtrl')
           h4 Matched Facilities&nbsp;
             span.matched-length ({{pairs.length}})

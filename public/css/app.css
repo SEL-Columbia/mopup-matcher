@@ -1,7 +1,36 @@
+/** overall layout **/
+html, body, .container-fluid, .row-fluid, .span10, #matches_list{
+	height: 100%;
+}
+.navbar{
+  height: 8%;
+  min-height: 50px;
+}
+.view{
+	height: 85%;
+	overflow: hidden;
+}
+
+.table-wrapper{
+  width: 100%;
+  height: 400px;
+  overflow-y: auto;
+}
+
+[id^="matched_list_"]{
+  height: 100%;
+  overflow-y: auto;
+}
+
+/** visual styles **/
 body {
   background: rgb(240,240,240);
 	/*overflow-x: hidden;*/
 	padding-left: 5px; padding-right: 5px;
+}
+
+.main{
+  background-color: rgb(63,98,116);
 }
 
 /* navbar quick fixes but needs to be done better */
@@ -13,7 +42,7 @@ body {
   padding-top: 5px;
 }
 .brand img{
-  width: 35px;
+  width: 32px;
   margin: -8px 8px 0 0;
 }
 .navbar-inner{
@@ -33,10 +62,9 @@ body {
 }
 
 .icon-putback{
-  background-image: url("../images/putback.png");
+  background-image: url("../images/icon-putback.png");
   background-position: 0 0;
 }
-
 
 h3{
   font-weight: normal;
@@ -58,6 +86,10 @@ h3{
 
 table{
   background-color: #fafafa;
+}
+
+.table-bordered{
+  border-radius: 0;
 }
 
 th:first-child{
@@ -93,10 +125,9 @@ input[type="search"]{
 }
 
 #nmis_list, #lga_list{
-  background-color: rgb(63,98,116);
-  overflow: auto;
-  max-height: 50%;
+  max-height: 45%;
   padding: 25px;
+  overflow: hidden;
 }
 
 #lga_list{
