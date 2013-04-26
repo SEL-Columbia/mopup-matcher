@@ -25,7 +25,6 @@ html, body, .container-fluid, .row-fluid, .span10, #matches_list{
 /** visual styles **/
 body {
   background: rgb(240,240,240);
-	/*overflow-x: hidden;*/
 	padding-left: 5px; padding-right: 5px;
 }
 
@@ -117,7 +116,7 @@ input[type="search"]{
   margin-left: 10px;
 }
 
-.btn-match, .guidance .btn-match:hover{
+.btn-match, .guidance .btn-match:hover, .guidance .btn-match:focus{
   background: rgb(132, 201, 235);
   font-weight: bold;
   font-size: 13px;
@@ -160,12 +159,12 @@ input[type="search"]{
   display: inline;
 }
 
-.putback{
+.btn-putback{
   float: right;
 }
 .putback-guidance{
   margin-top: 15px;
 }
-.putback-guidance .putback{
+.putback-guidance .btn-putback{
   float: none;
 }
