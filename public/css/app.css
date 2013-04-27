@@ -3,11 +3,10 @@ html, body, .container-fluid, .row-fluid, .span10, #matches_list, .inner{
 	height: 100%;
 }
 .navbar{
-  height: 8%;
-  min-height: 50px;
+  margin-bottom: 5px;
 }
 .view{
-	height: 85%;
+	height: 90%;
 	overflow: hidden;
 }
 #lga_list{
@@ -33,9 +32,17 @@ html, body, .container-fluid, .row-fluid, .span10, #matches_list, .inner{
   overflow-y: auto;
 }
 [id^="matched_list_"]{
+  position: relative;
   height: 100%;
-  overflow-y: auto;
+}
+.pairs-wrapper{
+  height: 75%;
   padding-right: 10px;
+  overflow-y: auto;
+}
+.putback-guidance{
+  position: absolute;
+  bottom: 0;
 }
 
 
@@ -43,12 +50,25 @@ html, body, .container-fluid, .row-fluid, .span10, #matches_list, .inner{
 .navbar .brand{
   padding-top: 15px;
   color: black;
+  font-weight: 800;
 }
-.nav{
+.navbar .nav{
   padding-top: 5px;
+  margin-left: 40px;
 }
+.navbar .nav > .active > a{
+  background: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+}
+.nav .active{
+  font-weight: bold;
+  text-decoration: underline;
+}
+
 .brand img{
-  width: 32px;
+  width: 24px;
   margin: -8px 8px 0 0;
 }
 .navbar-inner{
@@ -61,10 +81,12 @@ html, body, .container-fluid, .row-fluid, .span10, #matches_list, .inner{
 .navbar-inner .lga{
   float: left;
   padding-top: 15px;
+  margin-left: 50px;
 }
 .navbar .btn.printouts{
+  color: rgb(8, 88, 129);
   float: right;
-  margin-top: 15px;
+  margin-top: 10px;
 }
 
 
@@ -149,6 +171,13 @@ input[type="search"]{
   font-size: 13px;
   padding: 0 7px 2px 7px;
 }
+.star{
+  display: inline-block;
+  width: 72px;
+  height: 37px;
+  background: rgb(132, 201, 235) url("../images/icon-star.png") no-repeat 25px 10px;
+  margin: 0 0 -10px 0;
+}
 #lga_list{
   padding-bottom: 0;
 }
@@ -162,7 +191,7 @@ input[type="search"]{
   color: #ffffff;
 }
 .pairs{
-  border-bottom: 2px solid #aaa;
+  border-bottom: 1px solid #aaa;
 }
 .pairs dt, dd{
   font-weight: bold;
@@ -175,9 +204,6 @@ input[type="search"]{
 }
 .btn-putback{
   float: right;
-}
-.putback-guidance{
-  margin-top: 15px;
 }
 .putback-guidance .btn-putback{
   float: none;

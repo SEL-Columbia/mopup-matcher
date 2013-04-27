@@ -35,6 +35,11 @@ html
                 span.unmatched ({{}} unmatched)
               label.search Search
                 input(ng-model="lgaHealthSearch", type="search")
+              .guidance Click&nbsp;
+                button.btn.btn-small.btn-match.no-hover Match
+                | &nbsp;on the facility that matches&nbsp;
+                span.star 
+                | &nbsp;from the list above
               .table-wrapper
                 table.table.table-bordered.table-hover
                   thead
@@ -54,27 +59,20 @@ html
                       td  {{facility.health_facility_name}}
                       td  {{facility.com_name_h}}
                       td  {{facility.health_facility_type}}
-                      // {{facility.mylga}}
-                      // {{facility.mylga_state}}
-              // | Sort by:
-              // .btn-group(data-toggle='buttons-checkbox')
-                   button.btn(btn-radio='\"Name\"', ng-model='radioModel', ng-click='predicate = \"facility_name\"; reverse=false')  Name
-                   button.btn(btn-radio='\"Type\"', ng-model='radioModel', ng-click='predicate = \"facility_type\"; reverse=false')  Type
-                   button.btn(btn-radio='\"Ward\"', ng-model='radioModel', ng-click='predicate = \"ward\"; reverse=false')  Ward
-                   button.btn(btn-radio='\"Community\"', ng-model='radioModel', ng-click='predicate = \"community\"; reverse=false')  Community
         section.span2#matches_list(ng-controller='PairedListCtrl')
-          h4 Matched Facilities&nbsp;
-            span.matched-length ({{pairs.length}})
           #matched_list_{{$index}}
-            .pairs(ng-repeat='pair in pairs')
-              button.btn.btn-small.btn-putback(ng-click="removePair(pair)")
-               i.icon-putback
-              dl 
-                dt Facility
-                dd {{pair.health_facility_name}}
-                &nbsp;matches&nbsp;
-                dt NMIS
-                dd {{pair.nmis.facility_name}}
+            h4 Matched Facilities&nbsp;
+              span.matched-length ({{pairs.length}})
+            .pairs-wrapper
+              .pairs(ng-repeat='pair in pairs')
+                button.btn.btn-small.btn-putback(ng-click="removePair(pair)")
+                 i.icon-putback
+                dl 
+                  dt Facility
+                  dd {{pair.health_facility_name}}
+                  &nbsp;matches&nbsp;
+                  dt NMIS
+                  dd {{pair.nmis.facility_name}}
             div.putback-guidance If you made an error, put facilities back by clicking 
               button.btn.btn-small.btn-putback
                 i.icon-putback
