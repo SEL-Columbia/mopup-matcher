@@ -4,12 +4,6 @@
 var db = require('monk')('localhost/mopup'),
   csv = require('express-csv');
 
-
-exports.name = function(req, res) {
-  res.json({
-    name: "wat"
-  });
-};
 exports.facilities = function (req, res) {
   var type, id, sector, db_str, collection, promise;
   type = req.params.type;
@@ -30,3 +24,24 @@ exports.facilities = function (req, res) {
   });
 };
 
+exports.matching_create = function (req, res) {
+  var sector, db_str, collection, promise;
+  sector = req.params.sector;
+  db_str = 'paired_list_' + sector;
+  collection = db.get(db_str);
+  promise = collection.insert(req.body);
+  promise.on('success', function(b){
+    res.json({'message':'affirmative'});
+  });
+  promise.on('error', function(e){
+    if (e.name == 'MongoError' &&
+      e.err.indexOf('duplicate key error') != -1){
+        res.json({'message':'duplicate'});
+      }else{
+        res.json({'message':'other_error','err':e});
+      }
+  });
+};
+
+exprts.matching_delete = function (req, res) {
+};
