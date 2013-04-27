@@ -12,21 +12,26 @@ var RootCtrl = function(sector){
     $rootScope.$on('matching_request', function(evt, fac){
       if ($rootScope.currentNMIS !== undefined &&
         fac !== undefined) {
-          var pair = fac;
-          pair.nmis = $rootScope.currentNMIS;
-          var promise = $http.post(
-            '/api/matching/' + sector + '/create', pair
-          );
-          promise.success(function(b){
-            var message = b.message;
-            if(message == 'affirmative') {
-              $rootScope.$broadcast('pair_confirmed', pair);
-            }else if(message == 'duplicate') {
-              alert('this pairing exists in database, please double check');
-            }else{
-              alert('database error');
-            }
-          });
+          var nmis = $rootScope.currentNMIS;
+          if(nmis.matched || fac.matched){
+            alert("either facility exist in a pair already");
+            return;
+          }else{
+            var pair = {'lga':fac, 'nmis':nmis};
+            var promise = $http.post(
+              '/api/matching/' + sector + '/create', pair
+            );
+            promise.success(function(b){
+              var message = b.message;
+              if(message == 'affirmative') { 
+                $rootScope.$broadcast('pair_confirmed', fac);
+              }else if(message == 'duplicate') {
+                alert('this pairing exists in database, please double check');
+              }else{
+                alert('database error');
+              }
+            });
+          }
         }
     });
   };
@@ -84,13 +89,14 @@ var PairedListCtrl = function($scope, $rootScope, $http) {
 
   var lga_id = $rootScope.current_lga;
   
-  $http.get('/api/facilities/paired/'+lga_id+'/health')
+  $http.get('/api/facilities/lga/'+lga_id+'/health')
     .success(function(data, status, headers, config){
-      console.log(data);
-      if (data.length === 0){
-        $scope.pairs = [];
-      }else{
-        $scope.pairs = data;
+      $scope.pairs = [];
+      for(var i =0; i<data.length; i++){
+        if (data[i].matched) {
+          console.log(data[i]);
+          $scope.pairs.push(data[i]);
+        }
       }
       $scope.$on('pair_confirmed', function(evt, fac){
         $scope.pairs.unshift(fac);
