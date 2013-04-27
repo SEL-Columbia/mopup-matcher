@@ -25,9 +25,9 @@ html
                     tr(ng-repeat='facility in facilities | orderBy:predicate:reverse | filter:nmisHealthSearch')(ng-click="select(facility)")
                       td 
                       td {{$index+1}}
-                      td {{facility.ward_name}}
+                      td {{facility.ward}}
                       td {{facility.school_name}}
-                      td {{facility.com_name}}
+                      td {{facility.community}}
                       td {{facility.level_of_education}}
           section#lga_list(name='facility_section', ng-controller='LGACtrl')
             .inner
@@ -55,9 +55,9 @@ html
                       td  
                         button.btn.btn-small.btn-match(ng-click='match(facility)') Match
                       td {{$index+1}}
-                      td {{facility.ward}}
+                      td {{facility.ward_name}}
                       td {{facility.school_name}}
-                      td {{facility.community}}
+                      td {{facility.com_name}}
                       td {{facility.level_of_education}}
         section.span2#matches_list(ng-controller='PairedListCtrl')
           #matched_list_{{$index}}
