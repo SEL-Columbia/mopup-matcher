@@ -9,13 +9,20 @@ var RootCtrl = function(sector){
     $rootScope.$on('currentNMIS', function(evt, fac){
       $rootScope.currentNMIS = fac;
     });
+    $rootScope.localMatch=[];
+    $rootScope.$on('local_pair', function(evt,pair){
+      $rootScope.localMatch.push(pair[0]);
+      $rootScope.localMatch.push(pair[1]);
+    });
+    console.log($rootScope.localMatch);
     $rootScope.$on('matching_request', function(evt, fac){
       if ($rootScope.currentNMIS !== undefined &&
         fac !== undefined) {
           var nmis = $rootScope.currentNMIS;
-          if(nmis.matched || fac.matched){
-            alert("either facility exist in a pair already");
-            return;
+          if(nmis.matched || fac.matched ||
+            $rootScope.localMatch.indexOf(nmis['_id']) != -1 ||
+            $rootScope.localMatch.indexOf(fac['_id']) != -1){
+              alert("either facility exist in a pair already");
           }else{
             var pair = {'lga':fac, 'nmis':nmis};
             var promise = $http.post(
@@ -24,7 +31,9 @@ var RootCtrl = function(sector){
             promise.success(function(b){
               var message = b.message;
               if(message == 'affirmative') { 
-                $rootScope.$broadcast('pair_confirmed', fac);
+                $rootScope.localMatch.push(b.data['_id']);
+                $rootScope.localMatch.push(b.data['matched']);
+                $rootScope.$broadcast('pair_confirmed', b.data);
               }else if(message == 'duplicate') {
                 alert('this pairing exists in database, please double check');
               }else{
@@ -88,24 +97,41 @@ var LGACtrl = function($scope, $http, $rootScope) {
 var PairedListCtrl = function($scope, $rootScope, $http) {
 
   var lga_id = $rootScope.current_lga;
+  var sector = $rootScope.currentSector;
   
   $http.get('/api/facilities/lga/'+lga_id+'/health')
     .success(function(data, status, headers, config){
       $scope.pairs = [];
       for(var i =0; i<data.length; i++){
-        if (data[i].matched) {
-          console.log(data[i]);
+        if (data[i]['matched']!=undefined) {
+          $scope.$emit('local_pair',[data[i]['_id'],data[i]['matched']]);
           $scope.pairs.push(data[i]);
         }
       }
       $scope.$on('pair_confirmed', function(evt, fac){
+        console.log($rootScope.localMatch);
         $scope.pairs.unshift(fac);
       });
     })
     .error(function(data, status, headers, config){
-      alert(file + ' is not valid file format, please check!');
+      alert('data is not valid file format, please check!');
     });
 
-   $scope.removePair = function(){};
+  $scope.removePair = function(pair){
+    $rootScope.localMatch.remove(pair['_id']);
+    $rootScope.localMatch.remove(pair['matched']);
+    console.log($rootScope.localMatch);
+    var promise = $http.post('/api/matching/' + sector + '/delete', pair);
+    promise.success(function(b){
+      if (b.message == 'affirmative'){
+        $scope.pairs.remove(pair);
+      }else{
+        alert(b.message);
+      }
+    });
+    promise.error(function(e){
+      alert(e);
+    });
+  };
 };
 

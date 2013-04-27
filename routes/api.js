@@ -25,7 +25,7 @@ exports.facilities = function (req, res) {
 };
 
 exports.matching_create = function (req, res) {
-  var sector, db_str, collection, lga_promise, nmis_promise;
+  var sector, db_str, collection, lga_col, nmis_col, lga_promise, nmis_promise;
   sector = req.params.sector;
   nmis = req.body.nmis;
   lga = req.body.lga;
@@ -37,19 +37,26 @@ exports.matching_create = function (req, res) {
   lga_col = db.get('lga_list_'+sector);
   nmis_col = db.get('nmis_list_'+sector);
   lga_promise = lga_col.update(
-      lga, {$set:
+      {'_id':lga._id}, {$set:
         {'matched':nmis._id,
           'nmis':nmis}
       });
   lga_promise.on('success', function(b){
     nmis_promise =nmis_col.update(
-      nmis, {$set:
+      {'_id':nmis._id}, {$set:
         {'matched':lga._id,
           'lga':lga}
       });
       nmis_promise.on('success', function(b){
-        res.json({'message':'affirmative'});
-        return;
+        fin_promise = lga_col.findOne({'_id':lga._id});
+        fin_promise.on('success', function(b){
+          res.json({'message':'affirmative','data':b});
+          return;
+        });
+        fin_promise.on('error', function(e){
+          res.json({'message':'database error','err':e});
+          return;
+        });
       });
       nmis_promise.on('error', function(e){
         res.json({'message':'database error','err':e});
@@ -70,4 +77,27 @@ exports.matching_create = function (req, res) {
 };
 
 exports.matching_delete = function (req, res) {
+  var sector = req.params.sector;
+  var lga = req.body;
+  var nmis_id = lga.matched;
+  var nmis = lga.nmis;
+  var lga_col = db.get('lga_list_' + sector);
+  var nmis_col = db.get('nmis_list_' + sector);
+  var lga_promise = lga_col.update(lga, {$unset: { 'matched' : 1, 'nmis' : 1 }});
+  lga_promise.on('success', function(b){
+    var nmis_promise = nmis_col.update({"_id": nmis_id}, {$unset: { 'matched' : 1, 'lga' :1 }});
+    nmis_promise.on('success', function(b){
+      res.json({'message':'affirmative'});
+      return;
+    });
+    nmis_promise.on('error', function(e){
+      console.log(e);
+      res.json({'message':'database error', 'error':e});
+      return;
+    });
+  });
+  lga_promise.on('error', function(e){
+    res.json({'message':'database error', 'error':e});
+    return;
+  });
 };

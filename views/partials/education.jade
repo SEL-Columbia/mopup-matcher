@@ -67,7 +67,7 @@ html
             span.matched-length ({{pairs.length}})
           #matched_list_{{$index}}
             .pairs(ng-repeat='pair in pairs')
-              button.btn.btn-small.btn-putback(ng-click="removePair()")
+              button.btn.btn-small.btn-putback(ng-click="removePair(pair)")
                i.icon-putback
               dl 
                 dt Facility
