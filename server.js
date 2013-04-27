@@ -34,7 +34,8 @@ app.get('/partials/:name', routes.partials);
 // JSON API
 
 app.get('/api/facilities/:type/:id/:sector', api.facilities);
-//app.post('/api/matched/', api.matching);
+app.post('/api/matching/:sector/create', api.matching_create);
+app.post('/api/matching/:sector/delete', api.matching_delete);
 
 // redirect all others to the index (HTML5 history)
 app.get('*', routes.index);
