@@ -43,5 +43,5 @@ exports.matching_create = function (req, res) {
   });
 };
 
-exprts.matching_delete = function (req, res) {
+exports.matching_delete = function (req, res) {
 };

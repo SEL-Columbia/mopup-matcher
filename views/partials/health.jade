@@ -3,7 +3,7 @@ html
     .container-fluid
       .row-fluid
         .span10.main
-          section#nmis_list(ng-controller='NMISHealthCtrl')
+          section#nmis_list(ng-controller='NMISCtrl')
             .inner
               h3 Baseline List&nbsp;
                 span.unmatched ({{}} unmatched)
@@ -29,7 +29,7 @@ html
                       td {{facility.facility_name}}
                       td {{facility.community}}
                       td {{facility.facility_type}}
-          section#lga_list(name='facility_section', ng-controller='LGAHealthCtrl')
+          section#lga_list(name='facility_section', ng-controller='LGACtrl')
             .inner
               h3 Facility List&nbsp;
                 span.unmatched ({{}} unmatched)
@@ -70,7 +70,7 @@ html
               button.btn.btn-small.btn-putback(ng-click="removePair()")
                i.icon-putback
               dl 
-                dt Facility List
+                dt Facility
                 dd {{pair.health_facility_name}}
                 &nbsp;matches&nbsp;
                 dt NMIS

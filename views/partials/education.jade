@@ -3,13 +3,38 @@ html
     .container-fluid
       .row-fluid
         .span10.main
-          section#lga_list(name='facility_section', ng-controller='LGAEduCtrl')
+          section#nmis_list(ng-controller='NMISCtrl')
             .inner
-              header.clearfix
-                h3 Baseline List&nbsp;
-                  span.unmatched ({{}} unmatched)
-                label.search Search
-                  input(ng-model="lgaEduSearch", type="search")
+              h3 Baseline List&nbsp;
+                span.unmatched ({{}} unmatched)
+              label.search Search
+                input(ng-model="nmisHealthSearch", type="search")
+              .guidance Click&nbsp;
+                button.btn.btn-small.btn-match.no-hover Match
+                | &nbsp;on the matching facility
+              .table-wrapper
+                table.table.table-bordered.table-hover
+                  thead
+                      th
+                      th  ID
+                      th  Ward
+                      th  Facility Name
+                      th  Community
+                      th  Facility Type
+                  tbody
+                    tr(ng-repeat='facility in facilities | orderBy:predicate:reverse | filter:nmisHealthSearch')(ng-click="select(facility)")
+                      td 
+                      td {{$index+1}}
+                      td {{facility.ward_name}}
+                      td {{facility.school_name}}
+                      td {{facility.com_name}}
+                      td {{facility.level_of_education}}
+          section#lga_list(name='facility_section', ng-controller='LGACtrl')
+            .inner
+              h3 Facility List&nbsp;
+                span.unmatched ({{}} unmatched)
+              label.search Search
+                input(ng-model="lgaHealthSearch", type="search")
               .table-wrapper
                 table.table.table-bordered.table-hover
                   thead
@@ -21,50 +46,22 @@ html
                       th  Community
                       th  Facility Type
                   tbody
-                    tr(ng-repeat='facilty in facilities | orderBy:predicate:reverse | filter:lgaEduSearch')(ng-click="select()")
-                      td
-                      td {{$index+1}}
-                      td {{facility.ward_name}}
-                      td {{facility.school_name}}
-                      td {{facility.com_name}}
-                      td {{facility.level_of_education}}
-                      //{{facility.mylga}}
-                      //{{facility.mylga_state}}
-          //  | Sort by:
-          //  .btn-group(data-toggle='buttons-checkbox')
-              button.btn(btn-radio='\"Name\"', ng-model='radioModel', ng-click='predicate = \"facility_name\"; reverse=false')  Name
-              button.btn(btn-radio='\"Type\"', ng-model='radioModel', ng-click='predicate = \"facility_type\"; reverse=false')  Type
-              button.btn(btn-radio='\"Ward\"', ng-model='radioModel', ng-click='predicate = \"ward\"; reverse=false')  Ward
-              button.btn(btn-radio='\"Community\"', ng-model='radioModel', ng-click='predicate = \"community\"; reverse=false')  Community
-          section#nmis_list(ng-controller='NMISEduCtrl')
-            .inner
-              header.clearfix
-                h3 Facility List&nbsp;
-                  span.unmatched ({{}} unmatched)
-                label.search Search
-                  input(ng-model='nmisEduSearch', type="search")
-                .guidance Click&nbsp;
-                  button.btn.btn-small.btn-match.no-hover Match
-                  | &nbsp;on the matching facility
-              .table-wrapper
-                table.table.table-bordered.table-hover
-                  thead
-                      th
-                      th  ID
-                      th  Ward
-                      th  Facility Name
-                      th  Community
-                      th  Facility Type
-                  tbody
-                    tr(ng-repeat='facility in facilities | orderBy:predicate:reverse | filter:nmisEduSearch')
-                      td 
+                    tr(ng-repeat='facility in facilities | orderBy:predicate:reverse | filter:lgaHealthSearch')
+                      td  
                         button.btn.btn-small.btn-match(ng-click='match(facility)') Match
                       td {{$index+1}}
                       td {{facility.ward}}
                       td {{facility.school_name}}
                       td {{facility.community}}
                       td {{facility.level_of_education}}
-
+                      // {{facility.mylga}}
+                      // {{facility.mylga_state}}
+              // | Sort by:
+              // .btn-group(data-toggle='buttons-checkbox')
+                   button.btn(btn-radio='\"Name\"', ng-model='radioModel', ng-click='predicate = \"facility_name\"; reverse=false')  Name
+                   button.btn(btn-radio='\"Type\"', ng-model='radioModel', ng-click='predicate = \"facility_type\"; reverse=false')  Type
+                   button.btn(btn-radio='\"Ward\"', ng-model='radioModel', ng-click='predicate = \"ward\"; reverse=false')  Ward
+                   button.btn(btn-radio='\"Community\"', ng-model='radioModel', ng-click='predicate = \"community\"; reverse=false')  Community
         section.span2#matches_list(ng-controller='PairedListCtrl')
           h4 Matched Facilities&nbsp;
             span.matched-length ({{pairs.length}})
@@ -73,11 +70,11 @@ html
               button.btn.btn-small.btn-putback(ng-click="removePair()")
                i.icon-putback
               dl 
-                dt {{pair[0].id}}
-                dd {{pair[0].facility_name}}
+                dt Facility
+                dd {{pair.health_facility_name}}
                 &nbsp;matches&nbsp;
-                dt {{pair[1].id}}
-                dd {{pair[1].facility_name}}
+                dt NMIS
+                dd {{pair.nmis.facility_name}}
             div.putback-guidance If you made an error, put facilities back by clicking 
               button.btn.btn-small.btn-putback
                 i.icon-putback
