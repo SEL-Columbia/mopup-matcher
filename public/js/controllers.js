@@ -43,6 +43,9 @@ var RootCtrl = function(sector){
           }
         }
     });
+	$rootScope.$on('set_lga_name', function(evt, lgaName){
+		$rootScope.current_lga_name = lgaName;
+	});
   };
 };
 
@@ -87,7 +90,7 @@ var LGACtrl = function($scope, $http, $rootScope) {
       //$scope.facilities = csv(data).toObjects();
       $scope.facilities = data;
       //$scope.facilities.forEach(function(item, i){item.index=i});
-      
+      if (data && data.length > 0) $scope.$emit('set_lga_name', data[0].mylga);
       $scope.match = function(fac){
         $scope.$emit('matching_request', fac);
       };
