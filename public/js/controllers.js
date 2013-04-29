@@ -48,11 +48,11 @@ var RootCtrl = function(sector){
 
 var NMISCtrl = function($scope, $http, $rootScope) {
   //var file = "../docs/Aba_North_NMIS_List.csv";
-  //$http.get(file)
   var lga_id = $rootScope.current_lga;
   var sector = $rootScope.currentSector;
   
   $http.get('/api/facilities/nmis/'+lga_id+'/'+sector)
+  //$http.get(file)
     .success(function(data, status, headers, config){
       //$scope.facilities = csv(data).toObjects();
       $scope.facilities = data;
@@ -61,6 +61,10 @@ var NMISCtrl = function($scope, $http, $rootScope) {
       $scope.radioModel = 'Name';
       $scope.select = function(fac) {
         $scope.$emit('currentNMIS', fac);
+        $scope.facilities.forEach(function(f) {
+            f.active = (f.id == fac.id) ? 'active' : '';
+        });
+        $scope.selectedIndex = $scope.facilities.indexOf(fac.id);
       };
       $scope.sortby = function(key) {
         $scope.facilities = _.sortBy($scope.facilities, 
@@ -78,10 +82,11 @@ var LGACtrl = function($scope, $http, $rootScope) {
   var sector = $rootScope.currentSector;
   
   $http.get('/api/facilities/lga/'+lga_id+'/'+sector)
+  //$http.get(file)
     .success(function(data, status, headers, config){
       //$scope.facilities = csv(data).toObjects();
       $scope.facilities = data;
-//_.each($scope.facilities, function(item, i){item.index=i});
+      //$scope.facilities.forEach(function(item, i){item.index=i});
       
       $scope.match = function(fac){
         $scope.$emit('matching_request', fac);
