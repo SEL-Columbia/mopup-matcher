@@ -56,7 +56,7 @@ html, body, .container-fluid, .row-fluid, .span10, #matches_list, .inner{
   padding-top: 5px;
   margin-left: 40px;
 }
-.navbar .nav > .active > a{
+.navbar .nav > .active > a, .navbar .nav > .active > a:hover{
   background: none;
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
@@ -109,11 +109,11 @@ h3{
 h4{
   margin-top: -3px;
 }
-.unmatched{
+h3 .unmatched{
   font-weight: normal;
   color: rgb(178,196,204);
 }
-.matched-length{
+h4 .matched-length{
   color: rgb(100,100,100);
 }
 .guidance{
@@ -144,12 +144,13 @@ th:nth-child(4), td:nth-child(4){
 th:nth-child(5), td:nth-child(5){
   width: 25%;
 }
-tbody tr.active{
+tbody tr.active td, tbody tr.active:hover td{
   background-color: rgb(132, 201, 235);
   font-weight: bold;
 }
 tbody tr.active td:first-child{
-  background: url("../images/icon-star.png") no-repeat;
+  background-image: url("../images/icon-star.png");
+  background-repeat: no-repeat;
   background-position: 25px 10px;
 }
 tbody tr.matched{
@@ -159,8 +160,8 @@ tbody tr.matched{
   font-weight: normal;
   float: right;
 }
-#lga_list .search{
-  margin-top: -42px;
+#nmis_list .search{
+  /*margin-top: -42px;*/
 }
 input[type="search"]{
   margin-left: 10px;

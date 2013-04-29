@@ -19,9 +19,9 @@ html(ng-app="myApp")
             | NMIS/LGA Facility Matching Tool
           span.lga LGA: {{current_lga}}
           ul.nav
-            li
+            li(class="ng-class:{ active: currentSector == 'health'}")
               a(ng-href='{{current_lga}}/health') Health Facilities
-            li
+            li(class="ng-class:{ active: currentSector == 'edu'}")
               a(ng-href='{{current_lga}}/education') Education Facilities
           button.btn.printouts Download List Printouts
 
