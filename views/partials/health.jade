@@ -14,10 +14,14 @@ html
                 thead
                     th
                     th  ID
-                    th  Ward
-                    th  Facility Name
-                    th  Community
-                    th  Facility Type
+                    th
+                      a(ng-click = "predicate = 'ward'; reverse = false") Ward
+                    th
+                      a(ng-click = "predicate = 'facility_name'; reverse = false") Facility Name
+                    th
+                      a(ng-click = "predicate = 'community'; reverse = false") Community
+                    th
+                      a(ng-click = "predicate = 'faciity_type'; reverse = false") Facility Type
                 tbody
                   tr(ng-repeat='facility in facilities | orderBy:predicate:reverse | filter:nmisHealthSearch', ng-click="select(facility)", ng-class='{active: active: currentNMIS._id == facility._id, matched: isMatched(facility._id)}')
                     td 
@@ -43,10 +47,14 @@ html
                   tr
                     th
                     th  ID
-                    th  Ward
-                    th  Facility Name
-                    th  Community
-                    th  Facility Type
+                    th
+                      a(ng-click = "predicate = 'ward_name'; reverse = false") Ward
+                    th
+                      a(ng-click = "predicate = 'health_facility_name'; reverse = false") Facility Name
+                    th
+                      a(ng-click = "predicate = 'com_name_h'; reverse = false") Community
+                    th
+                      a(ng-click = "predicate = 'health_facility_type'; reverse = false") Facility Type
                 tbody
                   tr(ng-repeat='facility in facilities | orderBy:predicate:reverse | filter:lgaHealthSearch', ng-class='{matched: isMatched(facility._id)}')
                     td  
