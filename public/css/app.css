@@ -81,7 +81,7 @@ html, body, .container-fluid, .row-fluid, .span10, #matches_list, .inner{
 .navbar-inner .lga{
   float: left;
   padding-top: 15px;
-  margin-left: 50px;
+  margin-left: 10px;
 }
 .navbar .btn.printouts{
   color: rgb(8, 88, 129);
