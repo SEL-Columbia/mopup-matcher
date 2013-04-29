@@ -164,7 +164,7 @@ tbody tr.active td:first-child{
 }
 tbody tr.matched{
   opacity: 0.5;
-  display: none;
+  /*display: none;*/
 }
 
 

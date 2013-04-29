@@ -55,6 +55,9 @@ var RootCtrl = function(sector){
 	$rootScope.$on('set_lga_name', function(evt, lgaName){
 		$rootScope.current_lga_name = lgaName;
 	});
+	$rootScope.isMatched = function(id){
+		return ($rootScope.localMatch.indexOf(id) !== -1);
+	};
   };
 };
 

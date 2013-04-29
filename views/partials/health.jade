@@ -6,7 +6,7 @@ html
           section#nmis_list(ng-controller='NMISCtrl')
             .inner
               h3 Baseline List&nbsp;
-                span.unmatched ( {{ facilities.length - localMatch.length }} unmatched )
+                span.unmatched ( {{ facilities.length - (localMatch.length/2) }} unmatched )
               label.search Search
                 input(ng-model="nmisHealthSearch", type="search")
               .guidance Click on the facility to match
@@ -20,7 +20,7 @@ html
                       th  Community
                       th  Facility Type
                   tbody
-                    tr(ng-repeat='facility in facilities | orderBy:predicate:reverse | filter:nmisHealthSearch')(ng-click="select(facility)")(class="ng-class:facility.active")
+                    tr(ng-repeat='facility in facilities | orderBy:predicate:reverse | filter:nmisHealthSearch', ng-click="select(facility)", ng-class='{active: facility.active == "active", matched: isMatched(facility._id)}')
                       td 
                       td {{$index+1}}
                       td {{facility.ward}}
@@ -30,7 +30,7 @@ html
           section#lga_list(name='facility_section', ng-controller='LGACtrl')
             .inner
               h3 Facility List&nbsp;
-                span.unmatched ( {{ facilities.length - localMatch.length }} unmatched )
+                span.unmatched ( {{ facilities.length - (localMatch.length/2) }} unmatched )
               label.search Search
                 input(ng-model="lgaHealthSearch", type="search")
               .guidance Click&nbsp;
@@ -49,7 +49,7 @@ html
                       th  Community
                       th  Facility Type
                   tbody
-                    tr(ng-repeat='facility in facilities | orderBy:predicate:reverse | filter:lgaHealthSearch')
+                    tr(ng-repeat='facility in facilities | orderBy:predicate:reverse | filter:lgaHealthSearch', ng-class='{matched: isMatched(facility._id)}')
                       td  
                         button.btn.btn-small.btn-match(ng-click='match(facility)') Match
                       td  {{$index+1}}
