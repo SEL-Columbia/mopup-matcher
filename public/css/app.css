@@ -27,8 +27,8 @@ html, body, .main-wrapper, .main, #matches_list, .inner{
 #nmis_list, #lga_list{
   height: 50%;
 }
-#nmis_list .table-wrapper, #lga_list .table-wrapper{
-  height: 68%;
+.table-wrapper{
+  height: 80%;
 }
 .inner{
   padding: 25px;
@@ -116,22 +116,23 @@ body {
   background-position: 0 0;
 }
 h3{
-  margin-top: -10px;
   font-weight: normal;
+  margin-top: -10px;
+  margin-bottom: 0;
 }
 h4{
   margin-top: -3px;
 }
 h3 .unmatched{
-  font-weight: normal;
   color: rgb(178,196,204);
 }
 h4 .matched-length{
   color: rgb(100,100,100);
 }
 .guidance{
-  font-size: 17px;
+  font-size: 15px;
   color: rgb(144, 213, 248);
+  margin-bottom: 10px;
 }
 
 /**** table style ****/
@@ -185,9 +186,7 @@ tbody tr.matched{
 .search{
   font-weight: normal;
   float: right;
-}
-#nmis_list .search{
-  /*margin-top: -42px;*/
+  margin-bottom: 0;
 }
 input[type="search"]{
   margin-left: 10px;
