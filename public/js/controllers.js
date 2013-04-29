@@ -62,7 +62,7 @@ var NMISCtrl = function($scope, $http, $rootScope) {
       $scope.select = function(fac) {
         $scope.$emit('currentNMIS', fac);
         $scope.facilities.forEach(function(f) {
-            f.active = (f.id == fac.id) ? 'active' : '';
+            f.active = (f._id == fac._id) ? 'active' : '';
         });
         $scope.selectedIndex = $scope.facilities.indexOf(fac.id);
       };
