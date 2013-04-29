@@ -72,8 +72,7 @@ var NMISCtrl = function($scope, $http, $rootScope) {
     .success(function(data, status, headers, config){
       //$scope.facilities = csv(data).toObjects();
       $scope.facilities = data;
-      var facilities_len = $scope.facilities.length;
-      $scope.predicate = 'facility_name';
+      $scope.predicate = 'ward';
       $scope.radioModel = 'Name';
       $scope.select = function(fac) {
         $scope.$emit('currentNMIS', fac);
@@ -98,6 +97,7 @@ var LGACtrl = function($scope, $http, $rootScope) {
     .success(function(data, status, headers, config){
       //$scope.facilities = csv(data).toObjects();
       $scope.facilities = data;
+      $scope.predicate = 'ward_name';
       //$scope.facilities.forEach(function(item, i){item.index=i});
       if (data && data.length > 0) $scope.$emit('set_lga_name', data[0].mylga);
       $scope.match = function(fac){
