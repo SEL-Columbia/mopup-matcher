@@ -9,9 +9,9 @@ html
                 span.unmatched ( {{ facilities.length - localMatch.length }} unmatched )
               label.search Search
                 input(ng-model="nmisHealthSearch", type="search")
-              .guidance Click on the matching facility to match
+              .guidance Click on the facility to match
               .table-wrapper
-                table.table.table-bordered.table-hover
+                table.table
                   thead
                       th
                       th  ID
@@ -39,7 +39,7 @@ html
                 span.star 
                 | &nbsp;from the list above
               .table-wrapper
-                table.table.table-bordered.table-hover
+                table.table
                   thead
                     tr
                       th

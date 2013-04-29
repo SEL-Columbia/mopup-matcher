@@ -90,8 +90,9 @@ html, body, .container-fluid, .row-fluid, .span10, #matches_list, .inner{
 }
 
 
-/** visual styles **/
+/**** visual styles ****/
 body {
+  font-size: 13px;
   background: rgb(240,240,240);
 	padding-left: 5px; padding-right: 5px;
 }
@@ -120,29 +121,40 @@ h4 .matched-length{
   font-size: 17px;
   color: rgb(144, 213, 248);
 }
+
+/**** table style ****/
 table{
+  font-size: 13px;
+  empty-cells: show;
+  table-layout: fixed;
   background-color: #fafafa;
 }
 .table{
   margin-bottom: 0;
 }
-.table-bordered{
-  border-radius: 0;
+.table th, .table td{
+  padding: 2px;
+  word-wrap: break-word;
+  border: 1px solid #ddd;
 }
-th:first-child, td:first-child{
+th:first-child{
   width: 55px;
 }
 th:nth-child(2), td:nth-child(2){
+  text-align: center;
   width: 6%;
 }
-th:nth-child(3), td:nth-child(3){
-  width: 12%;
+th:nth-child(3){
+  width: 15%;
 }
-th:nth-child(4), td:nth-child(4){
-  width: 30%;
+th:nth-child(4){
+  width: 29%;
 }
-th:nth-child(5), td:nth-child(5){
-  width: 25%;
+th:nth-child(5){
+  width: 16%;
+}
+tbody tr:hover{
+  background-color: #dddddd;
 }
 tbody tr.active td, tbody tr.active:hover td{
   background-color: rgb(132, 201, 235);
@@ -151,11 +163,14 @@ tbody tr.active td, tbody tr.active:hover td{
 tbody tr.active td:first-child{
   background-image: url("../images/icon-star.png");
   background-repeat: no-repeat;
-  background-position: 25px 10px;
+  background-position: 21px 3px;
 }
 tbody tr.matched{
   opacity: 0.5;
+  display: none;
 }
+
+
 .search{
   font-weight: normal;
   float: right;
@@ -174,9 +189,9 @@ input[type="search"]{
 }
 .star{
   display: inline-block;
-  width: 72px;
-  height: 37px;
-  background: rgb(132, 201, 235) url("../images/icon-star.png") no-repeat 25px 10px;
+  width: 60px;
+  height: 25px;
+  background: rgb(132, 201, 235) url("../images/icon-star.png") no-repeat 21px 3px;
   margin: 0 0 -10px 0;
 }
 #lga_list{
