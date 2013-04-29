@@ -9,21 +9,18 @@ html, body, .container-fluid, .row-fluid, .span10, #matches_list, .inner{
 	height: 90%;
 	overflow: hidden;
 }
-#lga_list{
-  height: 45%;
+#nmis_list, #lga_list{
+  height: 50%;
 }
-#lga_list .table-wrapper{
-  height: 83%;
-}
-#nmis_list{
-  height: 55%;
-}
-#nmis_list .table-wrapper{
-  height: 75%;
+#nmis_list .table-wrapper, #lga_list .table-wrapper{
+  height: 68%;
 }
 .inner{
   padding: 25px;
   box-sizing: border-box;
+}
+#lga_list .inner{
+  padding-top: 0;
 }
 .table-wrapper{
   margin: 0;
@@ -199,9 +196,6 @@ input[type="search"]{
 }
 #nmis_list{
   padding-top: 0;
-}
-#lga_list .inner{
-  border-bottom: 4px solid rgb(43, 68, 80);
 }
 #nmis_list h3, #lga_list h3, .search{
   color: #ffffff;
