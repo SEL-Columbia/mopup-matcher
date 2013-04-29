@@ -2,8 +2,17 @@
 
 /* Controllers */
 
+var clean_root_scope = function($rootScope){
+  $rootScope.currentSector = undefined;
+  $rootScope.current_lga = undefined;
+  $rootScope.localMatch = [];
+  $rootScope.currentNMIS = undefined;
+  $rootScope.current_lga_name = undefined;
+};
+
 var RootCtrl = function(sector){
   return function($rootScope, $routeParams, $http) {
+    clean_root_scope($rootScope);
     $rootScope.currentSector = sector;
     $rootScope.current_lga = $routeParams.lgaid;
     $rootScope.$on('currentNMIS', function(evt, fac){
@@ -107,7 +116,7 @@ var PairedListCtrl = function($scope, $rootScope, $http) {
   var lga_id = $rootScope.current_lga;
   var sector = $rootScope.currentSector;
   
-  $http.get('/api/facilities/lga/'+lga_id+'/health')
+  $http.get('/api/facilities/lga/'+lga_id+'/'+sector)
     .success(function(data, status, headers, config){
       $scope.pairs = [];
       for(var i =0; i<data.length; i++){
