@@ -1,9 +1,24 @@
 /** overall layout **/
-html, body, .container-fluid, .row-fluid, .span10, #matches_list, .inner{
+html, body, .main-wrapper, .main, #matches_list, .inner{
 	height: 100%;
 }
 .navbar{
   margin-bottom: 5px;
+}
+.main-wrapper{
+  position: relative;
+}
+.main {
+  width: 75%;
+  display: inline-block;
+}
+#matches_list{
+  position: absolute;
+  top: 0;
+  width: 25%;
+  box-sizing: border-box;
+  display: inline-block;
+  padding: 0 15px;
 }
 .view{
 	height: 90%;
@@ -33,7 +48,7 @@ html, body, .container-fluid, .row-fluid, .span10, #matches_list, .inner{
   height: 100%;
 }
 .pairs-wrapper{
-  height: 75%;
+  height: 80%;
   padding-right: 10px;
   overflow-y: auto;
 }
@@ -164,9 +179,8 @@ tbody tr.active td:first-child{
 }
 tbody tr.matched{
   opacity: 0.5;
-  /*display: none;*/
+  display: none;
 }
-
 
 .search{
   font-weight: normal;

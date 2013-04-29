@@ -1,76 +1,75 @@
 html
   body
-    .container-fluid
-      .row-fluid
-        .span10.main
-          section#nmis_list(ng-controller='NMISCtrl')
-            .inner
-              h3 Baseline List&nbsp;
-                span.unmatched ( {{ facilities.length - (localMatch.length/2) }} unmatched )
-              label.search Search
-                input(ng-model="nmisHealthSearch", type="search")
-              .guidance Click on the facility to match
-              .table-wrapper
-                table.table
-                  thead
-                      th
-                      th  ID
-                      th  Ward
-                      th  Facility Name
-                      th  Community
-                      th  Facility Type
-                  tbody
-                    tr(ng-repeat='facility in facilities | orderBy:predicate:reverse | filter:nmisHealthSearch')(ng-click="select(facility)", ng-class='{active: facility.active == "active", matched: isMatched(facility._id)}')
-                      td 
-                      td {{$index+1}}
-                      td {{facility.ward}}
-                      td {{facility.school_name}}
-                      td {{facility.community}}
-                      td {{facility.level_of_education}}
-          section#lga_list(name='facility_section', ng-controller='LGACtrl')
-            .inner
-              h3 Facility List&nbsp;
-                span.unmatched ( {{ facilities.length - (localMatch.length/2) }} unmatched )
-              label.search Search
-                input(ng-model="lgaHealthSearch", type="search")
-              .guidance Click&nbsp;
-                button.btn.btn-small.btn-match.no-hover Match
-                | &nbsp;on the facility that matches&nbsp;
-                span.star 
-                | &nbsp;from the list above
-              .table-wrapper
-                table.table
-                  thead
-                    tr
-                      th
-                      th  ID
-                      th  Ward
-                      th  Facility Name
-                      th  Community
-                      th  Facility Type
-                  tbody
-                    tr(ng-repeat='facility in facilities | orderBy:predicate:reverse | filter:lgaHealthSearch', ng-class='{matched: isMatched(facility._id)}')
-                      td  
-                        button.btn.btn-small.btn-match(ng-click='match(facility)') Match
-                      td {{$index+1}}
-                      td {{facility.ward_name}}
-                      td {{facility.school_name}}
-                      td {{facility.com_name}}
-                      td {{facility.level_of_education}}
-        section.span2#matches_list(ng-controller='PairedListCtrl')
-          #matched_list_{{$index}}
-            h4 Matched Facilities&nbsp;
-              span.matched-length ({{pairs.length}})
-            .pairs-wrapper
-              .pairs(ng-repeat='pair in pairs')
-                button.btn.btn-small.btn-putback(ng-click="removePair(pair)")
-                 i.icon-putback
-                dl 
-                  dt Facility
-                  dd {{pair.school_name}}
-                  &nbsp;matches&nbsp;
-                  dt NMIS
-                  dd {{pair.nmis.school_name}}
-            div.putback-guidance If you made an error, put facilities back by clicking 
-              button.btn.btn-small.btn-putback
-                i.icon-putback
+    .main-wrapper
+      .main
+        section#nmis_list(ng-controller='NMISCtrl')
+          .inner
+            label.search Search
+              input(ng-model="nmisHealthSearch", type="search")
+            h3 Baseline List&nbsp;
+              span.unmatched ( {{ facilities.length - (localMatch.length/2) }} unmatched )
+            .guidance Click on the facility to match
+            .table-wrapper
+              table.table
+                thead
+                    th
+                    th  ID
+                    th  Ward
+                    th  Facility Name
+                    th  Community
+                    th  Facility Type
+                tbody
+                  tr(ng-repeat='facility in facilities | orderBy:predicate:reverse | filter:nmisHealthSearch')(ng-click="select(facility)", ng-class='{active: facility.active == "active", matched: isMatched(facility._id)}')
+                    td 
+                    td {{$index+1}}
+                    td {{facility.ward}}
+                    td {{facility.school_name}}
+                    td {{facility.community}}
+                    td {{facility.level_of_education}}
+        section#lga_list(name='facility_section', ng-controller='LGACtrl')
+          .inner
+            label.search Search
+              input(ng-model="lgaHealthSearch", type="search")
+            h3 Facility List&nbsp;
+              span.unmatched ( {{ facilities.length - (localMatch.length/2) }} unmatched )
+            .guidance Click&nbsp;
+              button.btn.btn-small.btn-match.no-hover Match
+              | &nbsp;on the facility that matches&nbsp;
+              span.star 
+              | &nbsp;from the list above
+            .table-wrapper
+              table.table
+                thead
+                  tr
+                    th
+                    th  ID
+                    th  Ward
+                    th  Facility Name
+                    th  Community
+                    th  Facility Type
+                tbody
+                  tr(ng-repeat='facility in facilities | orderBy:predicate:reverse | filter:lgaHealthSearch', ng-class='{matched: isMatched(facility._id)}')
+                    td  
+                      button.btn.btn-small.btn-match(ng-click='match(facility)') Match
+                    td {{$index+1}}
+                    td {{facility.ward_name}}
+                    td {{facility.school_name}}
+                    td {{facility.com_name}}
+                    td {{facility.level_of_education}}
+      section#matches_list(ng-controller='PairedListCtrl')
+        #matched_list_{{$index}}
+          h4 Matched Facilities&nbsp;
+            span.matched-length ({{pairs.length}})
+          .pairs-wrapper
+            .pairs(ng-repeat='pair in pairs')
+              button.btn.btn-small.btn-putback(ng-click="removePair(pair)")
+               i.icon-putback
+              dl 
+                dt Facility
+                dd {{pair.school_name}}
+                &nbsp;matches&nbsp;
+                dt NMIS
+                dd {{pair.nmis.school_name}}
+          div.putback-guidance If you made an error, put facilities back by clicking 
+            button.btn.btn-small.btn-putback
+              i.icon-putback
