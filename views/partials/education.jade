@@ -6,7 +6,7 @@ html
           section#nmis_list(ng-controller='NMISCtrl')
             .inner
               h3 Baseline List&nbsp;
-                span.unmatched ({{}} unmatched)
+                span.unmatched ( {{ facilities.length - localMatch.length }} unmatched )
               label.search Search
                 input(ng-model="nmisHealthSearch", type="search")
               .guidance Click on the matching facility to match
@@ -30,7 +30,7 @@ html
           section#lga_list(name='facility_section', ng-controller='LGACtrl')
             .inner
               h3 Facility List&nbsp;
-                span.unmatched ({{}} unmatched)
+                span.unmatched ( {{ facilities.length - localMatch.length }} unmatched )
               label.search Search
                 input(ng-model="lgaHealthSearch", type="search")
               .guidance Click&nbsp;
