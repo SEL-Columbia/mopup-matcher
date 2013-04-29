@@ -22,7 +22,7 @@ html
                       th  Community
                       th  Facility Type
                   tbody
-                    tr(ng-repeat='facility in facilities | orderBy:predicate:reverse | filter:nmisHealthSearch')(ng-click="select(facility)")
+                    tr(ng-repeat='facility in facilities | orderBy:predicate:reverse | filter:nmisHealthSearch')(ng-click="select(facility)")(class="ng-class:facility.active")
                       td 
                       td {{$index+1}}
                       td {{facility.ward}}
