@@ -115,6 +115,10 @@ body {
   background-image: url("../images/icon-putback.png");
   background-position: 0 0;
 }
+.undo{
+  font-weight: bold;
+  background-position: 0 0;
+}
 h3{
   font-weight: normal;
   margin-top: -10px;
