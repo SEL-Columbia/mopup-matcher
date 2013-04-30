@@ -95,6 +95,17 @@ var NMISCtrl = function($scope, $http, $rootScope) {
     .error(function(data, status, headers, config){
       alert("data  is not valid please check!");
     });
+    $scope.$on('pair_removed', function(evt, data){
+        var found;
+        $scope.facilities.forEach(function(f){
+            if(f._id === data.nmis)
+                found = f;
+        });
+        if(found && found.matched)
+        {
+            delete(found.matched);
+        }
+    });
 };
 
 var LGACtrl = function($scope, $http, $rootScope) {
@@ -119,6 +130,17 @@ var LGACtrl = function($scope, $http, $rootScope) {
       alert("data  is not valid please check!");
     });
 
+    $scope.$on('pair_removed', function(evt, data){
+        var found;
+        $scope.facilities.forEach(function(f){
+            if(f._id === data.fac)
+                found = f;
+        });
+        if(found && found.matched)
+        {
+            delete found.matched;
+        }
+    });
 };
   
 var PairedListCtrl = function($scope, $rootScope, $http) {
@@ -151,6 +173,7 @@ var PairedListCtrl = function($scope, $rootScope, $http) {
     promise.success(function(b){
       if (b.message == 'affirmative'){
         $scope.pairs.remove(pair);
+        $rootScope.$broadcast('pair_removed', {fac: pair['_id'], nmis: pair['matched']});
       }else{
         alert(b.message);
       }
