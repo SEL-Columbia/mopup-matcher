@@ -24,6 +24,26 @@ exports.facilities = function (req, res) {
   });
 };
 
+exports.download = function (req, res) {
+  var type, id, sector, db_str, collection, promise;
+  type = req.params.type;
+  id = +req.params.id;
+  sector = req.params.sector;
+  db_str = type + "_list_" + sector;
+  collection = db.get(db_str);
+  if (type=="nmis"){
+    promise = collection.find({"X_lga_id": id});
+  }else{
+    promise = collection.find({"lga_id": id});
+  }
+  promise.on('success', function(b){
+    res.csv(b);
+  });
+  promise.on('error', function(e){
+    res.json(e);
+  });
+};
+
 exports.matching_create = function (req, res) {
   var sector, db_str, collection, lga_col, nmis_col, lga_promise, nmis_promise;
   sector = req.params.sector;

@@ -34,6 +34,7 @@ app.get('/partials/:name', routes.partials);
 // JSON API
 
 app.get('/api/facilities/:type/:id/:sector', api.facilities);
+app.get('/api/download/:type/:id/:sector', api.download);
 app.post('/api/matching/:sector/create', api.matching_create);
 app.post('/api/matching/:sector/delete', api.matching_delete);
 
