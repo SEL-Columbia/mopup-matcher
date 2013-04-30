@@ -12,7 +12,7 @@ var clean_root_scope = function($rootScope){
 };
 
 var RootCtrl = function(sector){
-  return function($rootScope, $routeParams, $http, $location) {
+  return function($scope, $rootScope, $routeParams, $http, $location) {
     clean_root_scope($rootScope);
     $rootScope.currentSector = sector;
     $rootScope.current_lga = $routeParams.lgaid;
@@ -23,17 +23,18 @@ var RootCtrl = function(sector){
       }else if(view=='health'){
         var path_str = '/' + $rootScope.current_lga + '/health';
         $location.path(path_str);
+        $location.refresh();
       }
     };
-    $rootScope.$on('currentNMIS', function(evt, fac){
+    $scope.$on('currentNMIS', function(evt, fac){
       $rootScope.currentNMIS = fac;
     });
-    $rootScope.$on('local_pair', function(evt,pair){
+    $scope.$on('local_pair', function(evt,pair){
       $rootScope.localMatch=[];
       $rootScope.localMatch.push(pair[0]);
       $rootScope.localMatch.push(pair[1]);
     });
-    $rootScope.$on('matching_request', function(evt, fac){
+    $scope.$on('matching_request', function(evt, fac){
       if ($rootScope.currentNMIS !== undefined &&
         fac !== undefined) {
           var nmis = $rootScope.currentNMIS;
@@ -62,11 +63,11 @@ var RootCtrl = function(sector){
           }
         }
     });
-    $rootScope.$on('set_lga_name', function(evt, lgaStateNames){
+    $scope.$on('set_lga_name', function(evt, lgaStateNames){
         $rootScope.current_lga_name = lgaStateNames.lga;
         $rootScope.current_state_name = lgaStateNames.state;
 	});
-	$rootScope.isMatched = function(id){
+	$scope.isMatched = function(id){
 		return ($rootScope.localMatch.indexOf(id) !== -1);
 	};
   };
