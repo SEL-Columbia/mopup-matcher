@@ -23,7 +23,7 @@ html
                     th
                       a(ng-click = "predicate = 'level_of_education'; reverse = false") Facility Type
                 tbody
-                  tr(ng-repeat='facility in facilities | orderBy:predicate:reverse | filter:nmisHealthSearch')(ng-click="select(facility)", ng-class='{active: currentNMIS._id == facility._id, matched: isMatched(facility._id)}')
+                  tr.hover(ng-repeat='facility in facilities | orderBy:predicate:reverse | filter:nmisHealthSearch')(ng-click="select(facility)", ng-class='{active: currentNMIS._id == facility._id, matched: isMatched(facility._id)}')
                     td 
                     td {{$index+1}}
                     td {{facility.ward}}
