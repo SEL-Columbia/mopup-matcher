@@ -71,7 +71,7 @@ html
           .pairs-wrapper
             .pairs(ng-repeat='pair in pairs')
               button.btn.btn-small.btn-putback(ng-click="removePair(pair)")
-               i.icon-putback
+                .undo undo
               dl
                 b {{pair.health_facility_name}}
                 &nbsp; (Facility List) -- (Baseline) &nbsp;
