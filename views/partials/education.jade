@@ -13,6 +13,7 @@ html
             .table-header-wrapper
               table.table
                 thead
+                  tr
                     th
                     th  ID
                     th
@@ -79,9 +80,9 @@ html
               button.btn.btn-small.btn-putback(ng-click="removePair(pair)")
                 .undo undo
               p
-                span.fac {{pair.school_name}}
+                strong {{pair.school_name}}
                 | &nbsp; (Facility List) -- (Baseline) &nbsp;
-                span.fac {{pair.nmis.school_name}}
+                strong {{pair.nmis.school_name}}
           div.putback-guidance If you made an error, put facilities back by clicking 
             button.btn.btn-small.btn-putback
               .undo undo
