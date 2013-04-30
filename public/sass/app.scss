@@ -204,7 +204,13 @@ table, .table{
   color: #ffffff;
 }
 .pairs{
-  border-bottom: 1px solid #aaa; 
+  font-size: 12px;
+  line-height: 18px;
+  border-bottom: 1px solid #aaa;
+  p{
+    margin-top: 10px;}
+  .fac{
+    font-weight: bold;}
   .btn-putback{
     float: right;
     font-weight: bold; }

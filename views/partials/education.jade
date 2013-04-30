@@ -72,10 +72,10 @@ html
             .pairs(ng-repeat='pair in pairs')
               button.btn.btn-small.btn-putback(ng-click="removePair(pair)")
                 .undo undo
-              dl
-                b {{pair.school_name}}
-                &nbsp; (Facility List) -- (Baseline) &nbsp;
-                b {{pair.nmis.school_name}}
+              p
+                span.fac {{pair.school_name}}
+                | &nbsp; (Facility List) -- (Baseline) &nbsp;
+                span.fac {{pair.nmis.school_name}}
           div.putback-guidance If you made an error, put facilities back by clicking 
             button.btn.btn-small.btn-putback
               .undo undo
