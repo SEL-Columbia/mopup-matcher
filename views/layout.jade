@@ -23,7 +23,9 @@ html(ng-app="myApp")
               a(ng-href='{{current_lga}}/health') Health Facilities
             li(class="ng-class:{ active: currentSector == 'edu'}")
               a(ng-href='{{current_lga}}/education') Education Facilities
-          button.btn.printouts Download List
+          a.button.btn.printouts(ng-href='/api/download/nmis/{{current_lga}}/{{currentSector}}',target='_blank') BASELINE
+          a.button.btn.printouts(ng-href='/api/download/lga/{{current_lga}}/{{currentSector}}',target='_blank') FACILITY
+          .download Download Lists:
 
     div.view(ng-view)
     block body
