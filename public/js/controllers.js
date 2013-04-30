@@ -23,7 +23,6 @@ var RootCtrl = function(sector){
       }else if(view=='health'){
         var path_str = '/' + $rootScope.current_lga + '/health';
         $location.path(path_str);
-        $location.refresh();
       }
     };
     $scope.$on('currentNMIS', function(evt, fac){
