@@ -2,7 +2,7 @@
  * Serve JSON to our AngularJS client
  */
 var db = require('monk')('localhost/mopup'),
-  csv = require('express-csv');
+  _ = require('underscore');
 
 exports.facilities = function (req, res) {
   var type, id, sector, db_str, collection, promise;
@@ -24,6 +24,24 @@ exports.facilities = function (req, res) {
   });
 };
 
+/* Turn an array of objects into a csv */
+function toCsv(objArr, keysToExclude) {
+    var res = "";
+    // First we need to find all the keys that we might need for this csv
+    var allKeys = _.unique(_.flatten(_.map(objArr, function(o) {
+                    return _.keys(o); })));
+    allKeys = _.difference(allKeys, keysToExclude);
+    res = res + allKeys.join() + "\n";
+    // Now we go through each obj, but making sure to map to allKeys
+    _.each(objArr, function(obj) {
+        var row = _.map(allKeys, function(key) {
+            return obj[key] ? obj[key] : "";
+        });
+        res = res + row.join() + "\n";
+    });
+    return res;
+};
+
 exports.download = function (req, res) {
   var type, id, sector, db_str, collection, promise;
   type = req.params.type;
@@ -37,7 +55,12 @@ exports.download = function (req, res) {
     promise = collection.find({"lga_id": id});
   }
   promise.on('success', function(b){
-    res.csv(b);
+    res.attachment(type + "_" + sector + '_data__lga_' + id + '.csv');
+    var keysToExclude = (type=="nmis") ?
+                        ['uuid'] :
+                        ['facility_owner_other', 'start', 'end',
+                        'X_submission_time_y', 'X_submission_time_x', 'nmis'];
+    res.end(toCsv(b, keysToExclude));
   });
   promise.on('error', function(e){
     res.json(e);
