@@ -51,7 +51,7 @@ html, body, .main-wrapper, .main, #matches_list, .inner{
     padding: 0;
     width: 100%;
     overflow-y: auto;
-    height: 80%; }
+    height: 67%; }
   .inner{
     padding: 25px;
     @include border-box;} }
@@ -149,6 +149,16 @@ h4 .matched-length{
   margin-bottom: 10px; }
 
 /**** table style ****/
+.table-header-wrapper{
+  padding-right: 15px; }//scrollbar width
+.filler{
+  width: 15px;
+  margin: 0 0 0 -15px;
+  padding: 0;
+  height: 24px;
+  float: right;
+  border: none;
+  background: $bg;}
 table, .table{
   font-size: 13px;
   empty-cells: show;
@@ -159,9 +169,9 @@ table, .table{
     padding: 2px;
     word-wrap: break-word;
     border: 1px solid #ddd; }
-  th{
+  th, td{
     &:first-child{
-    width: 55px; }
+      width: 55px; }
     &:nth-child(2), &:nth-child(2){
       text-align: center;
       width: 6%;}
@@ -184,9 +194,11 @@ table, .table{
       display: none; } } }
 
 .search{
+  $shift: 8px;
   font-weight: normal;
   float: right;
-  margin-bottom: 0;
+  margin-top: $shift;
+  margin-bottom: -$shift;
   input{
     margin-left: 10px; } }
 .btn-match, .guidance .btn-match:hover, .guidance .btn-match:focus{

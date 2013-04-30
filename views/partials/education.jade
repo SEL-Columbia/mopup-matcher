@@ -9,7 +9,8 @@ html
             h3 Baseline List&nbsp;
               span.unmatched ( {{ facilities.length - (localMatch.length/2) }} unmatched )
             .guidance Click on the facility to match
-            .table-wrapper
+            .filler
+            .table-header-wrapper
               table.table
                 thead
                     th
@@ -22,6 +23,8 @@ html
                       a.hover(ng-click = "predicate = 'community'; reverse = false") Community
                     th
                       a.hover(ng-click = "predicate = 'level_of_education'; reverse = false") Facility Type
+            .table-wrapper
+              table.table
                 tbody
                   tr.hover(ng-repeat='facility in facilities | orderBy:predicate:reverse | filter:nmisHealthSearch')(ng-click="select(facility)", ng-class='{active: currentNMIS._id == facility._id, matched: isMatched(facility._id)}')
                     td 
@@ -41,7 +44,8 @@ html
               | &nbsp;on the facility that matches&nbsp;
               span.star 
               | &nbsp;from the list above
-            .table-wrapper
+            .filler
+            .table-header-wrapper
               table.table
                 thead
                   tr
@@ -55,6 +59,8 @@ html
                       a.hover(ng-click = "predicate = 'com_name'; reverse = false") Community
                     th
                       a.hover(ng-click = "predicate = 'level_of_education'; reverse = false") Facility Type
+            .table-wrapper
+              table.table
                 tbody
                   tr(ng-repeat='facility in facilities | orderBy:predicate:reverse | filter:lgaHealthSearch', ng-class='{matched: isMatched(facility._id)}')
                     td  
