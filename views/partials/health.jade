@@ -15,15 +15,15 @@ html
                     th
                     th  ID
                     th
-                      a(ng-click = "predicate = 'ward'; reverse = false") Ward
+                      a.hover(ng-click = "predicate = 'ward'; reverse = false") Ward
                     th
-                      a(ng-click = "predicate = 'facility_name'; reverse = false") Facility Name
+                      a.hover(ng-click = "predicate = 'facility_name'; reverse = false") Facility Name
                     th
-                      a(ng-click = "predicate = 'community'; reverse = false") Community
+                      a.hover(ng-click = "predicate = 'community'; reverse = false") Community
                     th
-                      a(ng-click = "predicate = 'faciity_type'; reverse = false") Facility Type
+                      a.hover(ng-click = "predicate = 'faciity_type'; reverse = false") Facility Type
                 tbody
-                  tr(ng-repeat='facility in facilities | orderBy:predicate:reverse | filter:nmisHealthSearch', ng-click="select(facility)", ng-class='{active: currentNMIS._id == facility._id, matched: isMatched(facility._id)}')
+                  tr.hover(ng-repeat='facility in facilities | orderBy:predicate:reverse | filter:nmisHealthSearch', ng-click="select(facility)", ng-class='{active: currentNMIS._id == facility._id, matched: isMatched(facility._id)}')
                     td 
                     td {{$index+1}}
                     td {{facility.ward}}
@@ -48,13 +48,13 @@ html
                     th
                     th  ID
                     th
-                      a(ng-click = "predicate = 'ward_name'; reverse = false") Ward
+                      a.hover(ng-click = "predicate = 'ward_name'; reverse = false") Ward
                     th
-                      a(ng-click = "predicate = 'health_facility_name'; reverse = false") Facility Name
+                      a.hover(ng-click = "predicate = 'health_facility_name'; reverse = false") Facility Name
                     th
-                      a(ng-click = "predicate = 'com_name_h'; reverse = false") Community
+                      a.hover(ng-click = "predicate = 'com_name_h'; reverse = false") Community
                     th
-                      a(ng-click = "predicate = 'health_facility_type'; reverse = false") Facility Type
+                      a.hover(ng-click = "predicate = 'health_facility_type'; reverse = false") Facility Type
                 tbody
                   tr(ng-repeat='facility in facilities | orderBy:predicate:reverse | filter:lgaHealthSearch', ng-class='{matched: isMatched(facility._id)}')
                     td  

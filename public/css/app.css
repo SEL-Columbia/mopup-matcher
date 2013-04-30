@@ -242,3 +242,6 @@ input[type="search"]{
 .putback-guidance .btn-putback{
   float: none;
 }
+.hover{
+  cursor: pointer;
+};

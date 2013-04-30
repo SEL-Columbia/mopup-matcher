@@ -12,20 +12,28 @@ var clean_root_scope = function($rootScope){
 };
 
 var RootCtrl = function(sector){
-  return function($rootScope, $routeParams, $http) {
+  return function($scope, $rootScope, $routeParams, $http, $location) {
     clean_root_scope($rootScope);
     $rootScope.currentSector = sector;
     $rootScope.current_lga = $routeParams.lgaid;
-    $rootScope.$on('currentNMIS', function(evt, fac){
+    $rootScope.changeView = function (view){
+      if(view=='education'){
+        var path_str = '/' + $rootScope.current_lga + '/education';
+        $location.path(path_str);
+      }else if(view=='health'){
+        var path_str = '/' + $rootScope.current_lga + '/health';
+        $location.path(path_str);
+      }
+    };
+    $scope.$on('currentNMIS', function(evt, fac){
       $rootScope.currentNMIS = fac;
     });
-    $rootScope.localMatch=[];
-    $rootScope.$on('local_pair', function(evt,pair){
+    $scope.$on('local_pair', function(evt,pair){
+      $rootScope.localMatch=[];
       $rootScope.localMatch.push(pair[0]);
       $rootScope.localMatch.push(pair[1]);
     });
-    console.log($rootScope.localMatch);
-    $rootScope.$on('matching_request', function(evt, fac){
+    $scope.$on('matching_request', function(evt, fac){
       if ($rootScope.currentNMIS !== undefined &&
         fac !== undefined) {
           var nmis = $rootScope.currentNMIS;
@@ -54,11 +62,11 @@ var RootCtrl = function(sector){
           }
         }
     });
-    $rootScope.$on('set_lga_name', function(evt, lgaStateNames){
+    $scope.$on('set_lga_name', function(evt, lgaStateNames){
         $rootScope.current_lga_name = lgaStateNames.lga;
         $rootScope.current_state_name = lgaStateNames.state;
 	});
-	$rootScope.isMatched = function(id){
+	$scope.isMatched = function(id){
 		return ($rootScope.localMatch.indexOf(id) !== -1);
 	};
   };
@@ -128,7 +136,6 @@ var PairedListCtrl = function($scope, $rootScope, $http) {
         }
       }
       $scope.$on('pair_confirmed', function(evt, fac){
-        console.log($rootScope.localMatch);
         $scope.pairs.unshift(fac);
       });
     })
