@@ -12,19 +12,27 @@ var clean_root_scope = function($rootScope){
 };
 
 var RootCtrl = function(sector){
-  return function($rootScope, $routeParams, $http) {
+  return function($rootScope, $routeParams, $http, $location) {
     clean_root_scope($rootScope);
     $rootScope.currentSector = sector;
     $rootScope.current_lga = $routeParams.lgaid;
+    $rootScope.changeView = function (view){
+      if(view=='education'){
+        var path_str = '/' + $rootScope.current_lga + '/education';
+        $location.path(path_str);
+      }else if(view=='health'){
+        var path_str = '/' + $rootScope.current_lga + '/health';
+        $location.path(path_str);
+      }
+    };
     $rootScope.$on('currentNMIS', function(evt, fac){
       $rootScope.currentNMIS = fac;
     });
-    $rootScope.localMatch=[];
     $rootScope.$on('local_pair', function(evt,pair){
+      $rootScope.localMatch=[];
       $rootScope.localMatch.push(pair[0]);
       $rootScope.localMatch.push(pair[1]);
     });
-    console.log($rootScope.localMatch);
     $rootScope.$on('matching_request', function(evt, fac){
       if ($rootScope.currentNMIS !== undefined &&
         fac !== undefined) {
@@ -128,7 +136,6 @@ var PairedListCtrl = function($scope, $rootScope, $http) {
         }
       }
       $scope.$on('pair_confirmed', function(evt, fac){
-        console.log($rootScope.localMatch);
         $scope.pairs.unshift(fac);
       });
     })

@@ -19,10 +19,10 @@ html(ng-app="myApp")
             | NMIS/LGA Facility Matching Tool
           span.lga {{current_lga_name | uppercase}} lga, {{current_state_name | uppercase}} state
           ul.nav
-            li(class="ng-class:{ active: currentSector == 'health'}")
-              a(ng-href='{{current_lga}}/health') Health Facilities
-            li(class="ng-class:{ active: currentSector == 'edu'}")
-              a(ng-href='{{current_lga}}/education') Education Facilities
+            li.hover(class="ng-class:{ active: currentSector == 'health'}")
+              a(ng-click="changeView('health')") Health Facilities
+            li.hover(class="ng-class:{ active: currentSector == 'edu'}")
+              a(ng-click="changeView('education')") Education Facilities
           a.button.btn.printouts(ng-href='/api/download/nmis/{{current_lga}}/{{currentSector}}',target='_blank') BASELINE
           a.button.btn.printouts(ng-href='/api/download/lga/{{current_lga}}/{{currentSector}}',target='_blank') FACILITY
           .download Download Lists:
