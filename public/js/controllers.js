@@ -8,6 +8,7 @@ var clean_root_scope = function($rootScope){
   $rootScope.localMatch = [];
   $rootScope.currentNMIS = undefined;
   $rootScope.current_lga_name = undefined;
+  $rootScope.current_state_name = undefined;
 };
 
 var RootCtrl = function(sector){
@@ -53,8 +54,9 @@ var RootCtrl = function(sector){
           }
         }
     });
-	$rootScope.$on('set_lga_name', function(evt, lgaName){
-		$rootScope.current_lga_name = lgaName;
+    $rootScope.$on('set_lga_name', function(evt, lgaStateNames){
+        $rootScope.current_lga_name = lgaStateNames.lga;
+        $rootScope.current_state_name = lgaStateNames.state;
 	});
 	$rootScope.isMatched = function(id){
 		return ($rootScope.localMatch.indexOf(id) !== -1);
@@ -99,7 +101,7 @@ var LGACtrl = function($scope, $http, $rootScope) {
       $scope.facilities = data;
       $scope.predicate = 'ward_name';
       //$scope.facilities.forEach(function(item, i){item.index=i});
-      if (data && data.length > 0) $scope.$emit('set_lga_name', data[0].mylga);
+      if (data && data.length > 0) $scope.$emit('set_lga_name', {lga: data[0].mylga, state: data[0].mylga_state});
       $scope.match = function(fac){
         $scope.$emit('matching_request', fac);
       };
