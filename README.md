@@ -16,3 +16,6 @@ This will run the mopup app on port 3000. You can also use `node server.js`. The
     http://localhost:3000/500/health 
 
 You can replace the 500 with another lga_id.
+
+# Development
+The app uses SASS (SCSS) so the css is compiled. It is recommended to install Compass and issue ````compass watch```` from the project root to compile to css.
