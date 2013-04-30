@@ -17,6 +17,9 @@ This will run the mopup app on port 3000. You can also use `node server.js`. The
 
 You can replace the 500 with another lga_id.
 
+# Development
+The app uses SASS (SCSS) so the css is compiled. It is recommended to install Compass and issue ````compass watch```` from the project root to compile to css.
+
 To run the tests
 
 - You must have karma installed globally in your node installation
