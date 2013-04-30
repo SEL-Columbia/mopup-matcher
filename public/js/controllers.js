@@ -29,7 +29,6 @@ var RootCtrl = function(sector){
       $rootScope.currentNMIS = fac;
     });
     $scope.$on('local_pair', function(evt,pair){
-      $rootScope.localMatch=[];
       $rootScope.localMatch.push(pair[0]);
       $rootScope.localMatch.push(pair[1]);
     });
