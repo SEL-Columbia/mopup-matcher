@@ -22,7 +22,7 @@ The app uses SASS (SCSS) so the css is compiled. It is recommended to install Co
 
 To run the tests
 
-- You must have karma installed globally in your node installation
+- Install karma globally in your node installation
 
     $ npm install -g karma
 
@@ -32,6 +32,6 @@ To run the tests
 
 - End to end tests
 
-Start the application's server on port 3000 (the default) then run the end to end tests
+Start the application on port 3000 (the default) then run
 
     $ karma start test/config/e2e.conf.js
