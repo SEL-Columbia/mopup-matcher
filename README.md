@@ -19,3 +19,20 @@ You can replace the 500 with another lga_id.
 
 # Development
 The app uses SASS (SCSS) so the css is compiled. It is recommended to install Compass and issue ````compass watch```` from the project root to compile to css.
+
+To run the tests
+
+- You must have karma installed globally in your node installation
+
+    $ npm install -g karma
+
+- Unit tests
+
+    $ karma start test/config/unit.conf.js
+
+- End to end tests
+
+Start the application's server on port 3000 (the default) then run the end to end tests
+
+    $ karma start test/config/e2e.conf.js
+
