@@ -34,5 +34,10 @@ To run the tests
 
 Start the application's server on port 3000 (the default) then run the end to end tests
 
+(if you are using linux and chromium, you need to set up the environment variable)
+    $ export CHROME_BIN='/usr/bin/chromium'
+
+and then, do:
+
     $ karma start test/config/e2e.conf.js
 
