@@ -32,5 +32,7 @@ To run the tests
 
 - End to end tests
 
+Start the application's server on port 3000 (the default) then run the end to end tests
+
     $ karma start test/config/e2e.conf.js
 
