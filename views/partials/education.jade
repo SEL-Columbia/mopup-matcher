@@ -15,15 +15,15 @@ html
                 thead
                   tr
                     th
-                    th  ID
+                    th ID
                     th
                       a.hover(ng-click = "predicate = 'ward'; reverse = false") Ward
                     th
-                      a.hover(ng-click = "predicate = 'school_name'; reverse = false") Facility Name
+                      a.hover(ng-click = "predicate = 'facility_name'; reverse = false") Facility Name
                     th
                       a.hover(ng-click = "predicate = 'community'; reverse = false") Community
                     th
-                      a.hover(ng-click = "predicate = 'level_of_education'; reverse = false") Facility Type
+                      a.hover(ng-click = "predicate = 'facility_type'; reverse = false") Facility Type
             .table-wrapper
               table.table
                 tbody
@@ -31,9 +31,9 @@ html
                     td 
                     td {{$index+1}}
                     td {{facility.ward}}
-                    td {{facility.school_name}}
+                    td {{facility.facility_name}}
                     td {{facility.community}}
-                    td {{facility.level_of_education}}
+                    td {{facility.facility_type}}
         section#lga_list(name='facility_section', ng-controller='LGACtrl')
           .inner
             label.search Search
@@ -51,15 +51,15 @@ html
                 thead
                   tr
                     th
-                    th  ID
+                    th ID 
                     th
-                      a.hover(ng-click = "predicate = 'ward_name'; reverse = false") Ward
+                      a.hover(ng-click = "predicate = 'ward'; reverse = false") Ward
                     th
-                      a.hover(ng-click = "predicate = 'school_name'; reverse = false") Facility Name
+                      a.hover(ng-click = "predicate = 'facility_name'; reverse = false") Facility Name
                     th
-                      a.hover(ng-click = "predicate = 'com_name'; reverse = false") Community
+                      a.hover(ng-click = "predicate = 'community'; reverse = false") Community
                     th
-                      a.hover(ng-click = "predicate = 'level_of_education'; reverse = false") Facility Type
+                      a.hover(ng-click = "predicate = 'facility_type'; reverse = false") Facility Type
             .table-wrapper
               table.table
                 tbody
@@ -67,10 +67,10 @@ html
                     td  
                       button.btn.btn-small.btn-match(ng-click='match(facility)') Match
                     td {{$index+1}}
-                    td {{facility.ward_num}}
-                    td {{facility.school_name}}
-                    td {{facility.com_name}}
-                    td {{facility.level_of_education}}
+                    td {{facility.ward}}
+                    td {{facility.facility_name}}
+                    td {{facility.community}}
+                    td {{facility.facility_type}}
       section#matches_list(ng-controller='PairedListCtrl')
         #matched_list_{{$index}}
           h4 Matched Facilities&nbsp;
@@ -80,9 +80,9 @@ html
               button.btn.btn-small.btn-putback(ng-click="removePair(pair)")
                 .undo undo
               p
-                strong {{pair.school_name}}
+                strong {{pair.facility_name}}
                 | &nbsp; (Facility List) -- (Baseline) &nbsp;
-                strong {{pair.nmis.school_name}}
+                strong {{pair.nmis.facility_name}}
           div.putback-guidance If you made an error, put facilities back by clicking 
             button.btn.btn-small.btn-putback
               .undo undo

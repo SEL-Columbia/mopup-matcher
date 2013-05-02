@@ -117,9 +117,9 @@ var LGACtrl = function($scope, $http, $rootScope) {
     .success(function(data, status, headers, config){
       //$scope.facilities = csv(data).toObjects();
       $scope.facilities = data;
-      $scope.predicate = 'ward_name';
+      $scope.predicate = 'ward';
       //$scope.facilities.forEach(function(item, i){item.index=i});
-      if (data && data.length > 0) $scope.$emit('set_lga_name', {lga: data[0].mylga, state: data[0].mylga_state});
+      if (data && data.length > 0) $scope.$emit('set_lga_name', {lga: data[0].lga, state: data[0].state});
       $scope.match = function(fac){
         $scope.$emit('matching_request', fac);
       };
