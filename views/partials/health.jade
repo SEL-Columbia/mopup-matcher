@@ -23,7 +23,7 @@ html
                     th
                       a.hover(ng-click = "predicate = 'community'; reverse = false") Community
                     th
-                      a.hover(ng-click = "predicate = 'faciity_type'; reverse = false") Facility Type
+                      a.hover(ng-click = "predicate = 'facility_type'; reverse = false") Facility Type
             .table-wrapper
               table.table
                 tbody
@@ -53,24 +53,24 @@ html
                     th
                     th  ID
                     th
-                      a.hover(ng-click = "predicate = 'ward_name'; reverse = false") Ward
+                      a.hover(ng-click = "predicate = 'ward'; reverse = false") Ward
                     th
-                      a.hover(ng-click = "predicate = 'health_facility_name'; reverse = false") Facility Name
+                      a.hover(ng-click = "predicate = 'facility_name'; reverse = false") Facility Name
                     th
-                      a.hover(ng-click = "predicate = 'com_name_h'; reverse = false") Community
+                      a.hover(ng-click = "predicate = 'community'; reverse = false") Community
                     th
-                      a.hover(ng-click = "predicate = 'health_facility_type'; reverse = false") Facility Type
+                      a.hover(ng-click = "predicate = 'facility_type'; reverse = false") Facility Type
             .table-wrapper
               table.table
                 tbody
                   tr(ng-repeat='facility in facilities | orderBy:predicate:reverse | filter:lgaHealthSearch', ng-class='{matched: isMatched(facility._id)}')
                     td  
                       button.btn.btn-small.btn-match(ng-click='match(facility)') Match
-                    td  {{$index+1}}
-                    td  {{facility.ward_name}}
-                    td  {{facility.health_facility_name}}
-                    td  {{facility.com_name_h}}
-                    td  {{facility.health_facility_type}}
+                    td {{$index + 1}}
+                    td  {{facility.ward}}
+                    td  {{facility.facility_name}}
+                    td  {{facility.community}}
+                    td  {{facility.facility_type}}
       section#matches_list(ng-controller='PairedListCtrl')
         #matched_list_{{$index}}
           h4 Matched Facilities&nbsp;

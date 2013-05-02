@@ -12,7 +12,7 @@ exports.facilities = function (req, res) {
   db_str = type + "_list_" + sector;
   collection = db.get(db_str);
   if (type=="nmis"){
-    promise = collection.find({"X_lga_id": id});
+    promise = collection.find({"lga_id": id});
   }else{
     promise = collection.find({"lga_id": id});
   }
@@ -50,7 +50,7 @@ exports.download = function (req, res) {
   db_str = type + "_list_" + sector;
   collection = db.get(db_str);
   if (type=="nmis"){
-    promise = collection.find({"X_lga_id": id});
+    promise = collection.find({"lga_id": id});
   }else{
     promise = collection.find({"lga_id": id});
   }
