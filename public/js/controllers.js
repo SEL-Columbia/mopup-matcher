@@ -65,10 +65,13 @@ var RootCtrl = function(sector){
         $rootScope.current_lga_name = lgaStateNames.lga;
         $rootScope.current_state_name = lgaStateNames.state;
 	});
-	$scope.isMatched = function(id){
-		return ($rootScope.localMatch.indexOf(id) !== -1);
+	$scope.isMatched = function(facility){
+		return ($rootScope.localMatch.indexOf(facility._id) !== -1);
 	};
-  };
+	$scope.isSelected = function(facility){
+		return ($rootScope.currentNMIS && ($rootScope.currentNMIS._id == facility._id));
+	};
+}
 };
 
 var NMISCtrl = function($scope, $http, $rootScope) {
@@ -105,6 +108,14 @@ var NMISCtrl = function($scope, $http, $rootScope) {
             delete(found.matched);
         }
     });
+  $scope.reject = function(fac){
+    console.log('facility rejected: ', fac);
+    $scope.$emit('currentNMIS', null);
+  };
+  $scope.clearRejection = function(fac){
+    delete fac.rejected;
+    console.log('cleared facility rejection', fac);
+  };
 };
 
 var LGACtrl = function($scope, $http, $rootScope) {
@@ -182,4 +193,3 @@ var PairedListCtrl = function($scope, $rootScope, $http) {
     });
   };
 };
-

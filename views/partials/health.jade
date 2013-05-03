@@ -27,13 +27,14 @@ html
             .table-wrapper
               table.table
                 tbody
-                  tr.hover(ng-repeat='facility in facilities | orderBy:predicate:reverse | filter:nmisHealthSearch', ng-click="select(facility)", ng-class='{active: currentNMIS._id == facility._id, matched: isMatched(facility._id)}')
+                  tr.hover(ng-repeat='facility in facilities | orderBy:predicate:reverse | filter:nmisHealthSearch', ng-click="select(facility)", ng-class='{active: isSelected(facility), matched: isMatched(facility), rejected: facility.rejected}')
                     td 
                     td {{$index+1}}
                     td {{facility.ward}}
                     td {{facility.facility_name}}
                     td {{facility.community}}
                     td {{facility.facility_type}}
+                      a.btn-nomatch(ng-class='{remove: !facility.rejected, addback: facility.rejected}', bs-popover="'../js/lib/partials/popover.html'", data-unique="1", data-placement="bottom", data-title="{{facility.facility_name}} cannot be matched")
         section#lga_list(name='facility_section', ng-controller='LGACtrl')
           .inner
             label.search Search
@@ -63,7 +64,7 @@ html
             .table-wrapper
               table.table
                 tbody
-                  tr(ng-repeat='facility in facilities | orderBy:predicate:reverse | filter:lgaHealthSearch', ng-class='{matched: isMatched(facility._id)}')
+                  tr(ng-repeat='facility in facilities | orderBy:predicate:reverse | filter:lgaHealthSearch', ng-class='{matched: isMatched(facility)}')
                     td  
                       button.btn.btn-small.btn-match(ng-click='match(facility)') Match
                     td {{$index + 1}}
