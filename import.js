@@ -9,6 +9,7 @@ var nmis_health = 'BASELINE_hospitals.csv',
   lga_health = 'FACILITY_LIST_hospitals.csv',
   lga_edu = 'FACILITY_LIST_schools.csv';
 
+
 var read = function(filename,cb){
   // readfile takes an second option of string encoding,
   // otherwise returns buffer
@@ -16,7 +17,6 @@ var read = function(filename,cb){
     cb(file);
   });
 };
-
 
 var file2json = function(filename, cb){
   read(filename, function(file){
@@ -33,8 +33,12 @@ var file2json = function(filename, cb){
 };
 
 var line2json = function(header_arr, line){
-  var fields = line.split(',');
-  var headers = header_arr.split(',');
+  var fields = line
+                .replace(/\"/g,'')
+                .split(',');
+  var headers = header_arr
+                .replace(/\"/g,'')
+                .split(',');
   json = {};
   for (var i=0; i< headers.length; i++) {
     json[headers[i]] = fields[i];
@@ -43,10 +47,34 @@ var line2json = function(header_arr, line){
 };
 
 
+
+var insert_json = function(col_name, json){
+  var collection = db.get(col_name);
+  for (var i=0; i<json.length; i++){
+    var random_id = json[i].random_id;
+    var promise = collection.findOne({"random_id":random_id});
+    promise.on('success', function(b){
+      if (b===null){
+        var ins_pro = collection.insert(json[i]);
+        ins_pro.on('success', function(b){
+          console.log('inserted', b);
+          return;
+        });
+        ins_pro.on('error', function(e){
+          console.log('error', e);
+        });
+      }
+    });
+    promise.on('error', function(e){
+      console.log('error in find',e);
+    });
+  }
+  console.log('done');
+};
+
+
+
 file2json(nmis_health, function(json){
-  console.log(json[1114]);
+  insert_json('nmis_list_health',json);
 });
-
-
-
 
