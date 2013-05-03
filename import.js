@@ -4,6 +4,11 @@ var db = require('monk')('localhost/mopup'),
     fs = require('fs'),
     filepath = 'csvs/';
 
+var nmis_health = 'BASELINE_hospitals.csv',
+  nmis_edu = 'BASELINE_schools.csv',
+  lga_health = 'FACILITY_LIST_hospitals.csv',
+  lga_edu = 'FACILITY_LIST_schools.csv';
+
 var read = function(filename,cb){
   // readfile takes an second option of string encoding,
   // otherwise returns buffer
@@ -12,15 +17,9 @@ var read = function(filename,cb){
   });
 };
 
-/*
- *[ 'BASELINE_hospitals.csv',
-  'BASELINE_schools.csv',
-  'FACILITY_LIST_hospitals.csv',
-  'FACILITY_LIST_schools.csv' ]
 
-  */
-var nmis_health = function(cb){
-  read('BASELINE_hospitals.csv', function(file){
+var file2json = function(filename, cb){
+  read(filename, function(file){
     var arr = file.split('\n');
     var len = arr.length;
     var header_arr = arr[0];
@@ -44,8 +43,8 @@ var line2json = function(header_arr, line){
 };
 
 
-nmis_health(function(json){
-  console.log(json[8]);
+file2json(nmis_health, function(json){
+  console.log(json[1114]);
 });
 
 
