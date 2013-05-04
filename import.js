@@ -2,6 +2,7 @@
 var db = require('monk')('localhost/mopup'),
     async = require('async'),
     fs = require('fs'),
+    _ = require('underscore'),
     filepath = 'csvs/';
 
 var nmis_health = 'BASELINE_hospitals.csv',
@@ -48,11 +49,26 @@ var line2json = function(header_arr, line){
 
 
 
+var insert_json_bulk = function(col_name, json){
+  var collection = db.get(col_name);
+  //get everything into memory
+  var promise = collection.findOne({'lga':'IKARA'},'random_id');
+  promise.on('success', function(b){
+    console.log(typeof b);
+    console.log(b);
+  });
+  promise.on('error', function(e){
+    console.log('error in find',e);
+  });
+  console.log('done');
+};
+
+
 var insert_json = function(col_name, json){
   var collection = db.get(col_name);
   for (var i=0; i<json.length; i++){
     var random_id = json[i].random_id;
-    var promise = collection.findOne({"random_id":random_id});
+    var promise = collection.find({"random_id":random_id});
     promise.on('success', function(b){
       if (b===null){
         var ins_pro = collection.insert(json[i]);
@@ -72,9 +88,8 @@ var insert_json = function(col_name, json){
   console.log('done');
 };
 
-
-
 file2json(nmis_health, function(json){
+
   insert_json('nmis_list_health',json);
 });
 
