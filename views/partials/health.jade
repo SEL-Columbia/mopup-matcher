@@ -29,7 +29,7 @@ html
                 tbody
                   tr.hover(ng-repeat='facility in facilities | orderBy:predicate:reverse | filter:nmisHealthSearch', ng-click="select(facility)", ng-class='{active: currentNMIS._id == facility._id, matched: isMatched(facility._id)}')
                     td 
-                    td {{$index+1}}
+                    td {{facility.short_id}}
                     td {{facility.ward}}
                     td {{facility.facility_name}}
                     td {{facility.community}}
@@ -66,7 +66,7 @@ html
                   tr(ng-repeat='facility in facilities | orderBy:predicate:reverse | filter:lgaHealthSearch', ng-class='{matched: isMatched(facility._id)}')
                     td  
                       button.btn.btn-small.btn-match(ng-click='match(facility)') Match
-                    td {{$index + 1}}
+                    td  {{facility.short_id}}
                     td  {{facility.ward}}
                     td  {{facility.facility_name}}
                     td  {{facility.community}}
