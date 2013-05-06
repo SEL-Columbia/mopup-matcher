@@ -32,6 +32,33 @@ var RootCtrl = function(sector){
       $rootScope.localMatch.push(pair[0]);
       $rootScope.localMatch.push(pair[1]);
     });
+    $scope.$on('reject_request', function(evt, fac){
+      if(fac !== undefined) {
+        var promise = $http.post(
+          'api/matching/' + sector + '/reject', fac
+          );
+        promise.success(function(b){
+          var message = b.message;
+          if(message == 'affirmative') { 
+            $scope.$broadcast('reject_confirmed');
+          }
+        });
+      }
+    });
+
+    $scope.$on('clear_reject_request', function(evt, fac){
+      if(fac !== undefined) {
+        var promise = $http.post(
+          'api/matching/' + sector + '/clearreject', fac
+          );
+        promise.success(function(b){
+          var message = b.message;
+          if(message == 'affirmative') { 
+            $scope.$broadcast('reject_clear_confirmed', b.data);
+          }
+        });
+      }
+    });
     $scope.$on('matching_request', function(evt, fac){
       if ($rootScope.currentNMIS !== undefined &&
         fac !== undefined) {
@@ -65,10 +92,13 @@ var RootCtrl = function(sector){
         $rootScope.current_lga_name = lgaStateNames.lga;
         $rootScope.current_state_name = lgaStateNames.state;
 	});
-	$scope.isMatched = function(id){
-		return ($rootScope.localMatch.indexOf(id) !== -1);
+	$scope.isMatched = function(facility){
+		return ($rootScope.localMatch.indexOf(facility._id) !== -1);
 	};
-  };
+	$scope.isSelected = function(facility){
+		return ($rootScope.currentNMIS && ($rootScope.currentNMIS._id == facility._id));
+	};
+}
 };
 
 var NMISCtrl = function($scope, $http, $rootScope) {
@@ -84,7 +114,7 @@ var NMISCtrl = function($scope, $http, $rootScope) {
       $scope.predicate = 'ward';
       $scope.radioModel = 'Name';
       $scope.select = function(fac) {
-        $scope.$emit('currentNMIS', fac);
+        if (!fac.rejected) $scope.$emit('currentNMIS', fac);
       };
       $scope.sortby = function(key) {
         $scope.facilities = _.sortBy($scope.facilities, 
@@ -105,6 +135,23 @@ var NMISCtrl = function($scope, $http, $rootScope) {
             delete(found.matched);
         }
     });
+  $scope.reject = function(fac){
+    $scope.$emit('reject_request', fac);
+  };
+
+  $scope.$on('reject_confirmed', function(evt, data){
+    $scope.$emit('currentNMIS', null);
+  });
+
+  $scope.clearRejection = function(fac){
+    if(fac.rejected!==null){
+      $scope.$emit('clear_reject_request', fac);
+      $scope.$on('reject_clear_confirmed', function(evt, data){
+          delete fac.rejected;
+      });
+    }
+  };
+
 };
 
 var LGACtrl = function($scope, $http, $rootScope) {
@@ -182,4 +229,3 @@ var PairedListCtrl = function($scope, $rootScope, $http) {
     });
   };
 };
-

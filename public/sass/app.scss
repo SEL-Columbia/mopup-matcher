@@ -165,6 +165,9 @@ table, .table{
   table-layout: fixed;
   background-color: $bg;
   margin-bottom: 0;
+  th {
+    a, th a:active, a:hover{
+      color:black;} }
   th, td{
     padding: 2px;
     word-wrap: break-word;
@@ -183,15 +186,22 @@ table, .table{
       width: 16%;} }
   tbody tr{
     &:hover{
-    background-color: #dddddd; }
+    background-color: #dddddd;
+      .btn-nomatch{
+        visibility: visible;} }
     &.active td, &.active:hover td{
       background-color: $highlight;
       font-weight: bold;
+      .btn-nomatch{
+        visibility: visible;}
       &:first-child{
         @include star;} }
-    &.matched{
-      opacity: 0.5;
-      display: none; } } }
+    &.rejected:not(.active){
+      /*opacity: 0.5;*/ 
+        color: #bbbbbb;
+      &:hover{
+        color: #888888;
+      /*opacity: 0.8;*/ } } } }
 
 .search{
   $shift: 8px;
@@ -206,12 +216,27 @@ table, .table{
   font-weight: bold;
   font-size: 13px;
   padding: 0 7px 2px 7px; }
+
+.btn-nomatch{
+  visibility: hidden;
+  float: right;
+  width: 20px;
+  padding: 0;
+  height: 20px;
+  &.remove{
+    background: url(/images/icon-nomatch-remove.png);}
+  &.addback{
+    background: url(/images/icon-nomatch-addback.png);} }
+
 .star{
   @include star;
   display: inline-block;
   width: 60px;
   height: 25px;
   margin: 0 0 -10px 0; }
+.carrot{
+  margin-left: 5px;
+  opacity: 0.6;}
 #nmis_list h3, #lga_list h3, .search{
   color: #ffffff;
 }
@@ -229,3 +254,27 @@ table, .table{
 //?
 .hover{
   cursor: pointer; }
+
+.popover{
+  .popover-title{
+    font-weight: bold;
+    word-break: break-all;
+    color: black !important; }
+  form{
+    label{
+      span{
+        color: #000000;
+        display: block;
+        margin-left: 20px;} }
+    input[type="radio"]{
+      float:left;
+      margin-top: 3px;}
+    input[type="text"]{
+      @include border-box;
+      width: 100%;
+      height: 30px;}
+    .btn{
+      margin: 20px 0 0 0;
+      width: 48%;
+      &.last{
+        float: right;} } } }
