@@ -107,7 +107,7 @@ var NMISCtrl = function($scope, $http, $rootScope) {
       $scope.predicate = 'ward';
       $scope.radioModel = 'Name';
       $scope.select = function(fac) {
-        $scope.$emit('currentNMIS', fac);
+        if (!fac.rejected) $scope.$emit('currentNMIS', fac);
       };
       $scope.sortby = function(key) {
         $scope.facilities = _.sortBy($scope.facilities, 
