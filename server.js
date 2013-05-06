@@ -37,6 +37,8 @@ app.get('/api/facilities/:type/:id/:sector', api.facilities);
 app.get('/api/download/:type/:id/:sector', api.download);
 app.post('/api/matching/:sector/create', api.matching_create);
 app.post('/api/matching/:sector/delete', api.matching_delete);
+app.post('/api/matching/:sector/reject', api.matching_reject);
+app.post('/api/matching/:sector/clearreject', api.matching_clearreject);
 
 // redirect all others to the index (HTML5 history)
 app.get('*', routes.index);
