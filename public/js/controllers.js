@@ -32,6 +32,26 @@ var RootCtrl = function(sector){
       $rootScope.localMatch.push(pair[0]);
       $rootScope.localMatch.push(pair[1]);
     });
+    $scope.$on('reject_request', function(evt, tup){
+      if(fac !== undefined) {
+        var promise = $http.post(
+          'api/matching/' + sector + 'reject', tup
+          );
+        promise.success(function(b){
+          $scope.$broadcast('reject_confirmed', b.data);
+        });
+      }
+    });
+    $scope.$on('clear_reject_request', function(evt, fac){
+      if(fac !== undefined) {
+        var promise = $http.post(
+          'api/matching/' + sector + 'clearreject', fac
+          );
+        promise.success(function(b){
+          $scope.$broadcast('reject_clear_confirmed', b.data);
+        });
+      }
+    });
     $scope.$on('matching_request', function(evt, fac){
       if ($rootScope.currentNMIS !== undefined &&
         fac !== undefined) {
@@ -108,12 +128,20 @@ var NMISCtrl = function($scope, $http, $rootScope) {
             delete(found.matched);
         }
     });
-  $scope.reject = function(fac){
-    console.log('facility rejected: ', fac);
+  $scope.reject = function(fac,reason){
+    console.log('facility rejected: ', fac, reason);
+    $scope.$emit('reject_request', [fac, reason]);
     $scope.$emit('currentNMIS', null);
   };
+  $scope.$on('reject_confirmed', function(evt, data){
+  });
+
+  $scope.$on('reject_clear_confirmed', function(evt, data){
+  });
+
   $scope.clearRejection = function(fac){
-    delete fac.rejected;
+    $scope.$emit('clear_reject_request', fac);
+    //delete fac.rejected;
     console.log('cleared facility rejection', fac);
   };
 };

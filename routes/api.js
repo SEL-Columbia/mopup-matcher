@@ -40,7 +40,7 @@ function toCsv(objArr, keysToExclude) {
         res = res + row.join() + "\n";
     });
     return res;
-};
+}
 
 exports.download = function (req, res) {
   var type, id, sector, db_str, collection, promise;
@@ -144,3 +144,37 @@ exports.matching_delete = function (req, res) {
     return;
   });
 };
+exports.matching_reject = function (req, res) {
+  var sector, db_str, collection, nmis_col, nmis_promise;
+  sector = req.params.sector;
+  nmis = req.body.nmis;
+  if(nmis.rejected){
+    console.log('rejected reject request: already exist');
+    res.json({'message':"facility already rejected"});
+    return;
+  }
+  nmis_col = db.get('nmis_list_'+sector);
+  nmis_promise =nmis_col.update(
+    {'_id':nmis._id}, {$set:
+      {'matched':lga._id,
+        'lga':lga}
+    });
+  nmis_promise.on('success', function(b){
+    fin_promise = lga_col.findOne({'_id':lga._id});
+    fin_promise.on('success', function(b){
+      res.json({'message':'affirmative','data':b});
+      return;
+    });
+    fin_promise.on('error', function(e){
+      res.json({'message':'database error','err':e});
+      return;
+    });
+  });
+  nmis_promise.on('error', function(e){
+    res.json({'message':'database error','err':e});
+    return;
+  });
+
+};
+
+
