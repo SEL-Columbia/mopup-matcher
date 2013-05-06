@@ -6,5 +6,5 @@
 	<label><input name="nomatchreason" value="other" ng-model="other" ng-change="facility.rejected = null" type="radio" /><span>Other</span></label>
 	<input type="text" ng-show="other" ng-model="facility.rejected" placeholder="enter reason (short)"/>
 	<button class="btn" ng-click="reject(facility); dismiss()">OK</button>
-	<button type="button" class="btn last" ng-click="clearRejection(facility); other=null; dismiss()">Cancel</button>
+	<button type="button" class="btn last" ng-click="clearRejection(facility); other=null; dismiss()">Clear</button>
 </form>

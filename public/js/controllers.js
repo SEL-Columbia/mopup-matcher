@@ -32,23 +32,30 @@ var RootCtrl = function(sector){
       $rootScope.localMatch.push(pair[0]);
       $rootScope.localMatch.push(pair[1]);
     });
-    $scope.$on('reject_request', function(evt, tup){
+    $scope.$on('reject_request', function(evt, fac){
       if(fac !== undefined) {
         var promise = $http.post(
-          'api/matching/' + sector + 'reject', tup
+          'api/matching/' + sector + '/reject', fac
           );
         promise.success(function(b){
-          $scope.$broadcast('reject_confirmed', b.data);
+          var message = b.message;
+          if(message == 'affirmative') { 
+            $scope.$broadcast('reject_confirmed');
+          }
         });
       }
     });
+
     $scope.$on('clear_reject_request', function(evt, fac){
       if(fac !== undefined) {
         var promise = $http.post(
-          'api/matching/' + sector + 'clearreject', fac
+          'api/matching/' + sector + '/clearreject', fac
           );
         promise.success(function(b){
-          $scope.$broadcast('reject_clear_confirmed', b.data);
+          var message = b.message;
+          if(message == 'affirmative') { 
+            $scope.$broadcast('reject_clear_confirmed', b.data);
+          }
         });
       }
     });
@@ -128,22 +135,23 @@ var NMISCtrl = function($scope, $http, $rootScope) {
             delete(found.matched);
         }
     });
-  $scope.reject = function(fac,reason){
-    console.log('facility rejected: ', fac, reason);
-    $scope.$emit('reject_request', [fac, reason]);
-    $scope.$emit('currentNMIS', null);
+  $scope.reject = function(fac){
+    $scope.$emit('reject_request', fac);
   };
-  $scope.$on('reject_confirmed', function(evt, data){
-  });
 
-  $scope.$on('reject_clear_confirmed', function(evt, data){
+  $scope.$on('reject_confirmed', function(evt, data){
+    $scope.$emit('currentNMIS', null);
   });
 
   $scope.clearRejection = function(fac){
-    $scope.$emit('clear_reject_request', fac);
-    //delete fac.rejected;
-    console.log('cleared facility rejection', fac);
+    if(fac.rejected!==null){
+      $scope.$emit('clear_reject_request', fac);
+      $scope.$on('reject_clear_confirmed', function(evt, data){
+          delete fac.rejected;
+      });
+    }
   };
+
 };
 
 var LGACtrl = function($scope, $http, $rootScope) {
