@@ -194,9 +194,11 @@ table, .table{
       &:first-child{
         @include star;} }
     &.rejected:not(.active){
-      opacity: 0.5; 
+      /*opacity: 0.5;*/ 
+        color: #bbbbbb;
       &:hover{
-      opacity: 0.8; } } } }
+        color: #888888;
+      /*opacity: 0.8;*/ } } } }
 
 .search{
   $shift: 8px;
@@ -255,6 +257,7 @@ table, .table{
   form{
     label{
       span{
+        color: #000000;
         display: block;
         margin-left: 20px;} }
     input[type="radio"]{
