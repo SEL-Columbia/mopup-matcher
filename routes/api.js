@@ -40,7 +40,7 @@ function toCsv(objArr, keysToExclude) {
         res = res + row.join() + "\n";
     });
     return res;
-};
+}
 
 exports.download = function (req, res) {
   var type, id, sector, db_str, collection, promise;
@@ -72,7 +72,6 @@ exports.matching_create = function (req, res) {
   nmis = req.body.nmis;
   lga = req.body.lga;
   if(lga.matched || nmis.matched){
-    console.log('rejected');
     res.json({'message':"either facility already paired"});
     return;
   }
@@ -143,3 +142,49 @@ exports.matching_delete = function (req, res) {
     return;
   });
 };
+
+exports.matching_reject = function (req, res) {
+  var sector, reason, fac, db_str, nmis_col, nmis_promise;
+  sector = req.params.sector;
+  fac = req.body;
+  nmis_id = fac._id;
+  reason = fac.rejected;
+
+  nmis_col = db.get('nmis_list_'+sector);
+
+  nmis_promise =nmis_col.update(
+    {'_id':nmis_id}, {$set:
+      {'rejected':reason}
+    });
+  nmis_promise.on('success', function(b){
+    res.json({'message':'affirmative'});
+  });
+  nmis_promise.on('error', function(e){
+    res.json({'message':'database error','err':e});
+    return;
+  });
+
+};
+
+exports.matching_clearreject = function (req, res) {
+  var sector, reason, fac, db_str, collection, nmis_col, nmis_promise;
+  sector = req.params.sector;
+  fac = req.body;
+  nmis_id = fac._id;
+
+  nmis_col = db.get('nmis_list_'+sector);
+
+  nmis_promise =nmis_col.update(
+    {'_id':nmis_id}, {$unset:
+      {'rejected':1}
+    });
+  nmis_promise.on('success', function(b){
+    res.json({'message':'affirmative'});
+  });
+  nmis_promise.on('error', function(e){
+    res.json({'message':'database error','err':e});
+    return;
+  });
+
+};
+

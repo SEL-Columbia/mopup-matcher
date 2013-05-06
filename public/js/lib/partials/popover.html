@@ -1,0 +1,10 @@
+<form name="popoverForm">
+  <!--<p ng-bind-html-unsafe="popover.content"></p>-->
+	<label><input name="nomatchreason" value="not in use" ng-model="facility.rejected" ng-change="other = null" type="radio" /><span>Not a registered facility: no longer in use/not functional<span></label>
+	<label><input name="nomatchreason" value="not existing" ng-model="facility.rejected" ng-change="other = null" type="radio" /><span>Not a registered facility: facility no longer exists</span></label>
+	<label><input name="nomatchreason" value="duplicate" ng-model="facility.rejected" ng-change="other = null" type="radio" /><span>Duplicate facility</span></label>
+	<label><input name="nomatchreason" value="other" ng-model="other" ng-change="facility.rejected = null" type="radio" /><span>Other</span></label>
+	<input type="text" ng-show="other" ng-model="facility.rejected" placeholder="enter reason (short)"/>
+	<button class="btn" ng-click="reject(facility); dismiss()">OK</button>
+	<button type="button" class="btn last" ng-click="clearRejection(facility); other=null; dismiss()">Clear</button>
+</form>
