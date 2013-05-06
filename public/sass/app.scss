@@ -165,6 +165,9 @@ table, .table{
   table-layout: fixed;
   background-color: $bg;
   margin-bottom: 0;
+  th {
+    a, th a:active, a:hover{
+      color:black;} }
   th, td{
     padding: 2px;
     word-wrap: break-word;
