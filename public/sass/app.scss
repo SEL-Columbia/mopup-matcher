@@ -176,7 +176,6 @@ table, .table{
     &:first-child{
       width: 55px; }
     &:nth-child(2), &:nth-child(2){
-      text-align: center;
       width: 6%;}
     &:nth-child(3){
       width: 15%;}
@@ -196,6 +195,8 @@ table, .table{
         visibility: visible;}
       &:first-child{
         @include star;} }
+    &.matched{
+      display: none; }
     &.rejected:not(.active){
       /*opacity: 0.5;*/ 
         color: #bbbbbb;
