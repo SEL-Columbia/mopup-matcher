@@ -5,9 +5,13 @@ var db = require('monk')('localhost/mopup'),
     filepath = 'csvs/';
 
 var nmis_health = 'BASELINE_hospitals.csv',
+  nmis_health_col = 'nmis_list_health',
   nmis_edu = 'BASELINE_schools.csv',
+  nmis_edu_col = 'nmis_list_edu',
   lga_health = 'FACILITY_LIST_hospitals.csv',
+  lga_health_col = 'lga_list_health',
   lga_edu = 'FACILITY_LIST_schools.csv';
+  lga_edu_col = 'lga_list_edu';
 
 
 var read = function(filename,cb){
@@ -63,24 +67,34 @@ var insert_json_bulk = function(col_name, json){
 };
 
 
-var insert_json = function(col_name, json){
+var insert_json = function(col_name, json, cb){
   var collection = db.get(col_name);
   for (var i=0; i<json.length; i++){
     var current_json = json[i];
     var long_id = current_json.long_id;
-    var promise = collection.update({"long_id":long_id},{$set:current_json},{upsert:true});
-    promise.on('success', function(b){
-    });
+    var promise = collection.update({"long_id":long_id},
+        {$set:current_json},
+        {upsert:true});
     promise.on('error', function(e){
       console.log('error in find',e);
     });
   }
-  console.log('done');
+  cb();
 };
 
-file2json(nmis_health, function(json){
-  console.log(json, json.length);
+var file2db = function(file, db, cb){
+  file2json(file, function(json){
+    insert_json(db, json, cb);
+  });
+};
 
-  insert_json('nmis_list_health',json);
-});
+async.series([
+  function(callback){console.log('start'),callback();},
+  function(callback){file2db(nmis_health, nmis_health_col, callback);},
+  function(callback){file2db(nmis_edu, nmis_edu_col, callback);},
+  function(callback){file2db(lga_health, lga_health_col, callback);},
+  function(callback){file2db(lga_edu, lga_edu_col, callback);},
+  function(callback){console.log('done'),callback();}
+]);
+
 
