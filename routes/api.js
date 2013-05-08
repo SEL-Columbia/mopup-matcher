@@ -67,10 +67,11 @@ exports.download = function (req, res) {
 };
 
 exports.matching_create = function (req, res) {
-  var sector, db_str, collection, lga_col, nmis_col, lga_promise, nmis_promise;
+  var sector, db_str, collection, timestamp, lga_col, nmis_col, lga_promise, nmis_promise;
   sector = req.params.sector;
   nmis = req.body.nmis;
   lga = req.body.lga;
+  timestamp = new Date();
   if(lga.matched || nmis.matched){
     res.json({'message':"either facility already paired"});
     return;
@@ -80,12 +81,14 @@ exports.matching_create = function (req, res) {
   lga_promise = lga_col.update(
       {'_id':lga._id}, {$set:
         {'matched':nmis._id,
+          'modified_date': timestamp,
           'nmis':nmis}
       });
   lga_promise.on('success', function(b){
     nmis_promise =nmis_col.update(
       {'_id':nmis._id}, {$set:
         {'matched':lga._id,
+          'modified_date': timestamp,
           'lga':lga}
       });
       nmis_promise.on('success', function(b){
@@ -124,9 +127,15 @@ exports.matching_delete = function (req, res) {
   var nmis = lga.nmis;
   var lga_col = db.get('lga_list_' + sector);
   var nmis_col = db.get('nmis_list_' + sector);
-  var lga_promise = lga_col.update(lga, {$unset: { 'matched' : 1, 'nmis' : 1 }});
+  var lga_promise = lga_col.update(lga, {$unset: { 
+    'matched' : 1, 
+    'modified_date': 1, 
+    'nmis' : 1 }});
   lga_promise.on('success', function(b){
-    var nmis_promise = nmis_col.update({"_id": nmis_id}, {$unset: { 'matched' : 1, 'lga' :1 }});
+    var nmis_promise = nmis_col.update({"_id": nmis_id}, {$unset: { 
+      'matched' : 1, 
+      'modified_date': 1, 
+      'lga' :1 }});
     nmis_promise.on('success', function(b){
       res.json({'message':'affirmative'});
       return;
@@ -144,17 +153,18 @@ exports.matching_delete = function (req, res) {
 };
 
 exports.matching_reject = function (req, res) {
-  var sector, reason, fac, db_str, nmis_col, nmis_promise;
+  var sector, reason, timestamp, fac, db_str, nmis_col, nmis_promise;
   sector = req.params.sector;
   fac = req.body;
   nmis_id = fac._id;
   reason = fac.rejected;
+  timestamp = new Date();
 
   nmis_col = db.get('nmis_list_'+sector);
 
   nmis_promise =nmis_col.update(
     {'_id':nmis_id}, {$set:
-      {'rejected':reason}
+      {'rejected':reason, 'modified_date':timestamp}
     });
   nmis_promise.on('success', function(b){
     res.json({'message':'affirmative'});
@@ -176,7 +186,7 @@ exports.matching_clearreject = function (req, res) {
 
   nmis_promise =nmis_col.update(
     {'_id':nmis_id}, {$unset:
-      {'rejected':1}
+      {'rejected':1, 'modified_date':1}
     });
   nmis_promise.on('success', function(b){
     res.json({'message':'affirmative'});
