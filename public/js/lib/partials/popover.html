@@ -1,5 +1,6 @@
 <form name="popoverForm">
   <!--<p ng-bind-html-unsafe="popover.content"></p>-->
+	<label><input name="nomatchreason" value="no match in facility list" ng-model="facility.rejected" ng-change="other = null" type="radio" /><span>Exists, but omitted in facility list<span></label>
 	<label><input name="nomatchreason" value="not in use" ng-model="facility.rejected" ng-change="other = null" type="radio" /><span>Not a registered facility: no longer in use/not functional<span></label>
 	<label><input name="nomatchreason" value="not existing" ng-model="facility.rejected" ng-change="other = null" type="radio" /><span>Not a registered facility: facility no longer exists</span></label>
 	<label><input name="nomatchreason" value="duplicate" ng-model="facility.rejected" ng-change="other = null" type="radio" /><span>Duplicate facility</span></label>
