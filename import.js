@@ -1,4 +1,3 @@
-
 var db = require('monk')('localhost/mopup'),
     async = require('async'),
     fs = require('fs'),
@@ -25,7 +24,7 @@ var file2json = function(filename, cb){
     var len = arr.length;
     var header_arr = arr[0];
     var json = [];
-    for (var i=1; i< len; i++) {
+    for (var i=1; i< len-1; i++) {
       var line_obj = line2json(header_arr, arr[i]);
       json.push(line_obj);
     }
@@ -52,13 +51,13 @@ var line2json = function(header_arr, line){
 var insert_json_bulk = function(col_name, json){
   var collection = db.get(col_name);
   //get everything into memory
-  var promise = collection.findOne({'lga':'IKARA'},'random_id');
+  console.log(json);
+  var promise = collection.insert(json);
   promise.on('success', function(b){
-    console.log(typeof b);
     console.log(b);
   });
-  promise.on('error', function(e){
-    console.log('error in find',e);
+  promise.on('error',function(e){
+    console.log(e);
   });
   console.log('done');
 };
@@ -67,19 +66,10 @@ var insert_json_bulk = function(col_name, json){
 var insert_json = function(col_name, json){
   var collection = db.get(col_name);
   for (var i=0; i<json.length; i++){
-    var random_id = json[i].random_id;
-    var promise = collection.find({"random_id":random_id});
+    var current_json = json[i];
+    var long_id = current_json.long_id;
+    var promise = collection.update({"long_id":long_id},{$set:current_json},{upsert:true});
     promise.on('success', function(b){
-      if (b===null){
-        var ins_pro = collection.insert(json[i]);
-        ins_pro.on('success', function(b){
-          console.log('inserted', b);
-          return;
-        });
-        ins_pro.on('error', function(e){
-          console.log('error', e);
-        });
-      }
     });
     promise.on('error', function(e){
       console.log('error in find',e);
@@ -89,6 +79,7 @@ var insert_json = function(col_name, json){
 };
 
 file2json(nmis_health, function(json){
+  console.log(json, json.length);
 
   insert_json('nmis_list_health',json);
 });
