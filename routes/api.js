@@ -57,8 +57,8 @@ exports.download = function (req, res) {
   promise.on('success', function(b){
     res.attachment(type + "_" + sector + '_data__lga_' + id + '.csv');
     var keysToExclude = (type=="nmis") ?
-                        ['_id'] :
-                        ['_id', 'nmis'];
+                        ['_id', 'lga', 'modified_date','long_id'] :
+                        ['_id', 'nmis', 'modified_date','long_id'];
     res.end(toCsv(b, keysToExclude));
   });
   promise.on('error', function(e){
