@@ -53,6 +53,7 @@ var line2json = function(header_arr, line){
 
 
 var insert_json_bulk = function(col_name, json){
+  //this is not used now
   var collection = db.get(col_name);
   //get everything into memory
   console.log(json);
@@ -75,9 +76,6 @@ var insert_json = function(col_name, json, cb){
     var promise = collection.update({"long_id":long_id},
         {$set:current_json},
         {upsert:true});
-    promise.on('error', function(e){
-      console.log('error in find',e);
-    });
   }
   cb();
 };
