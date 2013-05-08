@@ -123,13 +123,20 @@ exports.matching_create = function (req, res) {
 exports.matching_delete = function (req, res) {
   var sector = req.params.sector;
   var lga = req.body;
+  var lga_id = lga._id;
   var nmis_id = lga.matched;
   var nmis = lga.nmis;
   var lga_col = db.get('lga_list_' + sector);
   var nmis_col = db.get('nmis_list_' + sector);
-  var lga_promise = lga_col.update(lga, {$unset: {'matched' : 1, 'modified_date' : 1, 'nmis' : 1}});
+  var lga_promise = lga_col.update({"_id":lga_id}, {$unset: {
+    'matched' : 1, 
+    'modified_date' : 1, 
+    'nmis' : 1}});
   lga_promise.on('success', function(b){
-    var nmis_promise = nmis_col.update({"_id": nmis_id}, {$unset: {'matched' : 1, 'modified_date' : 1, 'lga' : 1}});
+    var nmis_promise = nmis_col.update({"_id": nmis_id}, {$unset: {
+      'matched' : 1, 
+      'modified_date' : 1, 
+      'lga' : 1}});
     nmis_promise.on('success', function(b){
       res.json({'message':'affirmative'});
       return;
