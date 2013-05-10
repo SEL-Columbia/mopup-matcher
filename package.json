@@ -12,6 +12,7 @@
       "coffee-script": "*",
       "underscore": "*",
       "jquery": "*",
+      "mongodb": "*",
       "monk": "*"
   }
 }
