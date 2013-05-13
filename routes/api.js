@@ -33,8 +33,8 @@ exports.lga_summaries = function (req, res) {
         },
         //callback
         function(err, results){
-          console.log(results);
           res.json(results);
+          client.close();
         }
       );
     });
@@ -42,6 +42,37 @@ exports.lga_summaries = function (req, res) {
 };
 
 exports.state_summaries = function (req, res) {
+  client.open(function(e, p_client){
+    client.collection('nmis_list_edu',function(err, collection){
+      console.log("in the first cb");
+      collection.group(
+        //keys
+        {'state':1},
+        //condition
+        {},
+        //inditials
+        {sum:0, matched:0, rejected:0, finished:0, left:0},
+        //reduce
+        function(curr, result){
+          result.sum+=1;
+          if(curr.matched){
+            result.finished+=1;
+            result.matched += 1;
+          }else if(curr.rejected){
+            result.finished += 1;
+            result.rejected += 1;
+          }else{
+            result.left+=1;
+          }
+        },
+        //callback
+        function(err, results){
+          res.json(results);
+          client.close();
+        }
+      );
+    });
+  });
 };
 
 exports.facilities = function (req, res) {
