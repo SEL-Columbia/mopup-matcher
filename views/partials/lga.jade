@@ -2,10 +2,8 @@ html
   body
     .main-wrapper
       .main
-        section#nmis_list(ng-controller='NMISCtrl')
+        section#nmis_list(ng-controller='TotalsCtrl')
           .inner
-            label.search Search
-              input(ng-model="nmisHealthSearch", type="search")
             h3 LGA PROGRESS:&nbsp;
             .guidance 
             .filler
@@ -13,10 +11,6 @@ html
               table.table
                 thead
                   tr
-                    th ID
-                    th
-                      a.hover(ng-click = "predicate = 'region'; reverse = false") region
-                      i.carrot.icon-chevron-down(ng-show = "predicate == 'region'")
                     th
                       a.hover(ng-click = "predicate = 'state'; reverse = false") state
                       i.carrot.icon-chevron-down(ng-show = "predicate == 'state'")
@@ -24,25 +18,14 @@ html
                       a.hover(ng-click = "predicate = 'lga'; reverse = false") lga
                       i.carrot.icon-chevron-down(ng-show = "predicate == 'lga'")
                     th
-                      a.hover(ng-click = "predicate = 'health'; reverse = false") heath(%) 
-                      i.carrot.icon-chevron-down(ng-show = "predicate == 'health'")
-                    th
-                      a.hover(ng-click = "predicate = 'education'; reverse = false") education(%) 
-                      i.carrot.icon-chevron-down(ng-show = "predicate == 'education'")
-                    th
                       a.hover(ng-click = "predicate = 'total'; reverse = false") total(%)
                       i.carrot.icon-chevron-down(ng-show = "predicate == 'total'")
             .table-wrapper
               table.table
                 tbody
-                  tr.hover(ng-repeat='lga in lgas | orderBy:predicate:reverse | filter:nmisHealthSearch')
-                    td 
-                    td {{lga.short_id}}
-                    td {{lga.region}}
+                  tr.hover(ng-repeat='lga in totals | orderBy:predicate:reverse | filter:nmisHealthSearch')
                     td {{lga.state}}
-                    td {{lga.name}}
-                    td {{lga.health}}
-                    td {{lga.education}}
+                    td {{lga.lga}}
                     td {{lga.total}}
                       a.btn-nomatch(ng-class='{remove: !facility.rejected, addback: facility.rejected}', bs-popover="'../js/lib/partials/popover.html'", data-unique="1", data-placement="bottom", data-title="{{facility.facility_name}} cannot be matched")
 

@@ -8,7 +8,15 @@ var db = require('monk')('localhost/mopup'),
   client = new mongodb.Db('mopup', mongoserver, {w:1});
 
 exports.lga_summaries = function (req, res) {
-
+  var db_str = "matched_totals";
+  var collection = db.get(db_str);
+  var promise = collection.find({});
+  promise.on('success', function(b) {
+      res.json(b);
+  });
+  promise.on('error', function(e) {
+    res.json(e);
+  });
 };
 
 exports.state_summaries = function (req, res) {

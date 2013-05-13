@@ -11,6 +11,16 @@ var clean_root_scope = function($rootScope){
   $rootScope.current_state_name = undefined;
 };
 
+var TotalsCtrl = function() {
+  return function($scope, $rootScope, $routeParams, $http, $location) {
+      var path = '/api/summaries/lga';
+      var promise = $http.get(path);
+      promise.success(function(b) {
+          $scope.totals = b;
+      });
+    };
+};
+
 var RootCtrl = function(sector){
   return function($scope, $rootScope, $routeParams, $http, $location) {
     clean_root_scope($rootScope);
