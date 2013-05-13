@@ -8,6 +8,7 @@
       "express-csv": "*",
       "jade": ">= 0.0.1",
       "async": "*",
+      "node-sass": "*",
       "natural": "*",
       "coffee-script": "*",
       "underscore": "*",
