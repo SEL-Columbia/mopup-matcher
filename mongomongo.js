@@ -1,5 +1,5 @@
 var groups = db.nmis_list_edu.group({
-  key:{'state':1},
+  key:{'lga_id':1},
   initial: {sum:0, matched:0, rejected:0, finished:0, left:0},
   reduce: function(curr, result){
     result.sum+=1;
@@ -14,4 +14,4 @@ var groups = db.nmis_list_edu.group({
     }
   }
 });
-printjson(groups.length);
+printjson(groups);
