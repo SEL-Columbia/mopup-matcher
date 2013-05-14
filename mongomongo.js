@@ -15,6 +15,16 @@ var groups = db.nmis_list_edu.group({
     }else{
       result.left+=1;
     }
+    if(!(result.state)){
+      if(curr.state){
+        result.state = curr.state;
+      }
+    }
+    if(!(result.lga)){
+      if(typeof curr.lga == 'string'){
+        result.lga = curr.lga;
+      }
+    }
   }
 });
 groups.forEach(function(g) {db.matched_totals_tmp.save(g)});
@@ -32,6 +42,16 @@ var groups = db.nmis_list_health.group({
       result.rejected += 1;
     }else{
       result.left+=1;
+    }
+    if(!(result.state)){
+      if(curr.state){
+        result.state = curr.state;
+      }
+    }
+    if(!(result.lga)){
+      if(typeof curr.lga == 'string'){
+        result.lga = curr.lga;
+      }
     }
   }
 });
@@ -62,6 +82,8 @@ var groups = db.matched_totals_tmp.group({
     result.finished += curr.finished;
     result.left += curr.left;
     result.rejected += curr.rejected;
+    result.state = curr.state;
+    result.lga = curr.lga;
   }
 });
 /* TOTALLY RE-WRITE THE TOTALS TABLE */
