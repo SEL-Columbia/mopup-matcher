@@ -23,6 +23,8 @@ var groups = db.nmis_list_edu.group({
     if(!(result.lga)){
       if(typeof curr.lga == 'string'){
         result.lga = curr.lga;
+      }else if ('lga' in curr && 'lga' in curr.lga){
+        result.lga = curr.lga.lga;
       }
     }
   }
@@ -51,6 +53,8 @@ var groups = db.nmis_list_health.group({
     if(!(result.lga)){
       if(typeof curr.lga == 'string'){
         result.lga = curr.lga;
+      }else if ('lga' in curr && 'lga' in curr.lga){
+        result.lga = curr.lga.lga;
       }
     }
   }
