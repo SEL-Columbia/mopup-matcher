@@ -1,7 +1,8 @@
 
-db.matched_totals.drop()
+/* HEALTH + EDUCATION -- INTERMEDIARY RESULTS */
+db.matched_totals_tmp.drop()
 var groups = db.nmis_list_edu.group({
-  key:{'state':1, 'lga': 1, 'lga_id':1},
+  key:{'lga_id':1},
   initial: {total:0, matched:0, rejected:0, finished:0, left:0, education: true},
   reduce: function(curr, result){
     result.total+=1;
@@ -16,10 +17,10 @@ var groups = db.nmis_list_edu.group({
     }
   }
 });
-groups.forEach(function(g) {db.matched_totals.save(g)});
+groups.forEach(function(g) {db.matched_totals_tmp.save(g)});
 
 var groups = db.nmis_list_health.group({
-  key:{'state':1, 'lga_id':1},
+  key:{'lga_id':1},
   initial: {total:0, matched:0, rejected:0, finished:0, left:0, health: true},
   reduce: function(curr, result){
     result.total+=1;
@@ -34,4 +35,37 @@ var groups = db.nmis_list_health.group({
     }
   }
 });
+groups.forEach(function(g) {db.matched_totals_tmp.save(g)});
+
+/* GROUP TMP TABLE INTO NON TMP TABLE */
+var groups = db.matched_totals_tmp.group({
+  key:{'lga_id':1},
+  initial: {total:0, matched:0, rejected:0, finished:0, left:0, full: true,
+            edu_total:0, edu_matched:0, edu_rejected:0, edu_finished:0, edu_left:0,
+            health_total:0, health_matched:0, health_rejected:0, health_finished:0, health_left:0},
+  reduce: function(curr, result){
+    if (curr.education) {
+      result.edu_total += curr.total;
+      result.edu_matched += curr.matched;
+      result.edu_finished += curr.finished;
+      result.edu_left += curr.left;
+      result.edu_rejected += curr.rejected;
+    } else { // curr.health
+      result.health_total += curr.total;
+      result.health_matched += curr.matched;
+      result.health_finished += curr.finished;
+      result.health_left += curr.left;
+      result.health_rejected += curr.rejected;
+    }
+    result.total += curr.total;
+    result.matched += curr.matched;
+    result.finished += curr.finished;
+    result.left += curr.left;
+    result.rejected += curr.rejected;
+  }
+});
+/* TOTALLY RE-WRITE THE TOTALS TABLE */
+db.matched_totals_tmp.drop()
+db.matched_totals.drop()
+db.matched_totals.drop()
 groups.forEach(function(g) {db.matched_totals.save(g)});

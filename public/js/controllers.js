@@ -15,8 +15,14 @@ var TotalsCtrl = function() {
   return function($scope, $rootScope, $routeParams, $http, $location) {
       var path = '/api/summaries/lga';
       var promise = $http.get(path);
-      promise.success(function(b) {
-          $scope.totals = b;
+      promise.success(function(data) {
+          console.log('TOTALS',data);
+          $scope.totals = data.map(function(datum) {
+            datum.pctfinished = Math.round(100 * datum.finished / datum.total);
+            datum.edu_pctfinished = Math.round(100 * datum.edu_finished / datum.edu_total);
+            datum.health_pctfinished = Math.round(100 * datum.health_finished / datum.health_total);
+          });
+          $scope.totals = data;
       });
     };
 };

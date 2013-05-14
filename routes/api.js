@@ -10,7 +10,7 @@ var db = require('monk')('localhost/mopup'),
 exports.lga_summaries = function (req, res) {
   var db_str = "matched_totals";
   var collection = db.get(db_str);
-  var promise = collection.find({});
+  var promise = collection.find({full:true}); // full: true => all totals
   promise.on('success', function(b) {
       res.json(b);
   });
