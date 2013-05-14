@@ -10,10 +10,9 @@ var db = require('monk')('localhost/mopup'),
 exports.lga_summaries = function (req, res) {
   client.open(function(e, p_client){
     client.collection('nmis_list_edu',function(err, collection){
-      console.log("in the first cb");
       collection.group(
         //keys
-        {'lga_id':1},
+        {'lga_id':1, 'state':1, 'zone':1},
         //condition
         {},
         //inditials
@@ -44,10 +43,9 @@ exports.lga_summaries = function (req, res) {
 exports.state_summaries = function (req, res) {
   client.open(function(e, p_client){
     client.collection('nmis_list_edu',function(err, collection){
-      console.log("in the first cb");
       collection.group(
         //keys
-        {'state':1},
+        {'state':1, 'zone':1},
         //condition
         {},
         //inditials
