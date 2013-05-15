@@ -35,6 +35,8 @@ app.get('/partials/:name', routes.partials);
 
 app.get('/api/facilities/:type/:id/:sector', api.facilities);
 app.get('/api/download/:type/:id/:sector', api.download);
+app.get('/api/summaries/lga', api.lga_summaries);
+app.get('/api/summaries/state', api.state_summaries);
 app.post('/api/matching/:sector/create', api.matching_create);
 app.post('/api/matching/:sector/delete', api.matching_delete);
 app.post('/api/matching/:sector/reject', api.matching_reject);

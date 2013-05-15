@@ -2,7 +2,25 @@
  * Serve JSON to our AngularJS client
  */
 var db = require('monk')('localhost/mopup'),
-  _ = require('underscore');
+  _ = require('underscore'),
+  mongodb = require('mongodb'),
+  mongoserver = new mongodb.Server('127.0.0.1', 27017, {}),
+  client = new mongodb.Db('mopup', mongoserver, {w:1});
+
+exports.lga_summaries = function (req, res) {
+  var db_str = "matched_totals";
+  var collection = db.get(db_str);
+  var promise = collection.find({full:true}); // full: true => all totals
+  promise.on('success', function(b) {
+      res.json(b);
+  });
+  promise.on('error', function(e) {
+    res.json(e);
+  });
+};
+
+exports.state_summaries = function (req, res) {
+};
 
 exports.facilities = function (req, res) {
   var type, id, sector, db_str, collection, promise;
@@ -25,7 +43,7 @@ exports.facilities = function (req, res) {
 };
 
 /* Turn an array of objects into a csv */
-function toCsv(objArr, keysToExclude) {
+var toCsv = function(objArr, keysToExclude) {
     var res = "";
     // First we need to find all the keys that we might need for this csv
     var allKeys = _.unique(_.flatten(_.map(objArr, function(o) {
@@ -40,7 +58,7 @@ function toCsv(objArr, keysToExclude) {
         res = res + row.join() + "\n";
     });
     return res;
-}
+};
 
 exports.download = function (req, res) {
   var type, id, sector, db_str, collection, promise;
