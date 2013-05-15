@@ -10,9 +10,9 @@ var db = require('monk')('localhost/mopup'),
 var clientReduce = function(collection, level, cb){
   var reduce_keys;
   if(level==='lga'){
-    reduce_keys = {'lga_id':1, 'state':1, 'zone':1};
+    reduce_keys = {'lga_id':1};
   }else if(level === 'state'){
-    reduce_keys = {'state':1, 'zone':1};
+    reduce_keys = {'state':1};
   }
   client.collection(collection,function(err, col){
     col.group(
@@ -21,7 +21,7 @@ var clientReduce = function(collection, level, cb){
       //condition
       {},
       //inditials
-      {sum:0, matched:0, rejected:0, finished:0, left:0, type:collection},
+      {sum:0, matched:0, rejected:0, finished:0, left:0},
       //reduce
       function(curr, result){
         result.sum+=1;
@@ -33,6 +33,20 @@ var clientReduce = function(collection, level, cb){
           result.rejected += 1;
         }else{
           result.left+=1;
+        }
+        if(!(result.state)){
+          if(curr.state){
+            result.state = curr.state;
+          }
+        }
+        if(!(result.lga)){
+          if(curr.lga){
+            if (typeof curr.lga == 'string' && curr.lga !== ''){
+              result.lga = curr.lga;
+            }else if (typeof curr.lga == 'object'){
+              result.lga = curr.lga.lga;
+            }
+          }
         }
       },
       //callback
@@ -51,7 +65,7 @@ exports.lga_summaries = function (req, res) {
           d[m.lga_id] = m;
         });
         health_result.forEach(function(n){
-          d[n.lga_id] = [d[n.lga_id],n];
+          d[n.lga_id] = {edu:d[n.lga_id],health:n};
         });
         res.json(d);
         client.close();
@@ -62,36 +76,53 @@ exports.lga_summaries = function (req, res) {
 
 exports.state_summaries = function (req, res) {
   client.open(function(e, p_client){
-    client.collection('nmis_list_edu',function(err, collection){
-      collection.group(
-        //keys
-        {'state':1, 'zone':1},
-        //condition
-        {},
-        //inditials
-        {sum:0, matched:0, rejected:0, finished:0, left:0},
-        //reduce
-        function(curr, result){
-          result.sum+=1;
-          if(curr.matched){
-            result.finished+=1;
-            result.matched += 1;
-          }else if(curr.rejected){
-            result.finished += 1;
-            result.rejected += 1;
-          }else{
-            result.left+=1;
-          }
-        },
-        //callback
-        function(err, results){
-          res.json(results);
-          client.close();
-        }
-      );
+    clientReduce('nmis_list_edu','state',function(edu_result){
+      clientReduce('nmis_list_health','state',function(health_result){
+        var d = {};
+        edu_result.forEach(function(m){
+          d[m.state] = m;
+        });
+        health_result.forEach(function(n){
+          d[n.state] = {edu:d[n.lga_id],health:n};
+        });
+        res.json(d);
+        client.close();
+      });
     });
   });
 };
+//exports.state_summaries = function (req, res) {
+//  client.open(function(e, p_client){
+//    client.collection('nmis_list_edu',function(err, collection){
+//      collection.group(
+//        //keys
+//        {'state':1, 'zone':1},
+//        //condition
+//        {},
+//        //inditials
+//        {sum:0, matched:0, rejected:0, finished:0, left:0},
+//        //reduce
+//        function(curr, result){
+//          result.sum+=1;
+//          if(curr.matched){
+//            result.finished+=1;
+//            result.matched += 1;
+//          }else if(curr.rejected){
+//            result.finished += 1;
+//            result.rejected += 1;
+//          }else{
+//            result.left+=1;
+//          }
+//        },
+//        //callback
+//        function(err, results){
+//          res.json(results);
+//          client.close();
+//        }
+//      );
+//    });
+//  });
+//};
 
 exports.facilities = function (req, res) {
   var type, id, sector, db_str, collection, promise;
