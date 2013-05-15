@@ -33,12 +33,12 @@ html
               table.table
                 tbody
                   tr.hover(ng-repeat='totalDatum in totals | orderBy:predicate:reverse | filter:nmisHealthSearch')
-                    td {{totalDatum.lga_id}}
-                    td {{totalDatum.state}}
-                    td {{totalDatum.lga}}
-                    td {{totalDatum.edu_pctfinished}} % ( {{totalDatum.edu_finished}} / {{totalDatum.edu_total}})
-                    td {{totalDatum.health_pctfinished}} % ( {{totalDatum.health_finished}} / {{totalDatum.health_total}})
-                    td {{totalDatum.pctfinished}} % ( {{totalDatum.finished}} / {{totalDatum.total}})
+                    td {{totalDatum.edu.lga_id}}
+                    td {{totalDatum.edu.state}}
+                    td {{totalDatum.edu.lga}}
+                    td {{totalDatum.edu_pctfinished}} % ( {{totalDatum.edu.finished}} / {{totalDatum.edu.sum}})
+                    td {{totalDatum.health_pctfinished}} % ( {{totalDatum.health.finished}} / {{totalDatum.health.sum}})
+                    td {{totalDatum.pctfinished}} % ( {{totalDatum.edu.finished + totalDatum.health.finished}} / {{totalDatum.edu.sum + totalDatum.health.sum}})
   script
     $('body, .main-wrapper, .main, .inner').css('height', 'auto');
     $('.main').css('width','100%');

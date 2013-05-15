@@ -61,13 +61,14 @@ exports.lga_summaries = function (req, res) {
     clientReduce('nmis_list_edu','lga',function(edu_result){
       clientReduce('nmis_list_health','lga',function(health_result){
         var d = {};
+        var fin = [];
         edu_result.forEach(function(m){
           d[m.lga_id] = m;
         });
         health_result.forEach(function(n){
-          d[n.lga_id] = {edu:d[n.lga_id],health:n};
+          fin.push({edu:d[n.lga_id],health:n});
         });
-        res.json(d);
+        res.json(fin);
         client.close();
       });
     });
