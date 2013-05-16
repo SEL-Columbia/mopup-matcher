@@ -12,9 +12,6 @@ html
                 thead
                   tr
                     th
-                      a.hover(ng-click = "predicate = 'lga_id'; reverse = false") LGA_ID 
-                      i.carrot.icon-chevron-down(ng-show = "predicate == 'lga_id'")
-                    th
                       a.hover(ng-click = "predicate = 'state'; reverse = true") STATE
                       i.carrot.icon-chevron-down(ng-show = "predicate == 'state'")
                     th
@@ -30,7 +27,6 @@ html
               table.table
                 tbody
                   tr.hover(ng-repeat='totalDatum in totals | orderBy:predicate:reverse | filter:nmisHealthSearch')
-                    td {{totalDatum.lga_id}}
                     td {{totalDatum.state}}
                     td {{totalDatum.edu_pctfinished}} % ( {{totalDatum.edu_finished}} / {{totalDatum.edu_total}})
                     td {{totalDatum.health_pctfinished}} % ( {{totalDatum.health_finished}} / {{totalDatum.health_total}})
