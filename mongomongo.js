@@ -78,17 +78,20 @@ var populating = function(type){
   };
 };
 
-function reduce_nmis(type){
-  var edu_groups = db.nmis_list_edu.group(reducing(type, 'edu'));
+function reduce_nmis(dataset, type){
+  var edu_groups = db[dataset+'_list_edu'].group(reducing(type, 'edu'));
   db.matched_totals_tmp.save(edu_groups);
-  var health_groups = db.nmis_list_health.group(reducing(type, 'health'));
+  var health_groups = db[dataset+'_list_health'].group(reducing(type, 'health'));
   db.matched_totals_tmp.save(health_groups);
   var final_nmis = db.matched_totals_tmp.group(populating(type));
   db.matched_totals_tmp.drop();
-  db.matched_totals.drop();
-  db.matched_totals.save(final_nmis);
+  db['matched_totals_' + dataset +'_by_' + type].drop();
+  db['matched_totals_'+dataset +'_by_' + type].save(final_nmis);
 }
 
-reduce_nmis('state');
+reduce_nmis('nmis','lga');
+reduce_nmis('nmis','state');
+reduce_nmis('lga','lga');
+reduce_nmis('lga','state');
 
 

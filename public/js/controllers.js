@@ -11,12 +11,17 @@ var clean_root_scope = function($rootScope){
   $rootScope.current_state_name = undefined;
 };
 
-var TotalsCtrl = function() {
+var TotalsCtrl = function(dataset_type, type) {
   return function($scope, $rootScope, $routeParams, $http, $location) {
-      var path = '/api/summaries/lga';
+      $scope.title = (type + ' progress in ' + dataset_type).toUpperCase();
+      $scope.type = type;
+      $scope.dataset_type = dataset_type;
+      console.log($scope.title);
+      var path = 'api/summaries/' + dataset_type + '/' + type;
+      console.log(path);
       var promise = $http.get(path);
       promise.success(function(data) {
-          console.log('TOTALS',data);
+          console.log('TOTALS',data.length);
           $scope.totals = data.map(function(datum) {
             datum.pctfinished = Math.round(100 * datum.finished / datum.total);
             datum.edu_pctfinished = Math.round(100 * datum.edu_finished / datum.edu_total);
