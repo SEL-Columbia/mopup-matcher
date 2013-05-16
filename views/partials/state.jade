@@ -4,6 +4,8 @@ html
       .main
         section#nmis_list
           .inner
+            label.search Search
+              input(ng-model="progressSearch", type="search")
             h3 {{title}}:&nbsp;
             .guidance 
             .filler
@@ -26,7 +28,7 @@ html
             .table-wrapper
               table.table
                 tbody
-                  tr.hover(ng-repeat='totalDatum in totals | orderBy:predicate:reverse | filter:nmisHealthSearch')
+                  tr.hover(ng-repeat='totalDatum in totals | orderBy:predicate:reverse | filter:progressSearch')
                     td {{totalDatum.state}}
                     td {{totalDatum.edu_pctfinished}} % ( {{totalDatum.edu_finished}} / {{totalDatum.edu_total}})
                     td {{totalDatum.health_pctfinished}} % ( {{totalDatum.health_finished}} / {{totalDatum.health_total}})

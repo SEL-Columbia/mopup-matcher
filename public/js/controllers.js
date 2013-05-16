@@ -16,12 +16,11 @@ var TotalsCtrl = function(dataset_type, type) {
       $scope.title = (type + ' progress in ' + dataset_type).toUpperCase();
       $scope.type = type;
       $scope.dataset_type = dataset_type;
-      console.log($scope.title);
+      $scope.predicate = 'pctfinished';
+      $scope.reverse = true;
       var path = 'api/summaries/' + dataset_type + '/' + type;
-      console.log(path);
       var promise = $http.get(path);
       promise.success(function(data) {
-          console.log('TOTALS',data.length);
           $scope.totals = data.map(function(datum) {
             datum.pctfinished = Math.round(100 * datum.finished / datum.total);
             datum.edu_pctfinished = Math.round(100 * datum.edu_finished / datum.edu_total);
