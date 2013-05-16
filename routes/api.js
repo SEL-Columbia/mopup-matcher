@@ -7,20 +7,20 @@ var db = require('monk')('localhost/mopup'),
   mongoserver = new mongodb.Server('127.0.0.1', 27017, {}),
   client = new mongodb.Db('mopup', mongoserver, {w:1});
 
-exports.lga_summaries = function (req, res) {
-  var db_str = "matched_totals";
-  var collection = db.get(db_str);
-  var promise = collection.find({full:true}); // full: true => all totals
-  promise.on('success', function(b) {
-      res.json(b);
-  });
-  promise.on('error', function(e) {
-    res.json(e);
-  });
+exports.summaries = function(dbstr){
+  return function (req, res) {
+    var db_str = dbstr;
+    var collection = db.get(db_str);
+    var promise = collection.find({full:true}); // full: true => all totals
+    promise.on('success', function(b) {
+        res.json(b);
+    });
+    promise.on('error', function(e) {
+      res.json(e);
+    });
+  };
 };
 
-exports.state_summaries = function (req, res) {
-};
 
 exports.facilities = function (req, res) {
   var type, id, sector, db_str, collection, promise;

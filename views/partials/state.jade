@@ -2,11 +2,9 @@ html
   body
     .main-wrapper
       .main
-        section#nmis_list(ng-controller='NMISCtrl')
+        section#nmis_list
           .inner
-            label.search Search
-              input(ng-model="nmisHealthSearch", type="search")
-            h3 STATE PORGRESS: &nbsp;
+            h3 {{title}}:&nbsp;
             .guidance 
             .filler
             .table-header-wrapper
@@ -14,28 +12,30 @@ html
                 thead
                   tr
                     th
-                    th ID
+                      a.hover(ng-click = "predicate = 'lga_id'; reverse = false") LGA_ID 
+                      i.carrot.icon-chevron-down(ng-show = "predicate == 'lga_id'")
                     th
-                      a.hover(ng-click = "predicate = 'ward'; reverse = false") Ward
-                      i.carrot.icon-chevron-down(ng-show = "predicate == 'ward'")
+                      a.hover(ng-click = "predicate = 'state'; reverse = true") STATE
+                      i.carrot.icon-chevron-down(ng-show = "predicate == 'state'")
                     th
-                      a.hover(ng-click = "predicate = 'facility_name'; reverse = false") Facility Name
-                      i.carrot.icon-chevron-down(ng-show = "predicate == 'facility_name'")
+                      a.hover(ng-click = "predicate = 'edu_pctfinished'; reverse = true") % Finished (EDUCATION)
+                      i.carrot.icon-chevron-down(ng-show = "predicate == 'edu_pctfinished'")
                     th
-                      a.hover(ng-click = "predicate = 'community'; reverse = false") Community
-                      i.carrot.icon-chevron-down(ng-show = "predicate == 'community'")
+                      a.hover(ng-click = "predicate = 'health_pctfinished'; reverse = true") % Finished (HEALTH)
+                      i.carrot.icon-chevron-down(ng-show = "predicate == 'health_pctfinished'")
                     th
-                      a.hover(ng-click = "predicate = 'facility_type'; reverse = false") Facility Type
-                      i.carrot.icon-chevron-down(ng-show = "predicate == 'facility_type'")
+                      a.hover(ng-click = "predicate = 'pctfinished'; reverse = true") % Finished (TOTAL)
+                      i.carrot.icon-chevron-down(ng-show = "predicate == 'pctfinished'")
             .table-wrapper
               table.table
                 tbody
-                  tr.hover(ng-repeat='facility in facilities | orderBy:predicate:reverse | filter:nmisHealthSearch')(ng-click="select(facility)", ng-class='{active: isSelected(facility), matched: isMatched(facility), rejected: facility.rejected}')
-                    td 
-                    td {{facility.short_id}}
-                    td {{facility.ward}}
-                    td {{facility.facility_name}}
-                    td {{facility.community}}
-                    td {{facility.facility_type}}
-                      a.btn-nomatch(ng-class='{remove: !facility.rejected, addback: facility.rejected}', bs-popover="'../js/lib/partials/popover.html'", data-unique="1", data-placement="bottom", data-title="{{facility.facility_name}} cannot be matched")
+                  tr.hover(ng-repeat='totalDatum in totals | orderBy:predicate:reverse | filter:nmisHealthSearch')
+                    td {{totalDatum.lga_id}}
+                    td {{totalDatum.state}}
+                    td {{totalDatum.edu_pctfinished}} % ( {{totalDatum.edu_finished}} / {{totalDatum.edu_total}})
+                    td {{totalDatum.health_pctfinished}} % ( {{totalDatum.health_finished}} / {{totalDatum.health_total}})
+                    td {{totalDatum.pctfinished}} % ( {{totalDatum.finished}} / {{totalDatum.total}})
+  script
+    $('body, .main-wrapper, .main, .inner').css('height', 'auto');
+    $('.main').css('width','100%');
 
