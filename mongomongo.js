@@ -7,13 +7,7 @@ var reducing = function(type, sector){
   }else if (sector === 'health'){
     ini = {total:0, matched:0, rejected:0, finished:0, left:0, health: true};
   }
-  if (type === 'state'){
-    key = {'state':1};
-  }else if (type === 'lga'){
-    key = {'lga_id':1};
-  }
-  return {
-    key: key,
+  var reduction = {
     initial: ini,
     reduce: function(curr, result){
       result.total+=1;
@@ -28,7 +22,7 @@ var reducing = function(type, sector){
       }
       if(!(result.state)){
         if(curr.state){
-          result.state = curr.state;
+          result.state = curr.state.toLowerCase();
         }
       }
       if(!(result.lga)){
@@ -40,6 +34,15 @@ var reducing = function(type, sector){
       }
     }
   };
+  if (type === 'state'){
+    var key = function(doc){
+      return {state_upper : doc.state.toUpperCase()};
+    };
+    reduction.keyf = key;
+  }else if (type === 'lga'){
+    reduction.key = {'lga_id':1};
+  }
+  return reduction;
 };
 
 var populating = function(type){
