@@ -6,8 +6,10 @@ angular.module('myApp', ['myApp.filters', 'myApp.services', 'myApp.directives', 
   config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
     $routeProvider.when('/:lgaid/health', {templateUrl: 'partials/health', controller: RootCtrl('health')});
     $routeProvider.when('/:lgaid/education', {templateUrl: 'partials/education', controller: RootCtrl('edu')});
-    $routeProvider.when('/progress/state', {templateUrl: 'partials/state', controller: RootCtrl('edu')});
-    $routeProvider.when('/progress/lga', {templateUrl: 'partials/lga', controller: TotalsCtrl('')});
+    $routeProvider.when('/progress/baseline/lga', {templateUrl: 'partials/lga', controller: TotalsCtrl('baseline','lga')});
+    $routeProvider.when('/progress/baseline/state', {templateUrl: 'partials/state', controller: TotalsCtrl('baseline','state')});
+    $routeProvider.when('/progress/facility_list/lga', {templateUrl: 'partials/lga', controller: TotalsCtrl('facility_list','lga')});
+    $routeProvider.when('/progress/facility_list/state', {templateUrl: 'partials/state', controller: TotalsCtrl('facility_list','state')});
     $routeProvider.otherwise({redirectTo: '/'});
     $locationProvider.html5Mode(true);
   }]);
