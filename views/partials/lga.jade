@@ -17,6 +17,9 @@ html
                       a.hover(ng-click = "predicate = 'lga_id'; reverse = false") LGA_ID 
                       i.carrot.icon-chevron-down(ng-show = "predicate == 'lga_id'")
                     th
+                      a.hover(ng-click = "predicate = 'zone'; reverse = true") ZONE
+                      i.carrot.icon-chevron-down(ng-show = "predicate == 'zone'")
+                    th
                       a.hover(ng-click = "predicate = 'state'; reverse = true") STATE
                       i.carrot.icon-chevron-down(ng-show = "predicate == 'state'")
                     th
@@ -36,6 +39,7 @@ html
                 tbody
                   tr.hover(ng-repeat='totalDatum in totals | orderBy:predicate:reverse | filter:progressSearch')
                     td {{totalDatum.lga_id}}
+                    td {{totalDatum.zone}}
                     td {{totalDatum.state}}
                     td {{totalDatum.lga}}
                     td {{totalDatum.edu_pctfinished}} % ( {{totalDatum.edu_finished}} / {{totalDatum.edu_total}})

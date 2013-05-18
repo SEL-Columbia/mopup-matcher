@@ -32,6 +32,11 @@ var reducing = function(type, sector){
           result.lga = curr.lga.lga;
         }
       }
+      if(!(result.zone)){
+        if(curr.zone){
+          result.zone = curr.zone;
+        }
+      }
     }
   };
   if (type === 'state'){
@@ -77,6 +82,7 @@ var populating = function(type){
       result.rejected += curr.rejected;
       result.state = curr.state;
       result.lga = curr.lga;
+      result.zone = curr.zone;
     }
   };
 };
