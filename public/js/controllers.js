@@ -11,34 +11,30 @@ var clean_root_scope = function($rootScope){
   $rootScope.current_state_name = undefined;
 };
 
-var TotalsCtrl = function(dataset_type, type) {
-  return function($scope, $rootScope, $routeParams, $http, $location) {
-      $scope.title = (type + ' progress in ' + dataset_type).toUpperCase();
-      $scope.type = type;
-      $scope.dataset_type = dataset_type;
-      $scope.predicate = 'pctfinished';
-      $scope.reverse = true;
-      var path = 'api/summaries/' + dataset_type + '/' + type;
-      var promise = $http.get(path);
-      promise.success(function(data) {
-          $scope.totals = data.map(function(datum) {
-            datum.pctfinished = Math.round(100 * datum.finished / datum.total);
-            datum.edu_pctfinished = Math.round(100 * datum.edu_finished / datum.edu_total);
-            datum.health_pctfinished = Math.round(100 * datum.health_finished / datum.health_total);
-          });
-          $scope.totals = data;
+var TotalsCtrl = function($scope, $rootScope, $routeParams, $http, $location) {
+  $scope.level = $routeParams.level;
+  $scope.dataset = $routeParams.dataset;
+  $scope.title = ($routeParams.level + ' progress in ' + $routeParams.dataset).toUpperCase();
+  $scope.predicate = 'pctfinished';
+  $scope.reverse = true;
+  $scope.isLGA = function(){
+    return ($scope.level === 'lga');
+  };
+  var path = 'api/summaries/' + $routeParams.dataset + '/' + $routeParams.level;
+  var promise = $http.get(path);
+  promise.success(function(data) {
+      $scope.totals = data.map(function(datum) {
+        datum.pctfinished = Math.round(100 * datum.finished / datum.total);
+        datum.edu_pctfinished = Math.round(100 * datum.edu_finished / datum.edu_total);
+        datum.health_pctfinished = Math.round(100 * datum.health_finished / datum.health_total);
       });
-      $rootScope.changeView = function (view){
-        var path_str;
-        if(view=='lga'){
-          path_str = '/progress/lga';
-          $location.path(path_str);
-        }else if(view=='state'){
-          path_str = '/progress/state';
-          $location.path(path_str);
-        }
-      };
-    };
+      $scope.totals = data;
+  });
+  $rootScope.changeView = function(dataset, level){
+    var path_str;
+    path_str = 'progress/' + dataset + '/' + level;
+    $location.path(path_str);
+  };
 };
 
 var RootCtrl = function(sector){

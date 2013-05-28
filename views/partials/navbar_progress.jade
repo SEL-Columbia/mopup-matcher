@@ -8,10 +8,14 @@ html
               img(src='/images/logo.png')
               | NMIS/LGA Facility Matching Tool
             ul.nav
-              li.hover(class="ng-class:{ active: currentSector == 'lga'}")
-                a(ng-click="changeView('lga')") LGA PROGRESS
-              li.hover(class="ng-class:{ active: currentSector == 'state'}")
-                a(ng-click="changeView('state')") STATE PROGRESS
+              li.hover(class="ng-class:{ active: (level=='lga' && dataset=='baseline')}")
+                a(ng-click="changeView('baseline', 'lga')") BASELINE LGA
+              li.hover(class="ng-class:{ active: (level=='state' && dataset=='baseline')}")
+                a(ng-click="changeView('baseline', 'state')") BASELINE STATE
+              li.hover(class="ng-class:{ active: (level=='lga' && dataset=='facility_list')}")
+                a(ng-click="changeView('facility_list', 'lga')") FACILITY LIST LGA
+              li.hover(class="ng-class:{ active: (level=='state' && dataset=='facility_list')}")
+                a(ng-click="changeView('facility_list', 'state')") FACILITY LIST STATE
     block main
   script
     $('body, .main-wrapper, .main, .inner').css('height', 'auto');
