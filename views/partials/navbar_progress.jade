@@ -1,0 +1,18 @@
+html
+  body
+    block navbar 
+      .navbar
+        .navbar-inner
+          .container
+            a.brand
+              img(src='/images/logo.png')
+              | NMIS/LGA Facility Matching Tool
+            ul.nav
+              li.hover(class="ng-class:{ active: currentSector == 'lga'}")
+                a(ng-click="changeView('lga')") LGA PROGRESS
+              li.hover(class="ng-class:{ active: currentSector == 'state'}")
+                a(ng-click="changeView('state')") STATE PROGRESS
+    block main
+  script
+    $('body, .main-wrapper, .main, .inner').css('height', 'auto');
+    $('.main').css('width','100%');

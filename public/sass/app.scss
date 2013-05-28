@@ -27,13 +27,14 @@ $highlight: rgb(132, 201, 235);//light blue
 /** overall layout **/
 html, body, .main-wrapper, .main, #matches_list, .inner{
 	height: 100%;}
+.view{
+  height: 100%;
+  overflow: hidden; }
 .navbar{
   height: 60px;
   margin-bottom: 5px;}
-.view{
-  height: 89%;
-  overflow: hidden; }
 .main-wrapper{
+  height: 89%;
   position: relative;}
 .main {
   width: 75%;

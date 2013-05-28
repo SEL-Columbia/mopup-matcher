@@ -28,6 +28,16 @@ var TotalsCtrl = function(dataset_type, type) {
           });
           $scope.totals = data;
       });
+      $rootScope.changeView = function (view){
+        var path_str;
+        if(view=='lga'){
+          path_str = '/progress/lga';
+          $location.path(path_str);
+        }else if(view=='state'){
+          path_str = '/progress/state';
+          $location.path(path_str);
+        }
+      };
     };
 };
 
@@ -37,11 +47,12 @@ var RootCtrl = function(sector){
     $rootScope.currentSector = sector;
     $rootScope.current_lga = $routeParams.lgaid;
     $rootScope.changeView = function (view){
+      var path_str;
       if(view=='education'){
-        var path_str = '/' + $rootScope.current_lga + '/education';
+        path_str = '/' + $rootScope.current_lga + '/education';
         $location.path(path_str);
       }else if(view=='health'){
-        var path_str = '/' + $rootScope.current_lga + '/health';
+        path_str = '/' + $rootScope.current_lga + '/health';
         $location.path(path_str);
       }
     };
@@ -111,14 +122,14 @@ var RootCtrl = function(sector){
     $scope.$on('set_lga_name', function(evt, lgaStateNames){
         $rootScope.current_lga_name = lgaStateNames.lga;
         $rootScope.current_state_name = lgaStateNames.state;
-	});
-	$scope.isMatched = function(facility){
-		return ($rootScope.localMatch.indexOf(facility._id) !== -1);
-	};
-	$scope.isSelected = function(facility){
-		return ($rootScope.currentNMIS && ($rootScope.currentNMIS._id == facility._id));
-	};
-}
+    });
+    $scope.isMatched = function(facility){
+      return ($rootScope.localMatch.indexOf(facility._id) !== -1);
+    };
+    $scope.isSelected = function(facility){
+      return ($rootScope.currentNMIS && ($rootScope.currentNMIS._id == facility._id));
+    };
+  };
 };
 
 var NMISCtrl = function($scope, $http, $rootScope) {
