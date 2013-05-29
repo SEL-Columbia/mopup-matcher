@@ -14,7 +14,10 @@ exports.summaries = function(dbstr){
     var collection = db.get(db_str);
     var promise = collection.find({full:true}); // full: true => all totals
     promise.on('success', function(b) {
-      zlib.gzip(JSON.stringify(b), function(_,result){
+      var buf = new Buffer(JSON.stringify(b), 'utf-8');
+      zlib.gzip(buf, function(_,result){
+        res.writeHead(200, {'Content-Type': 'application/json; charset=utf-8', 
+                            'Content-Encoding': 'gzip'});
         res.end(result);
       });
     });
