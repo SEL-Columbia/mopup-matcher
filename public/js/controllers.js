@@ -23,12 +23,12 @@ var TotalsCtrl = function($scope, $rootScope, $routeParams, $http, $location) {
   var path = 'api/summaries/' + $routeParams.dataset + '/' + $routeParams.level;
   var promise = $http.get(path);
   promise.success(function(data) {
-      $scope.totals = data.map(function(datum) {
-        datum.pctfinished = Math.round(100 * datum.finished / datum.total);
-        datum.edu_pctfinished = Math.round(100 * datum.edu_finished / datum.edu_total);
-        datum.health_pctfinished = Math.round(100 * datum.health_finished / datum.health_total);
-      });
-      $scope.totals = data;
+    $scope.totals = data.map(function(datum) {
+      datum.pctfinished = Math.round(100 * datum.finished / datum.total);
+      datum.edu_pctfinished = Math.round(100 * datum.edu_finished / datum.edu_total);
+      datum.health_pctfinished = Math.round(100 * datum.health_finished / datum.health_total);
+    });
+    $scope.totals = data;
   });
   $rootScope.changeView = function(dataset, level){
     var path_str;
