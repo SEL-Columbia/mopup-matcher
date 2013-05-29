@@ -4,6 +4,7 @@
 var db = require('monk')('localhost/mopup'),
   _ = require('underscore'),
   mongodb = require('mongodb'),
+  zlib = require('zlib'),
   mongoserver = new mongodb.Server('127.0.0.1', 27017, {}),
   client = new mongodb.Db('mopup', mongoserver, {w:1});
 
@@ -13,7 +14,9 @@ exports.summaries = function(dbstr){
     var collection = db.get(db_str);
     var promise = collection.find({full:true}); // full: true => all totals
     promise.on('success', function(b) {
-        res.json(b);
+      zlib.gzip(JSON.stringify(b), function(_,result){
+        res.end(result);
+      });
     });
     promise.on('error', function(e) {
       res.json(e);
