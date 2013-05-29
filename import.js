@@ -1,8 +1,11 @@
 var db = require('monk')('localhost/mopup'),
-    async = require('async'),
-    fs = require('fs'),
-    _ = require('underscore'),
-    filepath = 'csvs/';
+  mongodb = require('mongodb'),
+  mongoserver = new mongodb.Server('127.0.0.1', 27017, {}),
+  client = new mongodb.Db('mopup', mongoserver, {w:1});
+  async = require('async'),
+  fs = require('fs'),
+  _ = require('underscore'),
+  filepath = '../nigeria_mopup_data/';
 
 var nmis_health = 'BASELINE_hospitals.csv',
   nmis_health_col = 'nmis_list_health',
@@ -13,6 +16,8 @@ var nmis_health = 'BASELINE_hospitals.csv',
   lga_edu = 'FACILITY_LIST_schools.csv';
   lga_edu_col = 'lga_list_edu';
 
+var insert_json_native = function(col_name, json, cb){
+};
 
 var read = function(filename,cb){
   // readfile takes an second option of string encoding,

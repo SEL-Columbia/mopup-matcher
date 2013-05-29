@@ -27,13 +27,14 @@ $highlight: rgb(132, 201, 235);//light blue
 /** overall layout **/
 html, body, .main-wrapper, .main, #matches_list, .inner{
 	height: 100%;}
+.view{
+  height: 100%;
+  overflow: hidden; }
 .navbar{
   height: 60px;
   margin-bottom: 5px;}
-.view{
-  height: 89%;
-  overflow: hidden; }
 .main-wrapper{
+  height: 89%;
   position: relative;}
 .main {
   width: 75%;
@@ -176,14 +177,23 @@ table, .table{
     &:first-child{
       width: 55px; }
     &:nth-child(2){
-      width: 6%;}
+      width: 9%;}
     &:nth-child(3){
       width: 15%;}
     &:nth-child(4){
-      width: 29%;}
+      width: 26%;}
     &:nth-child(5){
       width: 16%;} }
   tbody tr{
+    &.finished{
+      background-color: #bbd7b4;
+    }
+    &.inprogress{
+      background-color: #e6e4b9;
+    }
+    &.notstarted{
+      background-color: #e9bebe;
+    }
     &:hover{
     background-color: #dddddd;
       .btn-nomatch{
