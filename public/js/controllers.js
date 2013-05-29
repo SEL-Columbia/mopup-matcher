@@ -11,24 +11,47 @@ var clean_root_scope = function($rootScope){
   $rootScope.current_state_name = undefined;
 };
 
-var TotalsCtrl = function(dataset_type, type) {
-  return function($scope, $rootScope, $routeParams, $http, $location) {
-      $scope.title = (type + ' progress in ' + dataset_type).toUpperCase();
-      $scope.type = type;
-      $scope.dataset_type = dataset_type;
-      $scope.predicate = 'pctfinished';
-      $scope.reverse = true;
-      var path = 'api/summaries/' + dataset_type + '/' + type;
-      var promise = $http.get(path);
-      promise.success(function(data) {
-          $scope.totals = data.map(function(datum) {
-            datum.pctfinished = Math.round(100 * datum.finished / datum.total);
-            datum.edu_pctfinished = Math.round(100 * datum.edu_finished / datum.edu_total);
-            datum.health_pctfinished = Math.round(100 * datum.health_finished / datum.health_total);
-          });
-          $scope.totals = data;
+var TotalsCtrl = function($scope, $rootScope, $routeParams, $http, $location) {
+  $scope.level = $routeParams.level;
+  $scope.dataset = $routeParams.dataset;
+  $scope.title = ($routeParams.level + ' progress in ' + $routeParams.dataset).toUpperCase();
+  $scope.predicate = 'pctfinished';
+  $scope.reverse = true;
+  $scope.isLGA = function(){
+    return ($scope.level === 'lga');
+  };
+  var path = 'api/summaries/' + $routeParams.dataset + '/' + $routeParams.level;
+  var promise = $http.get(path);
+  promise.success(function(data) {
+      $scope.totals = data.map(function(datum) {
+        datum.pctfinished = Math.round(100 * datum.finished / datum.total);
+        datum.edu_pctfinished = Math.round(100 * datum.edu_finished / datum.edu_total);
+        datum.health_pctfinished = Math.round(100 * datum.health_finished / datum.health_total);
       });
-    };
+      $scope.totals = data;
+  });
+  $rootScope.changeView = function(dataset, level){
+    var path_str;
+    path_str = 'progress/' + dataset + '/' + level;
+    $location.path(path_str);
+  };
+  $rootScope.redirect = function(lga_id){
+    var path_str;
+    path_str = lga_id + '/health';
+    $location.path(path_str);
+  };
+  $scope.hasFinished = function(data){
+    var pct = data.pctfinished;
+    return (pct === 100);
+  };
+  $scope.hasNotstarted = function(data){
+    var pct = data.pctfinished;
+    return (pct === 0);
+  };
+  $scope.isInprogress = function(data){
+    var pct = data.pctfinished;
+    return (pct > 0 && pct < 100);
+  };
 };
 
 var RootCtrl = function(sector){
@@ -37,11 +60,12 @@ var RootCtrl = function(sector){
     $rootScope.currentSector = sector;
     $rootScope.current_lga = $routeParams.lgaid;
     $rootScope.changeView = function (view){
+      var path_str;
       if(view=='education'){
-        var path_str = '/' + $rootScope.current_lga + '/education';
+        path_str = '/' + $rootScope.current_lga + '/education';
         $location.path(path_str);
       }else if(view=='health'){
-        var path_str = '/' + $rootScope.current_lga + '/health';
+        path_str = '/' + $rootScope.current_lga + '/health';
         $location.path(path_str);
       }
     };
@@ -111,14 +135,14 @@ var RootCtrl = function(sector){
     $scope.$on('set_lga_name', function(evt, lgaStateNames){
         $rootScope.current_lga_name = lgaStateNames.lga;
         $rootScope.current_state_name = lgaStateNames.state;
-	});
-	$scope.isMatched = function(facility){
-		return ($rootScope.localMatch.indexOf(facility._id) !== -1);
-	};
-	$scope.isSelected = function(facility){
-		return ($rootScope.currentNMIS && ($rootScope.currentNMIS._id == facility._id));
-	};
-}
+    });
+    $scope.isMatched = function(facility){
+      return ($rootScope.localMatch.indexOf(facility._id) !== -1);
+    };
+    $scope.isSelected = function(facility){
+      return ($rootScope.currentNMIS && ($rootScope.currentNMIS._id == facility._id));
+    };
+  };
 };
 
 var NMISCtrl = function($scope, $http, $rootScope) {
