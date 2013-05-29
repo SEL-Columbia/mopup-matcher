@@ -39,7 +39,7 @@ block main
               .table-wrapper
                 table.table
                   tbody
-                    tr.hover(ng-repeat='totalDatum in totals | orderBy:predicate:reverse | filter:progressSearch')
+                    tr.hover(ng-repeat='totalDatum in totals | orderBy:predicate:reverse | filter:progressSearch')(ng-click="redirect(totalDatum.lga_id)", ng-class='{finished: hasFinished(totalDatum), inprogress: isInprogress(totalDatum), notstarted: hasNotstarted(totalDatum)}')
                       td {{totalDatum.lga_id}}
                       td {{totalDatum.zone}}
                       td {{totalDatum.state}}
@@ -79,7 +79,7 @@ block main
               .table-wrapper
                 table.table
                   tbody
-                    tr.hover(ng-repeat='totalDatum in totals | orderBy:predicate:reverse | filter:progressSearch')
+                    tr.hover(ng-repeat='totalDatum in totals | orderBy:predicate:reverse | filter:progressSearch')(ng-class='{finished: hasFinished(totalDatum), inprogress: isInprogress(totalDatum), notstarted: hasNotstarted(totalDatum)}')
                       td {{totalDatum.state}}
                       td {{totalDatum.zone}}
                       td {{totalDatum.edu_pctfinished}} % ( {{totalDatum.edu_finished}} / {{totalDatum.edu_total}})

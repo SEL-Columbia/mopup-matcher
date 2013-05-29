@@ -35,6 +35,23 @@ var TotalsCtrl = function($scope, $rootScope, $routeParams, $http, $location) {
     path_str = 'progress/' + dataset + '/' + level;
     $location.path(path_str);
   };
+  $rootScope.redirect = function(lga_id){
+    var path_str;
+    path_str = lga_id + '/health';
+    $location.path(path_str);
+  };
+  $scope.hasFinished = function(data){
+    var pct = data.pctfinished;
+    return (pct === 100);
+  };
+  $scope.hasNotstarted = function(data){
+    var pct = data.pctfinished;
+    return (pct === 0);
+  };
+  $scope.isInprogress = function(data){
+    var pct = data.pctfinished;
+    return (pct > 0 && pct < 100);
+  };
 };
 
 var RootCtrl = function(sector){
