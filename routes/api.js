@@ -4,7 +4,6 @@
 var db = require('monk')('localhost/mopup'),
   _ = require('underscore'),
   mongodb = require('mongodb'),
-  zlib = require('zlib'),
   mongoserver = new mongodb.Server('127.0.0.1', 27017, {}),
   client = new mongodb.Db('mopup', mongoserver, {w:1});
 
